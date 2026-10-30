@@ -31,3 +31,7 @@ A silhueta desenhada destoa da foto (lembra o Slenderman). `figuras.png` compara
 - A pessoa vem de *Full-length portrait of a man, standing, facing front*, carte de visite de 1870, Biblioteca do Congresso (LCCN 2005692477), via Wikimedia Commons: https://commons.wikimedia.org/wiki/File:Full-length_portrait_of_a_man,_standing,_facing_front_LCCN2005692477.jpg. Domínio público no mundo todo (mais de 150 anos; `PD-old-100-1923`).
 - Recorte com `rembg` (modelo `u2net_human_seg`): `pessoa-recorte.png`.
 - `pessoa.py` põe a pessoa no `recorte.png` (mesmo tom, desfoque e posição de `figures.ts`), e depois `revela age -seed 2` envelhece tudo junto, para o grão e a lente valerem para os dois.
+
+## Rodada 3: destacar a opção 3
+
+`destaque.png` compara a opção 3 com três jeitos de chamar mais atenção para ela: maior e com mais contraste no mesmo lugar (A), no caminho claro em frente ao coreto (B) e no caminho, mais perto da câmera (C). Em B e C o casaco escuro contrasta com o chão claro, e dá para ver que ele não tem sombra. Se B ou C entrar no jogo, a posição em `figures.ts` muda (B fica perto de x 0,51 e pés em 0,57 da folha).
