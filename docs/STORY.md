@@ -123,7 +123,7 @@ O roteiro e os textos de cada dia ficam em `web/src/game/days/`. Até as fotos d
 
 Nenhuma figura no dia 1. Os detalhes da lupa ensinam a vasculhar a foto com coisas inocentes; a partir do dia 3 a lupa acha outra coisa.
 
-O dia: Dona Cida e Seu Nakamura deixam os rolos de manhã; os filmes vão para o tanque no escuro (narrado, o gesto do tanque fica para depois); as oito cópias passam por ampliador, bandeja e varal; o mural com a lupa; as entregas (a fala do cliente muda conforme as cópias saíram: no ponto, pálidas, escuras, borradas ou misturadas); às seis, a Senhorita Amanda devolve o guarda-chuva com "Noite na Taverna" na mão.
+O dia: Dona Cida e Seu Nakamura deixam os rolos de manhã; os filmes vão para o tanque no escuro (a tela apaga; abrir o chassi, segurar o botão para enrolar o filme na espiral, fechar a tampa); as oito cópias passam por ampliador, bandeja e varal; o mural com a lupa; as entregas (a fala do cliente muda conforme as cópias saíram: no ponto, pálidas, escuras, borradas ou misturadas); às seis, a Senhorita Amanda devolve o guarda-chuva com "Noite na Taverna" na mão.
 
 ### Dias 2 a 10
 
@@ -145,7 +145,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 9 | Senhorita Amanda, "A livraria" (35 mm) | vitrine, estante de terror, o gato Poe, ela no balcão | Nunca. "Atrás dela, só livros" |
 | 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | a bancada vista do teto, o ampliador, o varal, a pia vista do chão, o rosto, o fogo de sábado | Na sua câmara escura, mais perto a cada foto; o seu rosto borra junto |
 
-O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e não fala do Elias; no dia 10 ele diz que a Foto Íris está aberta e o revelador está sozinho nos fundos, e o som some de repente. A valsa volta com a nota errada no dia 10. O telefone com a goteira é no dia 5; o rangido, uma vez só, no fim do dia 9.
+O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e não fala do Elias; no dia 10 ele diz que a Foto Íris está aberta e o revelador está sozinho nos fundos, e o som some de repente. A valsa volta com a nota errada no dia 10. O tanque no escuro aparece nos dias 1 (ensina o gesto), 2 (o filme velho da câmera, que resiste) e 6 (o rolo que voltou, que entra fácil demais); nos outros dias é narrado. O telefone com a goteira é no dia 5; o rangido, uma vez só, no fim do dia 9.
 
 Os finais, depois do mural do dia 10:
 
@@ -157,4 +157,3 @@ Os finais, depois do mural do dia 10:
 
 - As fotos do Blender (a lista acima e a do dia 1).
 - A voz do locutor (hoje é texto e legenda).
-- O gesto do tanque no escuro total, para o filme.

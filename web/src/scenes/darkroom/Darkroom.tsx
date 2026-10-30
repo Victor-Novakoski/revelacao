@@ -1,5 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
+import { PerformanceMonitor } from '@react-three/drei'
 import { EffectComposer, Noise, Vignette, Bloom } from '@react-three/postprocessing'
 import { Vector3, type PerspectiveCamera, type PointLight } from 'three'
 import { DevelopTray, SAFELIGHT } from './DevelopTray'
@@ -60,7 +61,8 @@ function Camera({ reducedMotion, view }: Props) {
   useFrame(({ camera, clock, size }, delta) => {
     const t = clock.getElapsedTime()
     const breathe = reducedMotion || active ? 0 : Math.sin(t * 0.6) * 0.02
-    const ease = Math.min(1, delta * 1.5)
+    // Com movimento reduzido, a câmera corta para o lugar novo em vez de voar.
+    const ease = reducedMotion ? 1 : Math.min(1, delta * 1.5)
     const aspect = size.width / size.height
     if (active) {
       const halfTan = Math.tan((TRAY_FOV * Math.PI) / 360)
@@ -115,14 +117,19 @@ function EnlargerLight() {
 
 export function Darkroom({ reducedMotion, view }: Props) {
   const active = view === 'tray'
+  // Celular fraco: se os quadros caem, a tela desenha com menos pixels.
+  const [dpr, setDpr] = useState(2)
   return (
     <Canvas
       shadows
-      dpr={[1, 2]}
+      // No tanque, a luz está apagada e a tela fica preta: a sala para de desenhar.
+      frameloop={view === 'tank' ? 'never' : 'always'}
+      dpr={[1, dpr]}
       camera={{ position: [0, 1.7, 3.4], fov: 45 }}
       gl={{ antialias: true }}
       aria-hidden="true"
     >
+      <PerformanceMonitor onDecline={() => setDpr(1)} onIncline={() => setDpr(2)} flipflops={3} onFallback={() => setDpr(1)} />
       <color attach="background" args={['#050202']} />
       <fog attach="fog" args={['#050202', 3, 9]} />
       <ambientLight intensity={0.04} color={RED} />
@@ -137,7 +144,8 @@ export function Darkroom({ reducedMotion, view }: Props) {
       <ListenerSync />
       <EffectComposer>
         <Bloom intensity={0.9} luminanceThreshold={0.6} mipmapBlur />
-        <Noise opacity={0.12} />
+        {/* O grão muda a cada quadro: com movimento reduzido, fica de fora. */}
+        <Noise opacity={reducedMotion ? 0 : 0.12} />
         <Vignette eskil={false} offset={0.2} darkness={0.95} />
       </EffectComposer>
     </Canvas>

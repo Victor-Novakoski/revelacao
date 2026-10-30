@@ -24,3 +24,5 @@ Cada arquivo de arte ou som que entrar no repo ganha uma linha aqui: caminho, or
 | `web/src/photos/places.ts`, `week1.ts`, `week2.ts`, `figures.ts` (as fotos dos dias 2 a 10 e a figura, desenhadas em código) | Própria, feita para o projeto | Própria |
 | Telefone, rangido, fósforo e silêncio (`web/src/audio/engine.ts`, gerados no Tone.js) | Próprio | Próprio |
 | Sino da porta (`web/src/audio/engine.ts`, gerado no Tone.js) | Próprio | Próprio |
+| Chassi, espiral e tampa do tanque (`web/src/audio/engine.ts`, gerados no Tone.js) | Próprio | Próprio |
+| Capturas e GIF do README (`docs/media/`, gravados do próprio jogo) | Própria | Própria |

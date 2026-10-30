@@ -16,6 +16,7 @@ type Room = {
   hum: ToneNS.Gain
   radio: ToneNS.PolySynth
   bell: ToneNS.PolySynth
+  hands: ToneNS.NoiseSynth
 }
 
 let room: Room | null = null
@@ -23,6 +24,7 @@ let starting = false
 let wantAudible = true
 let hidden = false
 let bellFree = 0
+let handsFree = 0
 let waltzWrong = false
 let warp = 0
 let listener: { position: Point; forward: Point; up: Point } = { position: [0, 1.6, 2], forward: [0, 0, -1], up: [0, 1, 0] }
@@ -117,6 +119,16 @@ function doorBell(tone: Tone, out: ToneNS.InputNode) {
   }).connect(wall)
 }
 
+// As mãos no escuro: o estalo do chassi, a espiral, a tampa. Perto do
+// ouvido, sem eco de sala.
+function hands(tone: Tone, out: ToneNS.InputNode) {
+  const click = new tone.Filter({ type: 'bandpass', frequency: 3200, Q: 2 }).connect(out)
+  return new tone.NoiseSynth({
+    volume: LEVELS.tick,
+    envelope: { attack: 0.001, decay: 0.025, sustain: 0 },
+  }).connect(click)
+}
+
 async function build(context: AudioContext) {
   const tone = await import('tone')
   // Ao carregar, o Tone.js já cria um contexto próprio; troca pelo nosso e
@@ -134,7 +146,7 @@ async function build(context: AudioContext) {
   const piano = radio(tone, reverb)
   const bell = doorBell(tone, reverb)
 
-  room = { tone, master, hum, radio: piano, bell }
+  room = { tone, master, hum, radio: piano, bell, hands: hands(tone, master) }
   transport.start()
   applyGain(FADE_IN)
   say('[A lâmpada vermelha zumbe baixinho]', 5)
@@ -203,6 +215,32 @@ export function hushLamp(seconds = 1) {
   gain.linearRampToValueAtTime(1, now + seconds + 1.2)
 }
 
+// Luz apagada para o tanque: a lâmpada para de zumbir. Ao acender, volta.
+export function setDark(dark: boolean) {
+  if (!room) return
+  room.hum.gain.rampTo(dark ? 0 : 1, dark ? 0.3 : 1.5)
+}
+
+let reelSaid = false
+
+// Um estalo das mãos. Como no sino, um toque nunca é agendado antes do anterior.
+function tap(time: number, velocity = 1) {
+  if (!room) return
+  const at = Math.max(time, handsFree)
+  handsFree = at + 0.01
+  room.hands.triggerAttackRelease(0.02, at, velocity)
+}
+
+// Um dente da espiral pegando o filme, enquanto o botão está apertado.
+export function reelTick() {
+  if (!reelSaid) {
+    reelSaid = true
+    say('[O filme estala na espiral, dente por dente]', 5)
+  }
+  if (!room) return
+  tap(room.tone.now(), 0.4 + Math.random() * 0.3)
+}
+
 // A valsa com a nota errada, no último dia.
 export function setWaltzWrong(wrong: boolean) {
   waltzWrong = wrong
@@ -265,6 +303,20 @@ export function playCue(cue: Cue) {
       tone.getTransport().scheduleOnce(() => out.dispose(), `+7`)
       break
     }
+    case 'cassette':
+    case 'lid': {
+      // Um estalo seco de metal: o chassi abrindo, a tampa fechando.
+      const snap = new tone.MembraneSynth({
+        volume: LEVELS.snap,
+        pitchDecay: 0.008,
+        octaves: 2,
+        envelope: { attack: 0.001, decay: 0.06, sustain: 0, release: 0.02 },
+      }).connect(room.master)
+      snap.triggerAttackRelease(cue === 'lid' ? 'D3' : 'A3', 0.03, now)
+      tap(now + 0.01)
+      tone.getTransport().scheduleOnce(() => snap.dispose(), `+2`)
+      break
+    }
     case 'silence': {
       // Silêncio de repente é permitido; a volta é devagar.
       const gain = room.master.gain
@@ -284,6 +336,8 @@ const CUE_CAPTIONS: Record<Cue, string> = {
   creak: '[Um rangido baixinho, atrás de você, à esquerda]',
   match: '[Um fósforo risca. O filme chia e queima]',
   silence: '[Silêncio. Até a lâmpada para de zumbir]',
+  cassette: '[O chassi do filme estala ao abrir]',
+  lid: '[A tampa do tanque fecha com um clique]',
 }
 
 // O ouvido acompanha a câmera da cena, para o som 3D virar com ela.

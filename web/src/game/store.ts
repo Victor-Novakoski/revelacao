@@ -45,7 +45,7 @@ export const LAST_DAY = Math.max(...Object.keys(DAYS).map(Number))
 export const script = (day: number) => DAYS[day] ?? DAY1
 
 export type Screen = 'title' | 'day' | 'gallery'
-export type View = 'room' | 'counter' | 'enlarger' | 'tray' | 'line' | 'wall' | 'burn' | 'choice' | 'end'
+export type View = 'room' | 'counter' | 'enlarger' | 'tray' | 'line' | 'wall' | 'burn' | 'tank' | 'choice' | 'end'
 export type Phase = 'developing' | 'pulled'
 
 // O que está no ampliador. O foco e os segundos ficam de uma foto para a
@@ -146,6 +146,8 @@ export function viewOf(state: Pick<GameState, 'screen' | 'day' | 'cursor'> & { e
       return 'wall'
     case 'burn':
       return 'burn'
+    case 'tank':
+      return 'tank'
     case 'choice':
       return state.ending ? 'counter' : 'choice'
     case 'end':

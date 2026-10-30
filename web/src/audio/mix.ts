@@ -12,6 +12,8 @@ export const LEVELS = {
   phone: -32,
   creak: -30,
   match: -28,
+  tick: -30,
+  snap: -24,
 }
 
 // Ao entrar, o som sobe devagar. Ao tirar o mudo, também.

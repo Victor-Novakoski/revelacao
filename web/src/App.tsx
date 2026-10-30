@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Darkroom } from './scenes/darkroom/Darkroom'
+import { Suspense, lazy, useState } from 'react'
 import { TitleCard } from './ui/TitleCard'
 import { DevelopHud } from './ui/DevelopHud'
 import { TrayControls } from './ui/TrayControls'
@@ -11,6 +10,8 @@ import { LinePanel } from './ui/LinePanel'
 import { Wall } from './ui/Wall'
 import { EndCard } from './ui/EndCard'
 import { BurnPanel } from './ui/BurnPanel'
+import { TankPanel } from './ui/TankPanel'
+import { SceneBoundary } from './scenes/SceneBoundary'
 import { ChoiceCard } from './ui/ChoiceCard'
 import { currentStep } from './game/day'
 import { hasProgress, script, useGame, viewOf } from './game/store'
@@ -18,6 +19,10 @@ import { useSettings } from './game/settings'
 import { useReducedMotion } from './game/motion'
 import { start } from './audio/engine'
 import { useRoomAudio } from './audio/useRoomAudio'
+
+// A sala 3D (Three.js) vem num pedaço separado: o título aparece antes,
+// enquanto ela baixa.
+const Darkroom = lazy(() => import('./scenes/darkroom/Darkroom').then((m) => ({ default: m.Darkroom })))
 
 export default function App() {
   const screen = useGame((s) => s.screen)
@@ -71,6 +76,8 @@ export default function App() {
         return <Wall gallery={false} hint={wallHint} onDone={game.next} doneLabel="Pôr nos envelopes" />
       case 'burn':
         return <BurnPanel />
+      case 'tank':
+        return <TankPanel />
       case 'choice':
         return <ChoiceCard />
       case 'end':
@@ -93,8 +100,12 @@ export default function App() {
 
   return (
     <main className="app">
-      <div className={`stage ${dim ? 'dim' : ''}`}>
-        <Darkroom reducedMotion={reducedMotion} view={view} />
+      <div className={`stage ${dim ? 'dim' : ''} ${view === 'tank' ? 'dark' : ''}`}>
+        <SceneBoundary>
+          <Suspense fallback={null}>
+            <Darkroom reducedMotion={reducedMotion} view={view} />
+          </Suspense>
+        </SceneBoundary>
       </div>
       {overlay()}
       {screen !== 'title' && (

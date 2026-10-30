@@ -65,7 +65,19 @@ export const DAY2: DayScript = {
         say('augusto', 'Ainda tem filme dentro. Se o senhor quiser, eu revelo. Quem sabe aparece o dono.'),
         say('elias', 'Era isso que eu queria. E já que estou aqui, revela o meu também, da rota da semana. Busco na quinta.'),
         narrate('Elias deixa dois rolos no balcão e volta para o caminhão. Na porta da cabine, uma luneta pintada.'),
-        narrate('No escuro total, o rolo da câmera vai para o tanque primeiro. O filme é velho e cheira a vinagre.'),
+      ],
+    },
+    {
+      kind: 'tank',
+      actions: [
+        { text: 'Luz apagada. O rolo da câmera vai para o tanque primeiro. No escuro, o cheiro chega antes: vinagre.', label: 'Abrir o chassi', cue: 'cassette' },
+        {
+          text: 'O filme é velho e duro, enrolado há tempo demais. Ele resiste na espiral e volta a se enrolar sozinho.',
+          label: 'Segure para enrolar',
+          hold: 6,
+        },
+        { text: 'Na terceira volta, o filme cede. A espiral desce no tanque.', label: 'Fechar o tanque', cue: 'lid' },
+        { text: 'Revelador, fixador, água. Os negativos secam, e a luz vermelha volta.', label: 'Acender a luz vermelha' },
       ],
     },
     { kind: 'roll', roll: PRACA },

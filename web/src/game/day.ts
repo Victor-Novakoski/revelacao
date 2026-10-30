@@ -129,6 +129,7 @@ export function advance(day: DayScript, c: Cursor, prints: Print[], ending?: str
       return c.index + 1 < lines.length ? { ...c, index: c.index + 1 } : nextStep(day, c)
     }
     case 'burn':
+    case 'tank':
       return c.index + 1 < step.actions.length ? { ...c, index: c.index + 1 } : nextStep(day, c)
     case 'roll': {
       const g = GESTURES.indexOf(c.gesture)
@@ -141,6 +142,12 @@ export function advance(day: DayScript, c: Cursor, prints: Print[], ending?: str
     case 'end':
       return c
   }
+}
+
+// O filme enrolando na espiral enquanto o botão fica apertado. Soltar
+// pausa, não perde o que já foi: no escuro, a mão volta a achar a ponta.
+export function reel(wound: number, held: number, hold: number) {
+  return hold > 0 ? clamp(wound + held / hold, 0, 1) : 1
 }
 
 // Outra folha: a cópia volta para o ampliador.
@@ -158,7 +165,7 @@ export function validCursor(day: DayScript, c: Cursor | undefined): Cursor {
   if (!c || c.step < 0 || c.step >= day.steps.length) return START
   const step = day.steps[c.step]
   if (step.kind === 'roll' && c.index >= step.roll.photos.length) return START
-  if (step.kind === 'burn' && c.index >= step.actions.length) return START
+  if ((step.kind === 'burn' || step.kind === 'tank') && c.index >= step.actions.length) return START
   if (!GESTURES.includes(c.gesture)) return START
   return c
 }
