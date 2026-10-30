@@ -22,8 +22,24 @@ import { DAY2 } from './days/day2'
 import { DAY3 } from './days/day3'
 import { DAY4 } from './days/day4'
 import { DAY5 } from './days/day5'
+import { DAY6 } from './days/day6'
+import { DAY7 } from './days/day7'
+import { DAY8 } from './days/day8'
+import { DAY9 } from './days/day9'
+import { DAY10 } from './days/day10'
 
-export const DAYS: Record<number, DayScript> = { 1: DAY1, 2: DAY2, 3: DAY3, 4: DAY4, 5: DAY5 }
+export const DAYS: Record<number, DayScript> = {
+  1: DAY1,
+  2: DAY2,
+  3: DAY3,
+  4: DAY4,
+  5: DAY5,
+  6: DAY6,
+  7: DAY7,
+  8: DAY8,
+  9: DAY9,
+  10: DAY10,
+}
 export const LAST_DAY = Math.max(...Object.keys(DAYS).map(Number))
 
 export const script = (day: number) => DAYS[day] ?? DAY1

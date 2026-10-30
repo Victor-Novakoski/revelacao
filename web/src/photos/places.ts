@@ -119,7 +119,7 @@ export function churchInside(ctx: Ctx, fr: Frame) {
 // A câmara escura da Foto Íris, a mesma da sala do jogo: parede escura,
 // a bancada com as bandejas, a lâmpada de segurança e o varal.
 export function darkroom(ctx: Ctx, fr: Frame, bench = 0.62) {
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h, 0.22, 0.1)
+  gradient(ctx, fr.x, fr.y, fr.w, fr.h, 0.5, 0.32)
   // A lâmpada de segurança e o halo dela.
   const g = ctx.createRadialGradient(X(0.5), Y(0.14), 2, X(0.5), Y(0.14), X(0.3))
   g.addColorStop(0, gray(0.85, 0.9))
@@ -132,7 +132,7 @@ export function darkroom(ctx: Ctx, fr: Frame, bench = 0.62) {
   for (let i = 0; i < 6; i++) rect(ctx, X(0.14 + i * 0.13), Y(0.27), X(0.07), Y(0.08), 0.62)
   // A bancada e as três bandejas.
   rect(ctx, fr.x, Y(bench), fr.w, Y(0.05), 0.32)
-  rect(ctx, fr.x, Y(bench + 0.05), fr.w, fr.y + fr.h - Y(bench + 0.05), 0.12)
+  rect(ctx, fr.x, Y(bench + 0.05), fr.w, fr.y + fr.h - Y(bench + 0.05), 0.24)
   for (let i = 0; i < 3; i++) rect(ctx, X(0.3 + i * 0.16), Y(bench - 0.02), X(0.13), Y(0.025), 0.55)
 }
 
