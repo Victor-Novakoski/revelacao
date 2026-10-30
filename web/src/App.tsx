@@ -11,6 +11,7 @@ import { Wall } from './ui/Wall'
 import { EndCard } from './ui/EndCard'
 import { BurnPanel } from './ui/BurnPanel'
 import { TankPanel } from './ui/TankPanel'
+import { SceneBoundary } from './scenes/SceneBoundary'
 import { ChoiceCard } from './ui/ChoiceCard'
 import { currentStep } from './game/day'
 import { hasProgress, script, useGame, viewOf } from './game/store'
@@ -100,9 +101,11 @@ export default function App() {
   return (
     <main className="app">
       <div className={`stage ${dim ? 'dim' : ''} ${view === 'tank' ? 'dark' : ''}`}>
-        <Suspense fallback={null}>
-          <Darkroom reducedMotion={reducedMotion} view={view} />
-        </Suspense>
+        <SceneBoundary>
+          <Suspense fallback={null}>
+            <Darkroom reducedMotion={reducedMotion} view={view} />
+          </Suspense>
+        </SceneBoundary>
       </div>
       {overlay()}
       {screen !== 'title' && (

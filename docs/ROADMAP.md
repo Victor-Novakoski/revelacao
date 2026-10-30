@@ -38,5 +38,5 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 ## Etapa 7 · Polimento e lançamento
 - [x] O tanque no escuro total (dias 1, 2 e 6)
 - [x] Bundle dividido: a sala 3D carrega depois do título
-- [ ] Desempenho no celular, movimento reduzido, "Ver as fotos sem revelar"
+- [x] Desempenho no celular, movimento reduzido, "Ver as fotos sem revelar"
 - [ ] README com GIF e entrada no portfólio
