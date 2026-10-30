@@ -15,6 +15,7 @@ import {
 } from 'three'
 import { PAPER, TRAY, freshSpeed, type DevelopSim } from '../../game/develop'
 import { createTestPhoto } from './testPhoto'
+import { LAMP } from './layout'
 import noise from '../../shaders/noise.glsl?raw'
 import surface from '../../shaders/surface.glsl?raw'
 import quadVert from '../../shaders/quad.vert?raw'
@@ -26,7 +27,7 @@ import liquidFrag from '../../shaders/liquid.frag?raw'
 
 // Mapa de revelação: quanto cada ponto do papel já revelou.
 const MAP = { width: 256, height: 192 }
-const LIGHT_POS = new Vector3(0, 2.4, -0.6)
+const LIGHT_POS = new Vector3(...LAMP)
 
 const lib = (...chunks: string[]) => chunks.join('\n')
 

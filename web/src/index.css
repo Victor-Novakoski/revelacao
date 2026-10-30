@@ -108,3 +108,49 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 }
 .hud > * { pointer-events: auto; }
 .hud .hint { flex-basis: 100%; margin: 0; text-align: center; pointer-events: none; }
+
+.sound-controls {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(242, 227, 213, 0.3);
+  border-radius: 50%;
+  background: rgba(5, 2, 2, 0.55);
+  color: var(--ink);
+  font: 600 12px Inter, sans-serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.icon:hover { border-color: rgba(242, 227, 213, 0.6); }
+.icon .off { opacity: 0.45; text-decoration: line-through; }
+
+.captions {
+  position: absolute;
+  inset: calc(max(16px, env(safe-area-inset-top)) + 92px) 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  pointer-events: none;
+}
+.captions p {
+  margin: 0;
+  max-width: 36ch;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(5, 2, 2, 0.72);
+  font: italic 500 17px/1.35 'Cormorant Garamond', serif;
+  color: var(--ink);
+  text-align: center;
+}
