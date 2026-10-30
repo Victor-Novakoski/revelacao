@@ -11,7 +11,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 | Nome | Quem é |
 | --- | --- |
 | **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Terno, gravata borboleta, sempre arrumado |
-| **Amanda** | Namorada do Seu Augusto. Tem a floricultura ao lado e passa todo dia com um café. É a única que percebe que ele está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
+| **Amanda** | A vizinha da floricultura ao lado. Passa todo dia com um café e é a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
 | **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
 | **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
