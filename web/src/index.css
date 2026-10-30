@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Inter:wght@400;600&display=swap');
+
+:root {
+  --ink: #f2e3d5;
+  --muted: #c9a99a;
+  --red: #ff3b2a;
+  --bg: #050202;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { margin: 0; height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.5 Inter, system-ui, sans-serif;
+  overflow: hidden;
+}
+
+.app { position: relative; height: 100%; }
+.stage { position: absolute; inset: 0; }
+
+.title-card {
+  position: absolute;
+  inset: auto 0 12vh 0;
+  padding: 0 16px;
+  text-align: center;
+  text-shadow: 0 2px 24px #000;
+}
+.kicker {
+  margin: 0;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 12px;
+  color: var(--muted);
+}
+h1 {
+  margin: 8px 0 12px;
+  font: 700 clamp(56px, 12vw, 128px)/0.9 'Cormorant Garamond', serif;
+  letter-spacing: 0.02em;
+}
+.lead {
+  margin: 0 auto 28px;
+  max-width: 34ch;
+  font: italic 500 20px/1.4 'Cormorant Garamond', serif;
+  color: var(--muted);
+}
+.enter, .ghost {
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  font: 600 16px Inter, sans-serif;
+  cursor: pointer;
+}
+.enter {
+  border: 1px solid var(--red);
+  background: rgba(255, 59, 42, 0.12);
+  color: var(--ink);
+}
+.enter:hover, .enter:focus-visible { background: rgba(255, 59, 42, 0.28); }
+.ghost {
+  border: 1px solid rgba(242, 227, 213, 0.35);
+  background: transparent;
+  color: var(--ink);
+}
+button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.hint { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
+
+.hud {
+  position: absolute;
+  inset: auto 0 6vh 0;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  padding: 0 16px;
+}
+.soon { margin: 0; color: var(--muted); }
