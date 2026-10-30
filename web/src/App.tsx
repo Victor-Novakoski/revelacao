@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Darkroom } from './scenes/darkroom/Darkroom'
+import { Suspense, lazy, useState } from 'react'
 import { TitleCard } from './ui/TitleCard'
 import { DevelopHud } from './ui/DevelopHud'
 import { TrayControls } from './ui/TrayControls'
@@ -18,6 +17,10 @@ import { useSettings } from './game/settings'
 import { useReducedMotion } from './game/motion'
 import { start } from './audio/engine'
 import { useRoomAudio } from './audio/useRoomAudio'
+
+// A sala 3D (Three.js) vem num pedaço separado: o título aparece antes,
+// enquanto ela baixa.
+const Darkroom = lazy(() => import('./scenes/darkroom/Darkroom').then((m) => ({ default: m.Darkroom })))
 
 export default function App() {
   const screen = useGame((s) => s.screen)
@@ -94,7 +97,9 @@ export default function App() {
   return (
     <main className="app">
       <div className={`stage ${dim ? 'dim' : ''}`}>
-        <Darkroom reducedMotion={reducedMotion} view={view} />
+        <Suspense fallback={null}>
+          <Darkroom reducedMotion={reducedMotion} view={view} />
+        </Suspense>
       </div>
       {overlay()}
       {screen !== 'title' && (
