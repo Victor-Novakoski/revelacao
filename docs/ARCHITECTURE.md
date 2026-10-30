@@ -18,7 +18,7 @@ Blender (camadas de cada foto)
 - **A bandeja** (etapa 2): o modelo fica em `game/develop.ts`, sem Three.js e com testes. Arrastar inclina a bandeja; o líquido é uma mola com pouco amortecimento que vai e volta. Agitar renova o revelador perto do papel: revela mais rápido e por igual. Parada, revela devagar e manchada.
 - **Mapa de revelação** (`shaders/accumulate.frag`): uma textura float pequena (256x192) que cobre o papel, somada a cada quadro (duas texturas que se alternam). Cada ponto revela conforme está coberto pelo líquido, então inclinar demais deixa uma ponta para trás. Sem float para escrever, usa meia precisão e soma a cada 0,12 s. `shaders/surface.glsl` tem a altura do líquido, a mesma conta do modelo em TS, usada pelo papel, pelo líquido (`liquid.vert/frag`) e pelo mapa.
 - **Estado** (`game/`): Zustand, com persistência local (dia atual, fotos reveladas, escolhas). O sorteio de onde a figura aparece é feito com semente salva, para ser estável entre visitas.
-- **Som** (`audio/`, etapa 4): Tone.js e Web Audio. Rádio com filtro AM, mudança de velocidade, som 3D (HRTF) e reverb da sala.
+- **Som** (`audio/`, etapa 4): Tone.js e Web Audio. Rádio com filtro AM, mudança de velocidade, som 3D (HRTF) e reverb da sala. O Tone.js só é baixado no clique de "Abrir a loja", que cria o contexto de áudio dentro do gesto. Cada fonte (lâmpada, torneira, rádio) tem um `Panner3D` na mesma posição do objeto na sala (`scenes/darkroom/layout.ts`), e o ouvido acompanha a câmera. O som entra em 4 s; o mudo corta rápido e volta devagar. As legendas (`audio/captions.ts`) aparecem mesmo no mudo.
 
 ## A ferramenta `revela` (Go)
 

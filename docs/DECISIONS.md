@@ -4,6 +4,7 @@ Registro das escolhas e do porquê. A mais nova em cima.
 
 | Data | Decisão | Por quê |
 | --- | --- | --- |
+| 30/10/2026 | Etapa 4: todo o som da sala é gerado pelo Tone.js, sem arquivo de áudio. A valsa do rádio é o começo da Gymnopédie nº 1 (Satie). O Tone.js só carrega no clique de entrar | Zero licença para conferir, nada a baixar antes do jogo abrir, e o rádio pode desafinar de verdade (tempo e afinação são parâmetros). A Gymnopédie, em 3/4, faz o papel da valsa até ter uma de Nazareth transcrita |
 | 30/10/2026 | WebP com `gen2brain/webp` (a libwebp traduzida para Go puro; usa a do sistema se existir), com perda e qualidade 82 | A biblioteca padrão do Go não escreve WebP. Esta não precisa de cgo nem de libwebp instalada, então roda igual no PC e na CI. Com perda porque WebP sem perda de foto com grão fica pesado no celular |
 | 30/10/2026 | O negativo sai só da primeira camada (a cena) | A criatura só existe nas fotografias: no filme ela não está, aparece no papel |
 | 30/10/2026 | Música de compositores em domínio público (Ernesto Nazareth, Satie, Chopin) tocada pelo jogo via Tone.js, gravações do Musopen e efeitos CC0 do Freesound. Nada de música gerada por IA | O Victor não compõe; direitos de IA são confusos. Música como código deixa fazer a "nota errada" do final |

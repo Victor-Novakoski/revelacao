@@ -1,0 +1,188 @@
+import type * as ToneNS from 'tone'
+import { LAMP, RADIO, TAP, type Point } from '../scenes/darkroom/layout'
+import { useCaptions } from './captions'
+import { BARS, WALTZ, at, length } from './waltz'
+import { FADE_IN, LEVELS, RADIO_BPM, dripPitch, fadeTime, nextDrip, radioWarp } from './mix'
+
+type Tone = typeof ToneNS
+
+// O som da sala. Nada toca antes de um gesto do jogador: start() tem que ser
+// chamado dentro do clique. O Tone.js só é baixado nessa hora.
+
+type Room = {
+  tone: Tone
+  master: ToneNS.Gain
+  hum: ToneNS.Gain
+  radio: ToneNS.PolySynth
+}
+
+let room: Room | null = null
+let starting = false
+let wantAudible = true
+let hidden = false
+
+const say = (text: string, seconds?: number) => useCaptions.getState().say(text, seconds)
+
+function panner(tone: Tone, [x, y, z]: Point, output: ToneNS.InputNode) {
+  return new tone.Panner3D({
+    panningModel: 'HRTF',
+    distanceModel: 'inverse',
+    refDistance: 1,
+    rolloffFactor: 1,
+    positionX: x,
+    positionY: y,
+    positionZ: z,
+  }).connect(output)
+}
+
+// Zumbido da lâmpada: a rede elétrica daqui é de 60 Hz, a lâmpada vibra no
+// dobro. Um chiado fino em cima, para o alto-falante do celular também tocar.
+function lamp(tone: Tone, out: ToneNS.InputNode) {
+  const hum = new tone.Gain(1).connect(panner(tone, LAMP, out))
+  new tone.Oscillator({ frequency: 120, type: 'sine', volume: LEVELS.hum }).connect(hum).start()
+  new tone.Oscillator({ frequency: 240, type: 'sine', volume: LEVELS.hum - 8 }).connect(hum).start()
+  const buzz = new tone.Filter({ type: 'bandpass', frequency: 2400, Q: 1.2 }).connect(hum)
+  new tone.Noise({ type: 'pink', volume: LEVELS.buzz }).connect(buzz).start()
+  return hum
+}
+
+// A torneira da pia pinga sozinha, num ritmo que não dá para prever.
+function drips(tone: Tone, out: ToneNS.InputNode) {
+  const drop = new tone.MembraneSynth({
+    pitchDecay: 0.02,
+    octaves: 1.5,
+    volume: LEVELS.drip,
+    envelope: { attack: 0.001, decay: 0.12, sustain: 0, release: 0.05 },
+  }).connect(panner(tone, TAP, out))
+  let first = true
+  const fall = (time: number) => {
+    drop.triggerAttackRelease(dripPitch(Math.random), 0.05, time)
+    if (first) {
+      first = false
+      tone.getDraw().schedule(() => say('[Uma gota cai na pia]', 4), time)
+    }
+    tone.getTransport().scheduleOnce(fall, time + nextDrip(Math.random))
+  }
+  tone.getTransport().scheduleOnce(fall, `+${2 + Math.random() * 3}`)
+}
+
+// A Rádio Garoa: a valsa num rádio de válvula, com faixa estreita de AM,
+// um pouco de saturação, chiado que vai e vem e estalos de vez em quando.
+function radio(tone: Tone, out: ToneNS.InputNode) {
+  const speaker = panner(tone, RADIO, out)
+  const band = new tone.Filter({ type: 'lowpass', frequency: 2800, rolloff: -24 }).connect(speaker)
+  const tube = new tone.Distortion({ distortion: 0.12, wet: 0.5 }).connect(band)
+  const cut = new tone.Filter({ type: 'highpass', frequency: 320 }).connect(tube)
+
+  const piano = new tone.PolySynth(tone.Synth, {
+    volume: LEVELS.radio,
+    oscillator: { type: 'triangle' },
+    envelope: { attack: 0.004, decay: 1.4, sustain: 0.12, release: 1.6 },
+  }).connect(cut)
+
+  const reception = new tone.Gain(0.6).connect(band)
+  new tone.LFO({ frequency: 0.07, min: 0.25, max: 1 }).connect(reception.gain).start()
+  const hiss = new tone.Filter({ type: 'bandpass', frequency: 1800, Q: 0.6 }).connect(reception)
+  new tone.Noise({ type: 'pink', volume: LEVELS.statics }).connect(hiss).start()
+  const crackle = new tone.NoiseSynth({
+    volume: LEVELS.crackle,
+    envelope: { attack: 0.001, decay: 0.012, sustain: 0 },
+  }).connect(band)
+
+  const part = new tone.Part<{ time: string; notes: string[]; beats: number }>((time, n) => {
+    piano.triggerAttackRelease(n.notes, length(n.beats), time, 0.5 + Math.random() * 0.1)
+    if (Math.random() < 0.08) crackle.triggerAttackRelease(0.01, time + Math.random() * 0.3)
+  }, WALTZ.map((n) => ({ time: at(n.bar, n.beat), notes: n.notes, beats: n.beats })))
+  part.loop = true
+  part.loopEnd = at(BARS, 0)
+  part.start(0)
+  return piano
+}
+
+async function build(context: AudioContext) {
+  const tone = await import('tone')
+  // Ao carregar, o Tone.js já cria um contexto próprio; troca pelo nosso e
+  // fecha o dele.
+  tone.setContext(new tone.Context(context), true)
+  const transport = tone.getTransport()
+  transport.timeSignature = 3
+  transport.bpm.value = RADIO_BPM
+
+  const master = new tone.Gain(0).toDestination()
+  const reverb = new tone.Reverb({ decay: 1.6, preDelay: 0.01, wet: 0.28 }).connect(master)
+  await reverb.ready
+  const hum = lamp(tone, reverb)
+  drips(tone, reverb)
+  const piano = radio(tone, reverb)
+
+  room = { tone, master, hum, radio: piano }
+  transport.start()
+  applyGain(FADE_IN)
+  say('[A lâmpada vermelha zumbe baixinho]', 5)
+  say('[No rádio, a Rádio Garoa toca uma valsa lenta]', 6)
+}
+
+function applyGain(seconds?: number) {
+  if (!room) return
+  const audible = wantAudible && !hidden
+  room.master.gain.rampTo(audible ? 1 : 0, seconds ?? fadeTime(audible))
+}
+
+// Chame dentro do clique: o navegador só deixa tocar depois de um gesto.
+// O contexto de áudio é criado aqui, antes de baixar o Tone.js, para o
+// gesto ainda valer quando ele chegar.
+export function start(muted: boolean) {
+  wantAudible = !muted
+  if (room || starting) return
+  starting = true
+  const context = new AudioContext({ latencyHint: 'playback' })
+  void context.resume()
+  build(context).catch(() => {
+    starting = false
+  })
+}
+
+export function setMuted(muted: boolean) {
+  wantAudible = !muted
+  applyGain()
+}
+
+// Aba escondida: o som some; ao voltar, sobe devagar.
+export function setHidden(isHidden: boolean) {
+  hidden = isHidden
+  applyGain()
+}
+
+// "O rádio desafina" quando a criatura está na foto em revelação.
+export function setRadioWarp(amount: number, seconds = 6) {
+  if (!room) return
+  const { bpm, detune } = radioWarp(amount)
+  room.tone.getTransport().bpm.rampTo(bpm, seconds)
+  room.radio.set({ detune })
+}
+
+// O zumbido some por um instante (a lupa sobre a criatura, mais tarde).
+export function hushLamp(seconds = 1) {
+  if (!room) return
+  const gain = room.hum.gain
+  const now = room.tone.now()
+  gain.cancelScheduledValues(now)
+  gain.setValueAtTime(0, now + 0.02)
+  gain.setValueAtTime(0, now + seconds)
+  gain.linearRampToValueAtTime(1, now + seconds + 1.2)
+}
+
+// O ouvido acompanha a câmera da cena, para o som 3D virar com ela.
+export function setListener(position: Point, forward: Point, up: Point) {
+  if (!room) return
+  const l = room.tone.getListener()
+  l.positionX.value = position[0]
+  l.positionY.value = position[1]
+  l.positionZ.value = position[2]
+  l.forwardX.value = forward[0]
+  l.forwardY.value = forward[1]
+  l.forwardZ.value = forward[2]
+  l.upX.value = up[0]
+  l.upY.value = up[1]
+  l.upZ.value = up[2]
+}

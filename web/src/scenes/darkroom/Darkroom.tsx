@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Noise, Vignette, Bloom } from '@react-three/postprocessing'
 import { Vector3, type PointLight } from 'three'
 import { DevelopTray, SAFELIGHT } from './DevelopTray'
+import { ListenerSync } from './ListenerSync'
 
 type Props = { reducedMotion: boolean; active: boolean }
 
@@ -124,6 +125,7 @@ export function Darkroom({ reducedMotion, active }: Props) {
       <Bench />
       <DevelopTray reducedMotion={reducedMotion} active={active} />
       <Camera reducedMotion={reducedMotion} active={active} />
+      <ListenerSync />
       <EffectComposer>
         <Bloom intensity={0.9} luminanceThreshold={0.6} mipmapBlur />
         <Noise opacity={0.12} />
