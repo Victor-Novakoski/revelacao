@@ -88,6 +88,15 @@ Clássicos de terror em domínio público. Cada um ecoa o momento da história:
 | 7 | "O Coração Delator", Edgar Allan Poe | A culpa que não deixa esquecer, depois do fogo |
 | 9 | "O Espelho", Machado de Assis | Um homem que perde a própria imagem |
 
+## Fidelidade de época (1957)
+
+- **Filme no escuro total, foto na luz vermelha.** O negativo é revelado num tanque, no escuro completo: a luz vermelha velaria o filme. A luz vermelha serve para a segunda parte, a cópia em papel, que é o que o jogador revela na bandeja. O jogo tem as duas: um momento curto no breu, só com som e tato, para pôr o filme no tanque, e depois a ampliação e a bandeja sob a luz vermelha.
+- **Três bandejas:** revelador, interruptor (ácido acético) e fixador, e depois a lavagem. É a bancada da sala.
+- **A revelação do papel** leva de 1 a 2 minutos com a bandeja balançando. Tirar cedo deixa a foto pálida; o tempo de luz no ampliador define o quanto ela escurece. A figura surgir por último é licença poética em cima disso.
+- **Câmeras e filme:** 35 mm e médio formato 120 (12 fotos 6x6, a preferida de fotógrafo de casamento como o Nakamura). Preto e branco era o normal para amador.
+- **Queimar o rolo:** filme de acetato (o padrão depois de 1951) queima devagar e com cheiro de vinagre; precisa de álcool e fósforo. Um rolo antigo de nitrato, que poderia ser o da câmera do Vilela, queima rápido e forte.
+- **Ambiente:** telefone de disco, era de ouro do rádio (a TV chegou a São Paulo em 1950, em poucas casas), lojas "Foto ..." que revelam e ampliam, normalistas, a comunidade japonesa na Liberdade.
+
 ## Estilo das fotos
 
 Realistas, em preto e branco, renderizadas no Blender. O grão e o desfoque da revelação escondem a cara de computação gráfica. O último rolo mostra a sua câmara escura com os mesmos modelos da sala do jogo, então o jogador reconhece a bancada onde está.
