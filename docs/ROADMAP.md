@@ -39,4 +39,6 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [x] O tanque no escuro total (dias 1, 2 e 6)
 - [x] Bundle dividido: a sala 3D carrega depois do título
 - [x] Desempenho no celular, movimento reduzido, "Ver as fotos sem revelar"
-- [ ] README com GIF e entrada no portfólio
+- [x] README com GIF e capturas
+- [ ] Entrada no portfólio (depois do link da Vercel)
+- [ ] Fotos mais reais: época em domínio público e fotos próprias, envelhecidas pelo `revela` (esperando o Victor)
