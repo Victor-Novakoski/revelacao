@@ -26,8 +26,9 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [x] Som ambiente: lâmpada, gotas, rádio (Tone.js), botão de mudo, legendas
 
 ## Etapa 5 · O primeiro dia
-- [ ] Clientes fixos, mural com lupa, anotações
-- [ ] Um dia jogável do começo ao fim
+- [x] Clientes fixos, mural com lupa, anotações
+- [x] Um dia jogável do começo ao fim
+- [ ] Critério: o dia 1 ensina os três gestos sem precisar ler manual (validar jogando)
 
 ## Etapa 6 · A história completa
 - [ ] Todos os dias do roteiro (docs/STORY.md)
