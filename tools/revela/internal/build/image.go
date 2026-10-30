@@ -11,10 +11,10 @@ import (
 	"github.com/gen2brain/webp"
 )
 
-// decodeGray abre uma camada e converte para tons de cinza. A transparência
+// DecodeGray abre uma camada e converte para tons de cinza. A transparência
 // vira preto: no shader, preto é "nada aqui", então uma camada com fundo
 // transparente e uma com fundo preto dão no mesmo.
-func decodeGray(path string) (*image.Gray, error) {
+func DecodeGray(path string) (*image.Gray, error) {
 	f, err := os.Open(path)
 	if err != nil {
 		return nil, err

@@ -36,6 +36,9 @@ type Photo struct {
 	ID     string   `json:"id"`
 	Note   string   `json:"note,omitempty"`
 	Layers []string `json:"layers"`
+	// Age envelhece a cena (a primeira camada) no build: para fotos de hoje
+	// ou de arquivo que precisam parecer uma cópia de balcão de 1957.
+	Age bool `json:"age,omitempty"`
 }
 
 // Problem é algo errado num rolo, com o arquivo onde aconteceu.

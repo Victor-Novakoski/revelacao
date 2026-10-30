@@ -218,3 +218,31 @@ func TestEncodeWebPHasNoAlpha(t *testing.T) {
 		t.Fatal("a foto não tem transparência, o WebP não devia levar canal alfa")
 	}
 }
+
+func TestAgeOnlyTouchesTheScene(t *testing.T) {
+	root := t.TempDir()
+	dir := filepath.Join(root, "praca")
+	writePNG(t, filepath.Join(dir, "scene.png"), 64, 48, color.Gray{Y: 128})
+	writePNG(t, filepath.Join(dir, "figure.png"), 64, 48, color.Gray{Y: 128})
+	write(t, filepath.Join(dir, "roll.json"), []byte(`{"id":"praca","photos":[{"id":"p1","age":true,"layers":["scene.png","figure.png"]}]}`))
+	run := func() (scene, figure []byte) {
+		out := t.TempDir()
+		if _, err := Run(root, out, Options{Quality: 90}); err != nil {
+			t.Fatal(err)
+		}
+		s, _ := os.ReadFile(filepath.Join(out, "praca/p1/scene.webp"))
+		f, _ := os.ReadFile(filepath.Join(out, "praca/p1/figure.webp"))
+		return s, f
+	}
+	s1, f1 := run()
+	s2, _ := run()
+	if !bytes.Equal(s1, s2) {
+		t.Fatal("a mesma foto envelheceu diferente em dois builds")
+	}
+	if bytes.Equal(s1, f1) {
+		t.Fatal("a cena devia ter envelhecido e a figura não")
+	}
+	if Seed("praca", "p1") == Seed("praca", "p2") {
+		t.Fatal("fotos diferentes com a mesma semente")
+	}
+}
