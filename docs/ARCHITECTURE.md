@@ -31,6 +31,7 @@ Blender (camadas de cada foto)
 
 - `revela check <dir>`: confere cada rolo: ids (letras minúsculas, números e hífen, porque viram pasta e URL), camadas que existem e ficam dentro da pasta do rolo, nomes de camada sem repetir.
 - `revela build [-j N] [-q Q] <dir> <out>`: converte cada camada para tons de cinza (transparência vira preto), gera o negativo da foto, comprime tudo em WebP e escreve `rolos.json` com tamanhos e hashes. Cada foto é um trabalho de um pool de goroutines (`internal/pool`), uma por CPU por padrão; a ordem do `rolos.json` não depende de quem termina antes.
+- `revela age [-seed N] <foto> <saída.png>`: envelhece uma foto de hoje ou de arquivo para parecer uma cópia de balcão de 1957 (lente mole, halo nas luzes, preto levantado, vinheta, grão, poeira e riscos), para conferir o resultado. No `build`, `"age": true` na foto do `roll.json` aplica o mesmo filtro só na cena (a primeira camada); a figura entra limpa. A semente sai do id do rolo e da foto, então o build continua reproduzível.
 - Roda na CI (`check` e `build`): um PR com foto quebrada não passa.
 
 ### Entrada: `art/rolls/<rolo>/roll.json`

@@ -4,10 +4,13 @@ package main
 import (
 	"flag"
 	"fmt"
+	"image/png"
 	"io"
 	"os"
+	"strings"
 	"time"
 
+	"github.com/victor-novakoski/revelacao/tools/revela/internal/age"
 	"github.com/victor-novakoski/revelacao/tools/revela/internal/build"
 	"github.com/victor-novakoski/revelacao/tools/revela/internal/roll"
 )
@@ -19,6 +22,9 @@ Uso:
   revela build [-j N] [-q Q] <entrada> <saída>
                                   gera as camadas em cinza, o negativo
                                   de cada foto em WebP e o rolos.json
+  revela age [-seed N] <foto> <saída.png>
+                                  envelhece uma foto, para conferir antes
+                                  de marcar "age": true no roll.json
 
 Opções do build:
   -j N   fotos processadas ao mesmo tempo (padrão: uma por CPU)
@@ -43,6 +49,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return check(args[1], stdout, stderr)
 	case "build":
 		return runBuild(args[1:], stdout, stderr)
+	case "age":
+		return runAge(args[1:], stdout, stderr)
 	default:
 		fmt.Fprint(stderr, usage)
 		return 2
@@ -97,5 +105,36 @@ func runBuild(args []string, stdout, stderr io.Writer) int {
 		}
 	}
 	fmt.Fprintf(stdout, "%d rolo(s), %d foto(s), %.1f KB em %s\n", len(m.Rolls), photos, float64(total)/1024, time.Since(start).Round(time.Millisecond))
+	return 0
+}
+
+func runAge(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("age", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	seed := fs.Uint64("seed", 1, "")
+	if err := fs.Parse(args); err != nil || fs.NArg() != 2 || !strings.HasSuffix(strings.ToLower(fs.Arg(1)), ".png") {
+		fmt.Fprint(stderr, usage)
+		return 2
+	}
+	gray, err := build.DecodeGray(fs.Arg(0))
+	if err != nil {
+		fmt.Fprintln(stderr, err)
+		return 1
+	}
+	f, err := os.Create(fs.Arg(1))
+	if err != nil {
+		fmt.Fprintln(stderr, err)
+		return 1
+	}
+	if err := png.Encode(f, age.Age(gray, *seed, age.Default)); err != nil {
+		f.Close()
+		fmt.Fprintln(stderr, err)
+		return 1
+	}
+	if err := f.Close(); err != nil {
+		fmt.Fprintln(stderr, err)
+		return 1
+	}
+	fmt.Fprintf(stdout, "%s envelhecida em %s\n", fs.Arg(0), fs.Arg(1))
 	return 0
 }

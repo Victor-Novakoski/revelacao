@@ -87,3 +87,37 @@ func TestBuildBadArgs(t *testing.T) {
 		}
 	}
 }
+
+func TestAgeWritesPNG(t *testing.T) {
+	dir := t.TempDir()
+	var img bytes.Buffer
+	if err := png.Encode(&img, image.NewGray(image.Rect(0, 0, 40, 30))); err != nil {
+		t.Fatal(err)
+	}
+	in := filepath.Join(dir, "foto.png")
+	if err := os.WriteFile(in, img.Bytes(), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	out := filepath.Join(dir, "velha.png")
+	var stdout, errOut bytes.Buffer
+	if code := run([]string{"age", "-seed", "3", in, out}, &stdout, &errOut); code != 0 {
+		t.Fatalf("esperava código 0, veio %d: %s", code, errOut.String())
+	}
+	f, err := os.Open(out)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer f.Close()
+	got, err := png.Decode(f)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got.Bounds().Dx() != 40 || got.Bounds().Dy() != 30 {
+		t.Fatalf("tamanho mudou: %v", got.Bounds())
+	}
+	for _, args := range [][]string{{"age", in}, {"age", in, filepath.Join(dir, "x.jpg")}} {
+		if code := run(args, &stdout, &errOut); code != 2 {
+			t.Errorf("%v: esperava código 2, veio %d", args, code)
+		}
+	}
+}

@@ -8,10 +8,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"hash/fnv"
 	"os"
 	"path"
 	"path/filepath"
 
+	"github.com/victor-novakoski/revelacao/tools/revela/internal/age"
 	"github.com/victor-novakoski/revelacao/tools/revela/internal/pool"
 	"github.com/victor-novakoski/revelacao/tools/revela/internal/roll"
 )
@@ -138,11 +140,14 @@ func developPhoto(j job, out string, quality int) (Photo, error) {
 	var scene []byte
 	for i, layer := range j.photo.Layers {
 		src := filepath.Join(j.dir, layer)
-		gray, err := decodeGray(src)
+		gray, err := DecodeGray(src)
 		if err != nil {
 			return p, err
 		}
 		w, h := gray.Rect.Dx(), gray.Rect.Dy()
+		if i == 0 && j.photo.Age {
+			gray = age.Age(gray, Seed(j.roll.ID, p.ID), age.Default)
+		}
 		if i == 0 {
 			p.Width, p.Height = w, h
 		} else if w != p.Width || h != p.Height {
@@ -172,6 +177,14 @@ func developPhoto(j job, out string, quality int) (Photo, error) {
 	}
 	p.Negative = f
 	return p, nil
+}
+
+// Seed é a semente do envelhecimento de uma foto: sai do id, então a mesma
+// foto envelhece igual em qualquer máquina.
+func Seed(rollID, photoID string) uint64 {
+	h := fnv.New64a()
+	h.Write([]byte(rollID + "/" + photoID))
+	return h.Sum64()
 }
 
 func writeFile(out, rollID, photoID, name string, data []byte) (File, error) {
