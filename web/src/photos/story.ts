@@ -1,5 +1,12 @@
+import { creature } from './draw'
 import type { Scene } from './day1'
+import { PLACEMENTS } from './figures'
+import { X, Y } from './places'
+import { WEEK1_SCENES } from './week1'
 
-// As fotos dos dias 2 a 10. Por enquanto vazio: cada dia entra no seu commit.
-export const STORY_SCENES: Record<string, Scene> = {}
-export const STORY_FIGURES: Record<string, Scene> = {}
+// As fotos dos dias 2 a 10 e a figura em cada uma, saída de figures.ts.
+export const STORY_SCENES: Record<string, Scene> = { ...WEEK1_SCENES }
+
+export const STORY_FIGURES: Record<string, Scene> = Object.fromEntries(
+  Object.entries(PLACEMENTS).map(([key, p]) => [key, ((ctx) => creature(ctx, X(p.x), Y(p.foot), Y(p.h))) as Scene]),
+)
