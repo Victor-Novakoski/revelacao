@@ -1,5 +1,6 @@
-import { crowd, ellipse, falloff, gradient, gray, person, poly, rect, seeded, tree, type Ctx } from './draw'
+import { ellipse, falloff, gradient, gray, person, poly, rect, seeded, tree, type Ctx } from './draw'
 import type { Scene } from './day1'
+import { blurredSign, realScene } from './real'
 import {
   X,
   Y,
@@ -22,86 +23,20 @@ import {
 // As fotos dos dias 2 a 5. A figura não está aqui: ela fica na camada
 // própria (photos/figures.ts). Aqui só ficam os vãos onde ela cabe.
 
-// Dia 2 e 6 · o rolo da câmera do H. Vilela, um domingo na praça. Lente
-// rachada: tudo um pouco mole e com queda forte nos cantos.
+// Dia 2 e 6 · o rolo da câmera do H. Vilela: a viagem de Anápolis a
+// Campinas. Fotos de verdade, ver photos/real.ts.
 
-export const coreto: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.52, [0.74])
-  // O coreto: telhado de oito águas, colunas finas e o tablado.
-  poly(ctx, [[X(0.22), Y(0.3)], [X(0.36), Y(0.18)], [X(0.5), Y(0.3)]], 0.2)
-  for (let i = 0; i < 5; i++) rect(ctx, X(0.24 + i * 0.06), Y(0.3), 3, Y(0.18), 0.3)
-  rect(ctx, X(0.2), Y(0.48), X(0.32), Y(0.06), 0.5)
-  // A banda, pequenininha lá em cima.
-  for (let i = 0; i < 4; i++) person(ctx, { x: X(0.27 + i * 0.06), foot: Y(0.48), h: Y(0.1), tone: 0.15, hair: 0.1 })
-  crowd(ctx, 57, 14, X(0.18), X(0.84), Y(0.62), Y(0.2))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.55)
-}
+export const coreto = realScene('anapolis-coreto')
+export const pipoqueiro = realScene('campinas-jardim')
+export const lago = realScene('campinas-bento-quirino')
+export const familia = realScene('campinas-rosario')
+export const perto = realScene('campinas-pompeo')
 
-export const pipoqueiro: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.5, [0.3])
-  // O banco de praça lá atrás, vazio.
-  rect(ctx, X(0.22), Y(0.53), X(0.16), Y(0.02), 0.25)
-  rect(ctx, X(0.22), Y(0.5), X(0.16), Y(0.015), 0.25)
-  // O carrinho de pipoca: caixa de vidro, toldo e rodas.
-  rect(ctx, X(0.48), Y(0.42), X(0.22), Y(0.2), 0.85)
-  rect(ctx, X(0.5), Y(0.44), X(0.18), Y(0.1), 0.95)
-  poly(ctx, [[X(0.46), Y(0.42)], [X(0.59), Y(0.33)], [X(0.72), Y(0.42)]], 0.3)
-  ellipse(ctx, X(0.52), Y(0.65), X(0.03), Y(0.04), 0.15)
-  ellipse(ctx, X(0.66), Y(0.65), X(0.03), Y(0.04), 0.15)
-  person(ctx, { x: X(0.76), foot: Y(0.8), h: Y(0.44), tone: 0.9, hair: 0.2 })
-  person(ctx, boy(X(0.44), Y(0.82), Y(0.26), 0.3))
-  person(ctx, girl(X(0.38), Y(0.84), Y(0.24), 0.7))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.55)
-}
-
-export const lago: Scene = (ctx, fr) => {
-  gradient(ctx, fr.x, fr.y, fr.w, Y(0.47) - fr.y, 0.92, 0.84)
-  for (let i = 0; i < 10; i++) {
-    const tx = 0.16 + i * 0.075
-    if (Math.abs(tx - 0.62) < 0.05) continue
-    tree(ctx, X(tx), Y(0.47), Y(0.18), 0.34)
-  }
-  // A água: clara, com o reflexo das árvores, e nada mais.
-  gradient(ctx, fr.x, Y(0.47), fr.w, Y(0.3), 0.8, 0.66)
-  for (let i = 0; i < 10; i++) {
-    const tx = 0.16 + i * 0.075
-    if (Math.abs(tx - 0.62) < 0.05) continue
-    ellipse(ctx, X(tx), Y(0.55), X(0.04), Y(0.06), 0.6)
-  }
-  for (let i = 0; i < 6; i++) rect(ctx, fr.x, Y(0.5 + i * 0.045), fr.w, 1, 0.88)
-  // Um barquinho a remo e a margem de cá.
-  poly(ctx, [[X(0.3), Y(0.62)], [X(0.42), Y(0.62)], [X(0.4), Y(0.65)], [X(0.32), Y(0.65)]], 0.2)
-  person(ctx, { x: X(0.36), foot: Y(0.62), h: Y(0.1), tone: 0.3, hair: 0.1 })
-  gradient(ctx, fr.x, Y(0.77), fr.w, Y(0.23), 0.5, 0.4)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.55)
-}
-
-export const familia: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.46, [0.69])
-  // O chafariz atrás da família.
-  ellipse(ctx, X(0.4), Y(0.6), X(0.16), Y(0.04), 0.75)
-  rect(ctx, X(0.39), Y(0.44), X(0.02), Y(0.16), 0.7)
-  ellipse(ctx, X(0.4), Y(0.44), X(0.05), Y(0.015), 0.8)
-  // A mulher do H. Vilela e as duas meninas, de domingo.
-  person(ctx, lady(X(0.4), Y(0.92), Y(0.62)))
-  person(ctx, girl(X(0.3), Y(0.93), Y(0.36)))
-  person(ctx, girl(X(0.5), Y(0.94), Y(0.32), 0.7))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.55)
-}
-
-export const perto: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.48)
-  // O caminho vazio, em perspectiva.
-  poly(ctx, [[X(0.46), Y(0.48)], [X(0.54), Y(0.48)], [X(0.8), fr.y + fr.h], [X(0.2), fr.y + fr.h]], 0.78)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.65)
-}
-
-// Dia 6 · a última foto do rolo que voltou: tão perto que atrás dela só
+// Dia 6 · a última foto do rolo que voltou: tão perto que atrás dele só
 // sobra, desfocada, uma vitrine com letras.
 export const pertoVolta: Scene = (ctx, fr) => {
   perto(ctx, fr)
-  rect(ctx, X(0.18), Y(0.22), X(0.64), Y(0.14), 0.3)
-  sign(ctx, 'FOTO ÍRIS', X(0.5), Y(0.29), Y(0.08), 0.85)
+  blurredSign(ctx, 'FOTO ÍRIS', 0.79, 0.66, Y(0.04))
 }
 
 // Dia 3 · Dona Cida, "Piquenique no parque" (35 mm).

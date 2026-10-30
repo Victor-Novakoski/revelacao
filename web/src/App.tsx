@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { TitleCard } from './ui/TitleCard'
 import { DevelopHud } from './ui/DevelopHud'
 import { TrayControls } from './ui/TrayControls'
@@ -19,6 +19,7 @@ import { useSettings } from './game/settings'
 import { useReducedMotion } from './game/motion'
 import { start } from './audio/engine'
 import { useRoomAudio } from './audio/useRoomAudio'
+import { loadRealPhotos } from './photos/real'
 
 // A sala 3D (Three.js) vem num pedaço separado: o título aparece antes,
 // enquanto ela baixa.
@@ -35,12 +36,18 @@ export default function App() {
   const reducedMotion = useReducedMotion()
   // No fim do dia, o jogador pode rever o mural sem andar o roteiro.
   const [reviewing, setReviewing] = useState(false)
+  // As fotos de verdade baixam junto com o título. A sala (que pendura as
+  // cópias no varal) e a loja só abrem com elas prontas.
+  const [photos, setPhotos] = useState(false)
+  useEffect(() => {
+    loadRealPhotos().then(() => setPhotos(true))
+  }, [])
   useRoomAudio()
 
   // O som da sala começa no clique de abrir a loja, nunca antes.
   const withSound = (go: () => void) => () => {
     start(useSettings.getState().muted)
-    go()
+    loadRealPhotos().then(go)
   }
 
   const step = currentStep(script(day), cursor)
@@ -53,7 +60,7 @@ export default function App() {
           resume={resume}
           onEnter={withSound(game.open)}
           onRestart={withSound(game.restart)}
-          onGallery={game.showGallery}
+          onGallery={() => loadRealPhotos().then(game.showGallery)}
         />
       )
     if (screen === 'gallery') return <Wall gallery onDone={game.leave} doneLabel="Voltar" />
@@ -102,9 +109,7 @@ export default function App() {
     <main className="app">
       <div className={`stage ${dim ? 'dim' : ''} ${view === 'tank' ? 'dark' : ''}`}>
         <SceneBoundary>
-          <Suspense fallback={null}>
-            <Darkroom reducedMotion={reducedMotion} view={view} />
-          </Suspense>
+          <Suspense fallback={null}>{photos && <Darkroom reducedMotion={reducedMotion} view={view} />}</Suspense>
         </SceneBoundary>
       </div>
       {overlay()}

@@ -15,11 +15,15 @@ const FIGURES: Record<string, Scene> = { ...STORY_FIGURES }
 export const hasScene = (key: string) => key in SCENES
 export const hasFigure = (key: string) => key in FIGURES
 
+// figureGray é a figura desenhada (canal vermelho); figureMix e figureTone,
+// a figura de foto real (verde e azul, ver photos/real.ts).
 export type Layers = {
   scene: HTMLCanvasElement
   figure: HTMLCanvasElement
   sceneGray: Float32Array
   figureGray: Float32Array
+  figureMix: Float32Array
+  figureTone: Float32Array
 }
 
 const layersCache = new Map<string, Layers>()
@@ -31,10 +35,10 @@ function canvas() {
   return c
 }
 
-function grayOf(c: HTMLCanvasElement) {
+function channel(c: HTMLCanvasElement, k: number) {
   const data = c.getContext('2d')!.getImageData(0, 0, c.width, c.height).data
   const out = new Float32Array(c.width * c.height)
-  for (let i = 0; i < out.length; i++) out[i] = data[i * 4] / 255
+  for (let i = 0; i < out.length; i++) out[i] = data[i * 4 + k] / 255
   return out
 }
 
@@ -68,7 +72,14 @@ export function photoLayers(key: string, film: Film): Layers {
   FIGURES[key]?.(fc, frame)
   fc.restore()
 
-  const layers = { scene, figure, sceneGray: grayOf(scene), figureGray: grayOf(figure) }
+  const layers = {
+    scene,
+    figure,
+    sceneGray: channel(scene, 0),
+    figureGray: channel(figure, 0),
+    figureMix: channel(figure, 1),
+    figureTone: channel(figure, 2),
+  }
   layersCache.set(key, layers)
   return layers
 }
@@ -92,17 +103,20 @@ export function printCanvas(key: string, film: Film, look: PrintLook, withFigure
   const id = `${key}|${look.developed.toFixed(3)}|${look.exposure.toFixed(3)}|${look.blur.toFixed(3)}|${withFigure}`
   const cached = printCache.get(id)
   if (cached) return cached
-  const { sceneGray, figureGray } = photoLayers(key, film)
+  const { sceneGray, figureGray, figureMix, figureTone } = photoLayers(key, film)
   const { width: w, height: h } = PRINT
   const radius = blurRadius(look.blur, w)
   const scene = boxBlur(sceneGray, w, h, radius)
   const figure = withFigure ? boxBlur(figureGray, w, h, radius) : null
+  const mix = withFigure ? boxBlur(figureMix, w, h, radius) : null
+  const tone = withFigure ? boxBlur(figureTone, w, h, radius) : null
 
   const out = canvas()
   const ctx = out.getContext('2d')!
   const img = ctx.createImageData(w, h)
   for (let i = 0; i < w * h; i++) {
-    const d = printDensity(scene[i], figure ? figure[i] : 0, look.developed, look.exposure)
+    const m = mix ? mix[i] : 0
+    const d = printDensity(scene[i], figure ? figure[i] : 0, look.developed, look.exposure, m, m > 0 ? tone![i] / m : 0)
     for (let c = 0; c < 3; c++) img.data[i * 4 + c] = PAPER[c] + (INK[c] - PAPER[c]) * d
     img.data[i * 4 + 3] = 255
   }

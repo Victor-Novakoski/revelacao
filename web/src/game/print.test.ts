@@ -24,6 +24,15 @@ describe('a cópia pronta', () => {
     expect(late).toBeGreaterThan(0.4)
   })
 
+  it('a figura de foto real também só aparece no fim, e pode clarear a cena', () => {
+    // Rosto claro (tom 0,9) na frente de um arbusto escuro (cena 0,2).
+    const bush = printDensity(0.2, 0, 1.3, 1)
+    expect(printDensity(0.2, 0, 0.7, 1, 1, 0.9)).toBeCloseTo(printDensity(0.2, 0, 0.7, 1))
+    expect(printDensity(0.2, 0, 1.3, 1, 1, 0.9)).toBeLessThan(bush - 0.3)
+    // Casaco escuro na frente do céu claro.
+    expect(printDensity(0.9, 0, 1.3, 1, 1, 0.1)).toBeGreaterThan(printDensity(0.9, 0, 1.3, 1) + 0.4)
+  })
+
   it('o desfoque espalha um ponto sem mudar a soma', () => {
     const src = new Float32Array(25)
     src[12] = 1

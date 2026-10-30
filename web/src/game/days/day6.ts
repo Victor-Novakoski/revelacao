@@ -12,23 +12,23 @@ const volta: Roll = {
   id: 'vilela-volta',
   customer: 'narrator',
   film: '120',
-  title: 'Domingo na praça, de novo',
+  title: 'De Anápolis a Campinas, de novo',
   photos: [
     {
       ...photo('coreto'),
-      details: [seen('vilela-volta', 'coreto', 'Agora ele não está no fundo. Está no meio da praça, olhando para a lente.')],
+      details: [seen('vilela-volta', 'coreto', 'Agora ele não está ao lado do arbusto. Está na frente da câmera, olhando para a lente.')],
     },
     {
       ...photo('pipoqueiro'),
-      details: [seen('vilela-volta', 'pipoqueiro', 'Ao lado do carrinho de pipoca. As crianças passam por ele sem olhar.')],
+      details: [seen('vilela-volta', 'pipoqueiro', 'Entre as palmeiras, grande demais para a distância. As pessoas passam por ele sem olhar.')],
     },
     {
       ...photo('lago'),
-      details: [seen('vilela-volta', 'lago', 'Na beira do lago, deste lado agora. Ainda sem reflexo.')],
+      details: [seen('vilela-volta', 'lago', 'Na frente do carro, deste lado da rua agora. Ainda sem sombra.')],
     },
     {
       ...photo('perto'),
-      verso: 'Domingo na praça. A letra é a sua.',
+      verso: 'De Anápolis a Campinas. A letra é a sua.',
       details: [seen('vilela-volta', 'perto', 'Tão perto que só cabe o peito. Atrás dele, desfocada, uma vitrine: FOTO ÍRIS.')],
     },
   ],
@@ -44,7 +44,7 @@ export const DAY6: DayScript = {
         narrate('Sábado, 19 de outubro. Seu Augusto pendura a plaquinha na porta: "Fechado para balanço".'),
         say('augusto', 'Hoje eu não revelo nada.'),
         narrate('Embaixo da porta, um envelope pardo. Sem selo, sem remetente. Dentro, um rolo de 120.'),
-        narrate('Ele reconhece o cheiro de vinagre antes de ler a etiqueta. A etiqueta diz "Domingo na praça". A letra é a dele.'),
+        narrate('Ele reconhece o cheiro de vinagre antes de ler a etiqueta. A etiqueta diz "De Anápolis a Campinas". A letra é a dele.'),
         say('augusto', 'O rolo que o inspetor levou.'),
       ],
     },
