@@ -4,6 +4,9 @@ Registro das escolhas e do porquê. A mais nova em cima.
 
 | Data | Decisão | Por quê |
 | --- | --- | --- |
+| 30/10/2026 | Etapa 5: as fotos do dia 1 são desenhadas em código (canvas), como a foto de teste, até a arte do Blender. O roteiro é um arquivo TypeScript por dia, sem JSON nem backend | O dia precisava ser jogável agora; trocar o desenho pela camada do Blender não muda o roteiro nem os detalhes da lupa, que ficam em fração da foto. Roteiro em TS é checado pelo compilador e pelos testes |
+| 30/10/2026 | Etapa 5: o tempo de luz do ampliador multiplica o tom da cópia, mas a figura depende só do tempo no revelador | É como o papel funciona (a luz define o quanto escurece) e deixa uma escolha para o jogador: menos luz e mais revelador mostra mais detalhe sem escurecer |
+| 30/10/2026 | Etapa 5: a fala do cliente na entrega muda com as cópias (no ponto, pálidas, escuras, borradas ou misturadas) | O jogador sente que o trabalho importa sem placar nem nota |
 | 30/10/2026 | Etapa 4: todo o som da sala é gerado pelo Tone.js, sem arquivo de áudio. A valsa do rádio é o começo da Gymnopédie nº 1 (Satie). O Tone.js só carrega no clique de entrar | Zero licença para conferir, nada a baixar antes do jogo abrir, e o rádio pode desafinar de verdade (tempo e afinação são parâmetros). A Gymnopédie, em 3/4, faz o papel da valsa até ter uma de Nazareth transcrita |
 | 30/10/2026 | WebP com `gen2brain/webp` (a libwebp traduzida para Go puro; usa a do sistema se existir), com perda e qualidade 82 | A biblioteca padrão do Go não escreve WebP. Esta não precisa de cgo nem de libwebp instalada, então roda igual no PC e na CI. Com perda porque WebP sem perda de foto com grão fica pesado no celular |
 | 30/10/2026 | O negativo sai só da primeira camada (a cena) | A criatura só existe nas fotografias: no filme ela não está, aparece no papel |

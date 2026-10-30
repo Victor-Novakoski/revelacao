@@ -20,3 +20,5 @@ Cada arquivo de arte ou som que entrar no repo ganha uma linha aqui: caminho, or
 | Arquivo | Origem | Licença |
 | --- | --- | --- |
 | `web/src/scenes/darkroom/testPhoto.ts` (foto de teste da praça, desenhada em código) | Própria, feita para o projeto | Própria |
+| `web/src/photos/day1.ts` (as oito fotos do dia 1, desenhadas em código) | Própria, feita para o projeto | Própria |
+| Sino da porta (`web/src/audio/engine.ts`, gerado no Tone.js) | Próprio | Próprio |

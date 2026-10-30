@@ -8,9 +8,10 @@ import { Bench } from './Bench'
 import { Enlarger } from './Enlarger'
 import { Clothesline } from './Clothesline'
 import { Walls } from './Walls'
-import { ENLARGER, LAMP } from './layout'
+import { ENLARGER, LAMP, LINE_Y, LINE_Z } from './layout'
+import type { View } from '../../game/store'
 
-type Props = { reducedMotion: boolean; active: boolean }
+type Props = { reducedMotion: boolean; view: View }
 
 const RED = '#ff2a1a'
 
@@ -41,14 +42,19 @@ function SafeLight({ reducedMotion }: { reducedMotion: boolean }) {
 
 const TRAY_CENTER = new Vector3(0, 0.96, 0.05)
 const ROOM_LOOK = new Vector3(0, 1.3, -0.2)
+const EASEL = new Vector3(ENLARGER[0], ENLARGER[1] + 0.3, ENLARGER[2])
+const EASEL_LOW = EASEL.clone().setY(EASEL.y - 0.45)
+const LINE_LOOK = new Vector3(0, LINE_Y - 0.15, LINE_Z)
 const deg = (d: number) => (d * Math.PI) / 180
 
 const TRAY_FOV = 45
 
 // Na loja, a câmera olha a bancada inteira; em pé (celular), abre a lente
 // para caber o ampliador e a pia. Na revelação, desce sobre a bandeja,
-// perto o bastante para a foto encher a tela, em pé ou deitada.
-function Camera({ reducedMotion, active }: Props) {
+// perto o bastante para a foto encher a tela, em pé ou deitada. No
+// ampliador e no varal, chega perto de cada um.
+function Camera({ reducedMotion, view }: Props) {
+  const active = view === 'tray'
   const look = useRef(ROOM_LOOK.clone())
   const goal = useRef(new Vector3())
   useFrame(({ camera, clock, size }, delta) => {
@@ -63,12 +69,22 @@ function Camera({ reducedMotion, active }: Props) {
       const pitch = aspect < 1 ? deg(72) : deg(58)
       goal.current.set(0, Math.sin(pitch), Math.cos(pitch)).multiplyScalar(distance).add(TRAY_CENTER)
       look.current.lerp(TRAY_CENTER, ease)
+    } else if (view === 'enlarger') {
+      // Deitado, o painel fica à direita; em pé, embaixo.
+      if (aspect < 1) goal.current.set(EASEL.x + 0.3, EASEL.y + 0.9, EASEL.z + 1.5)
+      else goal.current.set(EASEL.x + 1.0, EASEL.y + 0.55, EASEL.z + 1.6)
+      // Em pé, o painel cobre a parte de baixo: a câmera mira abaixo do
+      // marginador para ele subir na tela.
+      look.current.lerp(aspect < 1 ? EASEL_LOW : EASEL, ease)
+    } else if (view === 'line') {
+      goal.current.set(0, 1.5 + breathe, aspect < 1 ? 1.9 : 1.3)
+      look.current.lerp(LINE_LOOK, ease)
     } else {
       goal.current.set(0, 1.75 + breathe, aspect < 1 ? 4 : 3.6)
       look.current.lerp(ROOM_LOOK, ease)
     }
     const lens = camera as PerspectiveCamera
-    const fov = active ? TRAY_FOV : aspect < 1 ? 64 : 48
+    const fov = active ? TRAY_FOV : view === 'enlarger' ? 50 : aspect < 1 ? 64 : 48
     if (Math.abs(lens.fov - fov) > 0.01) {
       lens.fov += (fov - lens.fov) * ease
       lens.updateProjectionMatrix()
@@ -97,7 +113,8 @@ function EnlargerLight() {
   )
 }
 
-export function Darkroom({ reducedMotion, active }: Props) {
+export function Darkroom({ reducedMotion, view }: Props) {
+  const active = view === 'tray'
   return (
     <Canvas
       shadows
@@ -116,7 +133,7 @@ export function Darkroom({ reducedMotion, active }: Props) {
       <Enlarger />
       <Clothesline />
       <DevelopTray reducedMotion={reducedMotion} active={active} />
-      <Camera reducedMotion={reducedMotion} active={active} />
+      <Camera reducedMotion={reducedMotion} view={view} />
       <ListenerSync />
       <EffectComposer>
         <Bloom intensity={0.9} luminanceThreshold={0.6} mipmapBlur />

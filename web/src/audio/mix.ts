@@ -8,6 +8,7 @@ export const LEVELS = {
   radio: -16,
   statics: -40,
   crackle: -34,
+  bell: -26,
 }
 
 // Ao entrar, o som sobe devagar. Ao tirar o mudo, também.

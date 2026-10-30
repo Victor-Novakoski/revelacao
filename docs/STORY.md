@@ -101,7 +101,32 @@ Clássicos de terror em domínio público. Cada um ecoa o momento da história:
 
 Realistas, em preto e branco, renderizadas no Blender. O grão e o desfoque da revelação escondem a cara de computação gráfica. O último rolo mostra a sua câmara escura com os mesmos modelos da sala do jogo, então o jogador reconhece a bancada onde está.
 
+## Os rolos
+
+O roteiro e os textos de cada dia ficam em `web/src/game/days/`. Até as fotos do Blender chegarem, cada cena é desenhada em código (`web/src/photos/`), com as mesmas posições, para os detalhes da lupa não mudarem de lugar.
+
+### Dia 1 · segunda-feira, 14/10/1957
+
+**Dona Cida, "Aniversário do Toninho"** (35 mm, domingo 13/10):
+
+1. O bolo: a família atrás da mesa, sete velinhas. Na lupa, o Toninho já está com o dedo na cobertura.
+2. Os netos no portão de ferro: Toninho, Lúcia e o Zezinho.
+3. Seu Juvenal dormindo na poltrona depois do almoço, jornal no colo. Na lupa, um gato dormindo embaixo da poltrona.
+4. Dona Cida e a Lúcia no quintal, varal de lençóis ao fundo. Torta, porque quem tirou foi o Toninho.
+
+**Seu Nakamura, "Casamento na Liberdade"** (120, 6x6, sábado 12/10):
+
+1. Os noivos na escadaria da igreja.
+2. As duas famílias em duas fileiras. Na lupa, o padrinho piscou.
+3. O brinde no salão com lanternas de papel.
+4. A saída da igreja, arroz no ar. Na lupa, um menino catando o arroz do chão.
+
+Nenhuma figura no dia 1. Os detalhes da lupa ensinam a vasculhar a foto com coisas inocentes; a partir do dia 3 a lupa acha outra coisa.
+
+O dia: Dona Cida e Seu Nakamura deixam os rolos de manhã; os filmes vão para o tanque no escuro (narrado, o gesto do tanque fica para depois); as oito cópias passam por ampliador, bandeja e varal; o mural com a lupa; as entregas (a fala do cliente muda conforme as cópias saíram: no ponto, pálidas, escuras, borradas ou misturadas); às seis, a Senhorita Amanda devolve o guarda-chuva com "Noite na Taverna" na mão.
+
 ## Em aberto
 
-- Quais fotos exatas vão em cada rolo (lista de cenas para o Blender).
-- Textos: anotações no verso das fotos, falas dos clientes, roteiro do locutor.
+- As fotos dos dias 2 a 10 (lista de cenas para o Blender).
+- Textos dos dias 2 a 10 e o roteiro do locutor.
+- O gesto do tanque no escuro total, para o filme.

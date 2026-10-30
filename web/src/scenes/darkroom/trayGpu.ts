@@ -1,4 +1,5 @@
 import {
+  CanvasTexture,
   Camera,
   Color,
   FloatType,
@@ -10,7 +11,9 @@ import {
   ShaderMaterial,
   Vector2,
   Vector3,
+  LinearFilter,
   WebGLRenderTarget,
+  type Texture,
   type WebGLRenderer,
 } from 'three'
 import { PAPER, TRAY, freshSpeed, type DevelopSim } from '../../game/develop'
@@ -33,6 +36,17 @@ const lib = (...chunks: string[]) => chunks.join('\n')
 
 type FrameInput = { sim: DevelopSim; delta: number; active: boolean; reducedMotion: boolean; light: number }
 
+// A folha da vez: as camadas da foto, a luz do ampliador e o foco.
+export type SheetInput = { key: string; photo: HTMLCanvasElement; figure: HTMLCanvasElement; exposure: number; blur: number }
+
+function canvasTexture(canvas: HTMLCanvasElement) {
+  const tex = new CanvasTexture(canvas)
+  tex.minFilter = LinearFilter
+  tex.magFilter = LinearFilter
+  tex.generateMipmaps = false
+  return tex
+}
+
 // Tudo o que a bandeja tem na placa de vídeo: o papel, o líquido e o mapa de
 // revelação, que é somado num par de texturas que se alternam.
 export class TrayGpu {
@@ -44,6 +58,7 @@ export class TrayGpu {
   private readonly float: boolean
   private readonly targets: WebGLRenderTarget[]
   private readonly photo = createTestPhoto()
+  private readonly sheets = new Map<string, { photo: Texture; figure: Texture }>()
   private readonly accumulate: ShaderMaterial
   private readonly quad: Mesh
   private readonly scene = new Scene()
@@ -95,6 +110,8 @@ export class TrayGpu {
         uFigure: { value: this.photo.figure },
         uDev: { value: this.targets[0].texture },
         uDevSize: { value: new Vector2(MAP.width, MAP.height) },
+        uExposure: { value: 1 },
+        uBlur: { value: 0 },
         uTint: { value: new Color(0.9, 0.16, 0.11) },
       },
     })
@@ -120,6 +137,19 @@ export class TrayGpu {
     }
     gl.setRenderTarget(null)
     gl.setClearColor(color, alpha)
+  }
+
+  // Troca a foto do papel. Sem folha, volta a foto de teste.
+  setSheet(sheet: SheetInput | null) {
+    let textures = this.photo
+    if (sheet) {
+      textures = this.sheets.get(sheet.key) ?? { photo: canvasTexture(sheet.photo), figure: canvasTexture(sheet.figure) }
+      this.sheets.set(sheet.key, textures)
+    }
+    this.paper.uniforms.uPhoto.value = textures.photo
+    this.paper.uniforms.uFigure.value = textures.figure
+    this.paper.uniforms.uExposure.value = sheet?.exposure ?? 1
+    this.paper.uniforms.uBlur.value = sheet?.blur ?? 0
   }
 
   frame(gl: WebGLRenderer, { sim, delta, active, reducedMotion, light }: FrameInput) {
@@ -149,6 +179,10 @@ export class TrayGpu {
     this.targets.forEach((t) => t.dispose())
     this.photo.photo.dispose()
     this.photo.figure.dispose()
+    this.sheets.forEach((t) => {
+      t.photo.dispose()
+      t.figure.dispose()
+    })
     this.accumulate.dispose()
     this.quad.geometry.dispose()
     this.paper.dispose()

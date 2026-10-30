@@ -2,7 +2,9 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import type { Group, PointLight } from 'three'
 import { PAPER, TRAY, developStage, stepSim } from '../../game/develop'
-import { useGame } from '../../game/store'
+import { script, useGame } from '../../game/store'
+import { printTone, rolls } from '../../game/day'
+import { photoLayers } from '../../photos'
 import { TrayGpu } from './trayGpu'
 
 type Props = { reducedMotion: boolean; active: boolean }
@@ -57,11 +59,20 @@ export function DevelopTray({ reducedMotion, active }: Props) {
     if (game.sheet !== sheetSeen.current) {
       sheetSeen.current = game.sheet
       gpu.clear(gl)
+      // A foto da folha nova, com a luz e o foco do ampliador.
+      const sheet = game.sheetPhoto
+      const roll = sheet && rolls(script(game.day)).find((r) => r.id === sheet.roll)
+      if (sheet && roll) {
+        const key = `${sheet.roll}/${sheet.photo}`
+        const layers = photoLayers(key, roll.film)
+        gpu.setSheet({ key, photo: layers.scene, figure: layers.figure, exposure: sheet.exposure, blur: sheet.blur })
+      } else gpu.setSheet(null)
     }
 
     if (active) {
       stepSim(sim, delta)
-      game.progress(Math.floor(sim.elapsed), developStage(sim.developed))
+      const exposure = game.sheetPhoto?.exposure ?? 1
+      game.progress(Math.floor(sim.elapsed), developStage(printTone(sim.developed, exposure)))
     }
 
     if (tray.current) {

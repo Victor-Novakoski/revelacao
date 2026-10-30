@@ -1,51 +1,232 @@
 import { create } from 'zustand'
-import { createSim, verdict, type DevelopSim, type Verdict } from './develop'
+import { createJSONStorage, persist } from 'zustand/middleware'
+import { createSim, type DevelopSim } from './develop'
+import {
+  START,
+  advance,
+  currentPhoto,
+  currentStep,
+  exposureFactor,
+  focusBlur,
+  keepPrint,
+  printQuality,
+  retry,
+  validCursor,
+  type Cursor,
+  type Print,
+} from './day'
+import type { DayScript, Quality } from './script'
+import { DAY1 } from './days/day1'
 
-export type Screen = 'title' | 'darkroom'
+export const DAYS: Record<number, DayScript> = { 1: DAY1 }
+export const LAST_DAY = 1
+
+export const script = (day: number) => DAYS[day] ?? DAY1
+
+export type Screen = 'title' | 'day' | 'gallery'
+export type View = 'room' | 'counter' | 'enlarger' | 'tray' | 'line' | 'wall' | 'end'
 export type Phase = 'developing' | 'pulled'
+
+// O que está no ampliador. O foco e os segundos ficam de uma foto para a
+// outra, como no aparelho de verdade; exposed diz se esta folha já levou luz.
+export type EnlargerState = { focus: number; seconds: number; exposed: boolean }
+
+// A folha na bandeja: de que foto é, quanta luz levou e o quanto borrou.
+export type Sheet = { roll: string; photo: string; exposure: number; blur: number }
 
 type GameState = {
   screen: Screen
   day: number
-  phase: Phase
+  cursor: Cursor
+  prints: Print[]
+  // Anotações do jogador, por foto ("rolo/foto").
+  notes: Record<string, string>
+  // Detalhes que a lupa já achou.
+  found: string[]
+  enlarger: EnlargerState
+  // A lâmpada do ampliador acesa, enquanto a folha leva luz.
+  lamp: boolean
   // Conta as folhas postas na bandeja; trocar de folha zera o papel na cena.
   sheet: number
+  sheetPhoto: Sheet | null
+  phase: Phase
   // A bandeja muda a cada quadro, fora do React. Só os números da tela
   // (segundos e etapa) passam pelo estado.
   sim: DevelopSim
   seconds: number
   stage: number
-  result: Verdict | null
-  enter: () => void
+  result: Quality | null
+
+  open: () => void
+  restart: () => void
   leave: () => void
+  showGallery: () => void
+  next: () => void
+  setFocus: (focus: number) => void
+  setSeconds: (seconds: number) => void
+  expose: () => void
+  setLamp: (on: boolean) => void
   progress: (seconds: number, stage: number) => void
   pull: () => void
-  newSheet: () => void
+  retry: () => void
+  hang: () => void
+  writeNote: (key: string, text: string) => void
+  find: (detail: string) => void
 }
 
-const freshSheet = (sheet: number) => ({
+export const noteKey = (roll: string, photo: string) => `${roll}/${photo}`
+
+const freshEnlarger: EnlargerState = { focus: 0.5, seconds: 8, exposed: false }
+
+const freshSheet = (sheet: number, sheetPhoto: Sheet | null) => ({
   phase: 'developing' as Phase,
   sheet,
+  sheetPhoto,
   sim: createSim(),
   seconds: 0,
   stage: 0,
   result: null,
 })
 
-export const useGame = create<GameState>((set, get) => ({
-  screen: 'title',
-  day: 1,
-  ...freshSheet(0),
-  enter: () => set({ screen: 'darkroom', ...freshSheet(get().sheet + 1) }),
-  leave: () => set({ screen: 'title' }),
-  progress: (seconds, stage) => {
-    if (seconds !== get().seconds || stage !== get().stage) set({ seconds, stage })
-  },
-  pull: () => {
-    const { sim, phase } = get()
-    if (phase !== 'developing') return
-    sim.running = false
-    set({ phase: 'pulled', result: verdict(sim.developed) })
-  },
-  newSheet: () => set(freshSheet(get().sheet + 1)),
-}))
+// Põe na bandeja a folha que acabou de sair do ampliador.
+function sheetFor(state: Pick<GameState, 'day' | 'cursor' | 'enlarger'>): Sheet | null {
+  const current = currentPhoto(script(state.day), state.cursor)
+  if (!current) return null
+  const { roll, photo } = current
+  return {
+    roll: roll.id,
+    photo: photo.id,
+    exposure: exposureFactor(state.enlarger.seconds, photo.exposure),
+    blur: focusBlur(state.enlarger.focus, photo.focus),
+  }
+}
+
+// A cópia da foto atual já está no varal?
+function hung(s: Pick<GameState, 'day' | 'cursor' | 'prints'>) {
+  const current = currentPhoto(script(s.day), s.cursor)
+  return !!current && s.prints.some((p) => p.roll === current.roll.id && p.photo === current.photo.id)
+}
+
+export function viewOf(state: Pick<GameState, 'screen' | 'day' | 'cursor'>): View {
+  if (state.screen === 'gallery') return 'wall'
+  if (state.screen !== 'day') return 'room'
+  const step = currentStep(script(state.day), state.cursor)
+  switch (step.kind) {
+    case 'talk':
+    case 'deliver':
+      return 'counter'
+    case 'roll':
+      return state.cursor.gesture
+    case 'wall':
+      return 'wall'
+    case 'end':
+      return 'end'
+  }
+}
+
+export const useGame = create<GameState>()(
+  persist(
+    (set, get) => ({
+      screen: 'title',
+      day: 1,
+      cursor: START,
+      prints: [],
+      notes: {},
+      found: [],
+      enlarger: freshEnlarger,
+      lamp: false,
+      ...freshSheet(0, null),
+
+      open: () => {
+        const s = get()
+        // Voltando no meio de uma revelação, a folha recomeça. Se a cópia
+        // estava indo para o varal, ela se perdeu: volta para o ampliador.
+        const view = viewOf({ ...s, screen: 'day' })
+        const cursor = view === 'line' ? retry(s.cursor) : s.cursor
+        set({ screen: 'day', cursor, ...freshSheet(s.sheet + 1, view === 'tray' ? sheetFor(s) : null) })
+      },
+      restart: () =>
+        set((s) => ({
+          screen: 'day',
+          day: 1,
+          cursor: START,
+          prints: [],
+          notes: {},
+          found: [],
+          enlarger: freshEnlarger,
+          ...freshSheet(s.sheet + 1, null),
+        })),
+      leave: () => set({ screen: 'title' }),
+      showGallery: () => set({ screen: 'gallery' }),
+
+      next: () => {
+        const s = get()
+        if (s.screen !== 'day') return
+        const from = viewOf(s)
+        if (from === 'enlarger' && !s.enlarger.exposed) return
+        if (from === 'tray' && s.phase !== 'pulled') return
+        if (from === 'line' && !hung(s)) return
+        const cursor = advance(script(s.day), s.cursor, s.prints)
+        const to = viewOf({ ...s, cursor })
+        if (to === 'tray') set({ cursor, ...freshSheet(s.sheet + 1, sheetFor(s)) })
+        else if (to === 'enlarger') set({ cursor, enlarger: { ...s.enlarger, exposed: false } })
+        else set({ cursor })
+      },
+
+      setFocus: (focus) => set((s) => ({ enlarger: { ...s.enlarger, focus: Math.min(1, Math.max(0, focus)) } })),
+      setSeconds: (seconds) => set((s) => ({ enlarger: { ...s.enlarger, seconds: Math.round(seconds) } })),
+      expose: () => set((s) => ({ lamp: false, enlarger: { ...s.enlarger, exposed: true } })),
+      setLamp: (lamp) => set({ lamp }),
+
+      progress: (seconds, stage) => {
+        if (seconds !== get().seconds || stage !== get().stage) set({ seconds, stage })
+      },
+      pull: () => {
+        const { sim, phase, sheetPhoto } = get()
+        if (phase !== 'developing') return
+        sim.running = false
+        const exposure = sheetPhoto?.exposure ?? 1
+        const blur = sheetPhoto?.blur ?? 0
+        set({ phase: 'pulled', result: printQuality({ developed: sim.developed, exposure, blur }) })
+      },
+      // Outra folha: volta para o ampliador e acende de novo.
+      retry: () =>
+        set((s) => ({
+          cursor: retry(s.cursor),
+          enlarger: { ...s.enlarger, exposed: false },
+          ...freshSheet(s.sheet + 1, null),
+        })),
+      hang: () => {
+        const s = get()
+        if (viewOf(s) !== 'line' || !s.sheetPhoto) return
+        const { roll, photo, exposure, blur } = s.sheetPhoto
+        set({ prints: keepPrint(s.prints, { roll, photo, exposure, blur, developed: s.sim.developed }) })
+      },
+
+      writeNote: (key, text) => set((s) => ({ notes: { ...s.notes, [key]: text } })),
+      find: (detail) => {
+        if (!get().found.includes(detail)) set((s) => ({ found: [...s.found, detail] }))
+      },
+    }),
+    {
+      name: 'revelacao:game',
+      version: 1,
+      storage: createJSONStorage(() => localStorage),
+      partialize: ({ day, cursor, prints, notes, found, enlarger }) => ({ day, cursor, prints, notes, found, enlarger }),
+      merge: (saved, current) => {
+        const s = (saved ?? {}) as Partial<GameState>
+        const day = s.day && DAYS[s.day] ? s.day : 1
+        return {
+          ...current,
+          ...s,
+          day,
+          cursor: validCursor(script(day), s.cursor),
+          enlarger: { ...freshEnlarger, ...s.enlarger, exposed: false },
+        }
+      },
+    },
+  ),
+)
+
+// Já começou o dia? Na tela de título, o botão vira "Continuar".
+export const hasProgress = (s: Pick<GameState, 'cursor' | 'prints'>) => s.cursor.step > 0 || s.cursor.index > 0 || s.prints.length > 0

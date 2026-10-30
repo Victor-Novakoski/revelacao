@@ -14,12 +14,14 @@ type Room = {
   master: ToneNS.Gain
   hum: ToneNS.Gain
   radio: ToneNS.PolySynth
+  bell: ToneNS.PolySynth
 }
 
 let room: Room | null = null
 let starting = false
 let wantAudible = true
 let hidden = false
+let bellFree = 0
 
 const say = (text: string, seconds?: number) => useCaptions.getState().say(text, seconds)
 
@@ -99,6 +101,18 @@ function radio(tone: Tone, out: ToneNS.InputNode) {
   return piano
 }
 
+// O sino da porta da loja, lá na frente: baixinho, abafado pela parede.
+function doorBell(tone: Tone, out: ToneNS.InputNode) {
+  const wall = new tone.Filter({ type: 'lowpass', frequency: 3200 }).connect(out)
+  return new tone.PolySynth(tone.FMSynth, {
+    volume: LEVELS.bell,
+    harmonicity: 3.01,
+    modulationIndex: 6,
+    envelope: { attack: 0.002, decay: 1.2, sustain: 0, release: 0.8 },
+    modulationEnvelope: { attack: 0.002, decay: 0.4, sustain: 0, release: 0.4 },
+  }).connect(wall)
+}
+
 async function build(context: AudioContext) {
   const tone = await import('tone')
   // Ao carregar, o Tone.js já cria um contexto próprio; troca pelo nosso e
@@ -114,8 +128,9 @@ async function build(context: AudioContext) {
   const hum = lamp(tone, reverb)
   drips(tone, reverb)
   const piano = radio(tone, reverb)
+  const bell = doorBell(tone, reverb)
 
-  room = { tone, master, hum, radio: piano }
+  room = { tone, master, hum, radio: piano, bell }
   transport.start()
   applyGain(FADE_IN)
   say('[A lâmpada vermelha zumbe baixinho]', 5)
@@ -159,6 +174,17 @@ export function setRadioWarp(amount: number, seconds = 6) {
   const { bpm, detune } = radioWarp(amount)
   room.tone.getTransport().bpm.rampTo(bpm, seconds)
   room.radio.set({ detune })
+}
+
+// Alguém entra na loja. A legenda aparece mesmo sem som.
+export function ringBell() {
+  say('[O sino da porta toca]', 3)
+  if (!room) return
+  // Dois toques seguidos não podem ser agendados antes do anterior.
+  const now = Math.max(room.tone.now(), bellFree)
+  bellFree = now + 0.2
+  room.bell.triggerAttackRelease('E6', 0.3, now, 0.6)
+  room.bell.triggerAttackRelease('B5', 0.3, now + 0.16, 0.45)
 }
 
 // O zumbido some por um instante (a lupa sobre a criatura, mais tarde).
