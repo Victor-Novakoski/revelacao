@@ -26,3 +26,4 @@ Cada arquivo de arte ou som que entrar no repo ganha uma linha aqui: caminho, or
 | Sino da porta (`web/src/audio/engine.ts`, gerado no Tone.js) | Próprio | Próprio |
 | Chassi, espiral e tampa do tanque (`web/src/audio/engine.ts`, gerados no Tone.js) | Próprio | Próprio |
 | Capturas e GIF do README (`docs/media/`, gravados do próprio jogo) | Própria | Própria |
+| `art/experiments/coreto-real/` (teste do coreto com foto real, fora do jogo) | [Coreto na Praça João Pessoa, Anápolis (GO)](https://commons.wikimedia.org/wiki/File:Coreto_na_Pra%C3%A7a_Jo%C3%A3o_Pessoa,_An%C3%A1polis_(GO).tif), década de 1950, Acervo Arquivo Nacional (BR_RJANRIO_O2_0_FOT_00501_002) | Domínio público no Brasil (PD-Brazil-URAA no Commons). Data não confirma até 1955 e pode não ser domínio público nos EUA: ver o README da pasta antes de usar no jogo |
