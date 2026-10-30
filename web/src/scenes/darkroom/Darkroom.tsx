@@ -118,6 +118,8 @@ export function Darkroom({ reducedMotion, view }: Props) {
   return (
     <Canvas
       shadows
+      // No tanque, a luz está apagada e a tela fica preta: a sala para de desenhar.
+      frameloop={view === 'tank' ? 'never' : 'always'}
       dpr={[1, 2]}
       camera={{ position: [0, 1.7, 3.4], fov: 45 }}
       gl={{ antialias: true }}

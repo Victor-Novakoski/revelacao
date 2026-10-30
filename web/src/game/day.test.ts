@@ -8,6 +8,7 @@ import {
   keepPrint,
   moodOf,
   printQuality,
+  reel,
   endingOf,
   retry,
   rollMood,
@@ -155,6 +156,24 @@ describe('a qualidade das cópias', () => {
     c = advance(burn, c, [])
     expect(burn.steps[c.step].kind).toBe('end')
     expect(validCursor(burn, { step: 0, index: 5, gesture: 'enlarger' })).toEqual(START)
+  })
+
+  it('o tanque anda um gesto por vez, e o filme só enrola com o botão apertado', () => {
+    const tank: DayScript = {
+      day: 1,
+      title: 'Tanque',
+      steps: [
+        { kind: 'tank', actions: [{ text: 'a', label: 'Abrir' }, { text: 'b', label: 'Segure', hold: 4 }] },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    expect(advance(tank, START, [])).toMatchObject({ step: 0, index: 1 })
+    expect(tank.steps[advance(tank, { ...START, index: 1 }, []).step].kind).toBe('end')
+    expect(validCursor(tank, { step: 0, index: 2, gesture: 'enlarger' })).toEqual(START)
+    expect(reel(0, 1, 4)).toBeCloseTo(0.25)
+    expect(reel(0.25, 0, 4)).toBeCloseTo(0.25)
+    expect(reel(0.9, 2, 4)).toBe(1)
+    expect(reel(0, 0, 0)).toBe(1)
   })
 
   it('a escolha do fim só anda depois de escolher, e segue as falas do final', () => {

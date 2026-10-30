@@ -76,6 +76,19 @@ describe('o roteiro de todos os dias', () => {
     }
   })
 
+  it('o filme vai para o tanque no dia 1, e todo tanque tem um gesto de segurar', () => {
+    expect(DAYS[1].steps.some((s) => s.kind === 'tank')).toBe(true)
+    for (const day of all) {
+      for (const step of day.steps) {
+        if (step.kind !== 'tank') continue
+        expect(step.actions.filter((a) => a.hold).length, `dia ${day.day}`).toBe(1)
+        // O tanque vem antes das cópias do dia.
+        const at = day.steps.indexOf(step)
+        expect(day.steps.findIndex((s) => s.kind === 'roll'), `dia ${day.day}`).toBeGreaterThan(at)
+      }
+    }
+  })
+
   it('todo dia dá para jogar do começo ao fim', () => {
     for (const day of all) {
       const prints: Print[] = []

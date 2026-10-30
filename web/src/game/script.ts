@@ -27,7 +27,7 @@ export const SPEAKERS: Record<Speaker, string> = {
 }
 
 // Um som que acompanha a fala, sempre com legenda.
-export type Cue = 'phone' | 'line' | 'creak' | 'match' | 'silence'
+export type Cue = 'phone' | 'line' | 'creak' | 'match' | 'silence' | 'cassette' | 'lid'
 
 export type Line = {
   who: Speaker
@@ -74,6 +74,8 @@ export type Step =
   | { kind: 'deliver'; roll: string; before: Line[]; after: Record<Mood, Line[]> }
   // Uma sequência de gestos com o rolo, um botão de cada vez (o rolo queimado).
   | { kind: 'burn'; actions: BurnAction[] }
+  // O filme vai para o tanque no escuro total: só som, texto e tato.
+  | { kind: 'tank'; actions: TankAction[] }
   // A escolha do fim. Depois de escolher, as falas do final escolhido.
   | { kind: 'choice'; prompt: string; options: Ending[] }
   | { kind: 'end'; title: string; text: string }
@@ -81,6 +83,10 @@ export type Step =
 // Um gesto com o rolo: o texto do momento e o botão que leva ao próximo.
 // fire: o rolo já está queimando.
 export type BurnAction = { text: string; label: string; cue?: Cue; fire?: boolean }
+
+// Um gesto no tanque. hold: segundos de botão apertado para enrolar o
+// filme na espiral; sem hold, um toque basta.
+export type TankAction = { text: string; label: string; cue?: Cue; hold?: number }
 
 // Como o final aparece na tela: fogo, o branco que estoura ou a porta da loja.
 export type EndingLook = 'fire' | 'white' | 'door'

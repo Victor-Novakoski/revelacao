@@ -167,6 +167,8 @@ button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
   pointer-events: none;
 }
 .stage.dim::after { opacity: 1; }
+/* O tanque: a luz vermelha apaga e a sala some no breu. */
+.stage.dark::after { opacity: 1; background: #000; transition-duration: 1.2s; }
 @media (prefers-reduced-motion: reduce) {
   .stage::after { transition: none; }
 }
@@ -473,6 +475,24 @@ button:disabled { opacity: 0.55; cursor: default; }
 }
 .actions.column { flex-direction: column; align-items: center; }
 .actions.column button { width: min(360px, 100%); }
+
+/* O tanque, no escuro total: nada vermelho, só um cinza apagado. */
+.tank {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+.tank .dialog { border-color: rgba(160, 150, 140, 0.18); background: transparent; box-shadow: none; }
+.tank .dialog .line { color: #a59b94; }
+.tank .enter { border-color: rgba(165, 155, 148, 0.45); color: #c9c0b9; background: transparent; }
+.tank .enter:hover, .tank .enter:focus-visible { background: rgba(165, 155, 148, 0.12); }
+.tank .hold { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.tank .hold.held { background: rgba(165, 155, 148, 0.18); }
+.reel { height: 2px; margin: 0 0 16px; background: rgba(165, 155, 148, 0.12); }
+.reel span { display: block; height: 100%; background: rgba(165, 155, 148, 0.5); }
 
 /* Os finais. "Revelar até o fim" escurece e depois estoura em branco,
    devagar, sem salto. */

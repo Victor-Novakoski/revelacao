@@ -95,9 +95,29 @@ export const DAY1: DayScript = {
         { who: 'augusto', text: 'Filme 120, como sempre. O senhor não confia em outro.' },
         { who: 'nakamura', text: 'Negativo grande perdoa noivo nervoso. Escolhi quatro chapas. A família quer ver hoje.' },
         { who: 'augusto', text: 'Às cinco estão no envelope, Seu Nakamura.' },
+      ],
+    },
+    {
+      kind: 'tank',
+      actions: [
         {
-          who: 'narrator',
-          text: 'No escuro total, os dois filmes vão para o tanque. Quando os negativos secam, Seu Augusto acende a luz vermelha para fazer as cópias.',
+          text: 'Antes das cópias, os negativos. Seu Augusto apaga até a luz vermelha: o filme não pode ver luz nenhuma. No escuro total, nem a mão aparece.',
+          label: 'Abrir o chassi',
+          cue: 'cassette',
+        },
+        {
+          text: 'Pelo tato, a ponta do filme entra na espiral. Agora é enrolar devagar, sem dobrar. Mantenha o botão apertado; se soltar, a mão acha a ponta de novo.',
+          label: 'Segure para enrolar',
+          hold: 4,
+        },
+        {
+          text: 'Os dois filmes na espiral. A espiral desce no tanque.',
+          label: 'Fechar o tanque',
+          cue: 'lid',
+        },
+        {
+          text: 'Revelador, fixador, água corrente. Quando os negativos secam, Seu Augusto acende a luz vermelha para fazer as cópias.',
+          label: 'Acender a luz vermelha',
         },
       ],
     },

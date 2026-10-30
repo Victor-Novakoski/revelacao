@@ -46,7 +46,14 @@ export const DAY6: DayScript = {
         narrate('Embaixo da porta, um envelope pardo. Sem selo, sem remetente. Dentro, um rolo de 120.'),
         narrate('Ele reconhece o cheiro de vinagre antes de ler a etiqueta. A etiqueta diz "Domingo na praça". A letra é a dele.'),
         say('augusto', 'O rolo que o inspetor levou.'),
-        narrate('Ele diz que não vai revelar. Mas as mãos já estão no tanque, no escuro.'),
+      ],
+    },
+    {
+      kind: 'tank',
+      actions: [
+        { text: 'Ele diz que não vai revelar. Mas a luz já está apagada, e as mãos já abriram o chassi.', label: 'Achar a ponta do filme', cue: 'cassette' },
+        { text: 'Desta vez o filme velho não resiste. Entra na espiral como se quisesse.', label: 'Segure para enrolar', hold: 3 },
+        { text: 'A tampa fecha. Os negativos secam. Ele acende a luz vermelha.', label: 'Acender a luz vermelha', cue: 'lid' },
       ],
     },
     { kind: 'roll', roll: volta },

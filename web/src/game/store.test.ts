@@ -6,9 +6,9 @@ import { LAST_DAY, hasProgress, printsOf, useGame, viewOf } from './store'
 const game = () => useGame.getState()
 const view = () => viewOf(game())
 
-// Passa as falas até chegar num passo que não é conversa.
+// Passa as falas e o tanque até chegar nas cópias.
 const talkThrough = () => {
-  while (view() === 'counter') game().next()
+  while (view() === 'counter' || view() === 'tank') game().next()
 }
 
 const develop = (developed = 1) => {
@@ -67,7 +67,8 @@ describe('useGame', () => {
   it('tirar da bandeja dá o ponto da cópia, e só então vai para o varal', () => {
     game().open()
     talkThrough()
-    game().setFocus(DAY1.steps[1].kind === 'roll' ? DAY1.steps[1].roll.photos[0].focus : 0)
+    const first = DAY1.steps.find((s) => s.kind === 'roll')
+    game().setFocus(first?.kind === 'roll' ? first.roll.photos[0].focus : 0)
     game().setSeconds(8)
     game().expose()
     game().next()
