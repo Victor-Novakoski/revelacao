@@ -1,7 +1,8 @@
 import { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Noise, Vignette, Bloom } from '@react-three/postprocessing'
-import type { PointLight, Group } from 'three'
+import { Vector3, type PointLight } from 'three'
+import { DevelopTray, SAFELIGHT } from './DevelopTray'
 
 type Props = { reducedMotion: boolean; active: boolean }
 
@@ -19,7 +20,7 @@ function SafeLight({ reducedMotion }: { reducedMotion: boolean }) {
   })
   return (
     <group position={[0, 2.4, -0.6]}>
-      <pointLight ref={light} color={RED} intensity={6} distance={9} decay={1.6} castShadow />
+      <pointLight ref={light} name={SAFELIGHT} color={RED} intensity={6} distance={9} decay={1.6} castShadow />
       <mesh>
         <sphereGeometry args={[0.12, 24, 24]} />
         <meshBasicMaterial color={RED} toneMapped={false} />
@@ -32,6 +33,7 @@ function SafeLight({ reducedMotion }: { reducedMotion: boolean }) {
   )
 }
 
+// Revelador no meio (DevelopTray); interruptor e fixador dos lados.
 function Bench() {
   return (
     <group>
@@ -39,11 +41,11 @@ function Bench() {
         <boxGeometry args={[3.2, 0.08, 1.2]} />
         <meshStandardMaterial color="#2a1c16" roughness={0.9} />
       </mesh>
-      {[-0.95, 0, 0.95].map((x, i) => (
+      {[-0.95, 0.95].map((x) => (
         <group key={x} position={[x, 0.97, 0.05]}>
           <mesh castShadow receiveShadow>
             <boxGeometry args={[0.8, 0.06, 0.6]} />
-            <meshStandardMaterial color={i === 1 ? '#d9d4c8' : '#3b3b3b'} roughness={0.4} />
+            <meshStandardMaterial color="#3b3b3b" roughness={0.4} />
           </mesh>
           <mesh position={[0, 0.02, 0]}>
             <boxGeometry args={[0.7, 0.02, 0.5]} />
@@ -74,17 +76,35 @@ function Room() {
   )
 }
 
+const TRAY_CENTER = new Vector3(0, 0.96, 0.05)
+const ROOM_LOOK = new Vector3(0, 1.05, 0)
+const deg = (d: number) => (d * Math.PI) / 180
+
+// Na loja, a câmera olha a bancada. Na revelação, desce sobre a bandeja,
+// perto o bastante para a foto encher a tela, em pé ou deitada.
 function Camera({ reducedMotion, active }: Props) {
-  const rig = useRef<Group>(null)
-  useFrame(({ camera, clock }, delta) => {
+  const look = useRef(ROOM_LOOK.clone())
+  const goal = useRef(new Vector3())
+  useFrame(({ camera, clock, size }, delta) => {
     const t = clock.getElapsedTime()
-    const breathe = reducedMotion ? 0 : Math.sin(t * 0.6) * 0.02
-    const targetZ = active ? 2.6 : 3.4
-    camera.position.z += (targetZ - camera.position.z) * Math.min(1, delta * 1.5)
-    camera.position.y = 1.7 + breathe
-    camera.lookAt(0, 1.05, 0)
+    const breathe = reducedMotion || active ? 0 : Math.sin(t * 0.6) * 0.02
+    const ease = Math.min(1, delta * 1.5)
+    if (active) {
+      const halfTan = Math.tan((45 * Math.PI) / 360)
+      const aspect = size.width / size.height
+      const distance = Math.max(0.36 / halfTan, 0.4 / (halfTan * aspect)) * 1.05
+      // Em pé (celular), olha mais de cima para a foto não achatar.
+      const pitch = aspect < 1 ? deg(72) : deg(58)
+      goal.current.set(0, Math.sin(pitch), Math.cos(pitch)).multiplyScalar(distance).add(TRAY_CENTER)
+      look.current.lerp(TRAY_CENTER, ease)
+    } else {
+      goal.current.set(0, 1.7 + breathe, 3.4)
+      look.current.lerp(ROOM_LOOK, ease)
+    }
+    camera.position.lerp(goal.current, ease)
+    camera.lookAt(look.current)
   })
-  return <group ref={rig} />
+  return null
 }
 
 export function Darkroom({ reducedMotion, active }: Props) {
@@ -102,6 +122,7 @@ export function Darkroom({ reducedMotion, active }: Props) {
       <SafeLight reducedMotion={reducedMotion} />
       <Room />
       <Bench />
+      <DevelopTray reducedMotion={reducedMotion} active={active} />
       <Camera reducedMotion={reducedMotion} active={active} />
       <EffectComposer>
         <Bloom intensity={0.9} luminanceThreshold={0.6} mipmapBlur />
