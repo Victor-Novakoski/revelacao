@@ -1,4 +1,5 @@
 import { ENLARGER } from './layout'
+import { useGame } from '../../game/store'
 
 const BLACK = <meshStandardMaterial color="#7d756a" roughness={0.45} metalness={0.1} />
 const METAL = <meshStandardMaterial color="#77726c" roughness={0.4} metalness={0.3} />
@@ -8,6 +9,7 @@ const METAL = <meshStandardMaterial color="#77726c" roughness={0.4} metalness={0
 export function Enlarger() {
   const [x, y, z] = ENLARGER
   const head = 0.72
+  const lamp = useGame((s) => s.lamp)
   return (
     <group position={[x, y, z]}>
       <mesh position={[0, 0.02, 0]} castShadow receiveShadow>
@@ -28,7 +30,14 @@ export function Enlarger() {
           <boxGeometry args={[0.36, 0.008, 0.025]} />
           {METAL}
         </mesh>
+        {/* A luz do ampliador na folha, enquanto ela é exposta. */}
+        <mesh position={[0, 0.007, -0.01]} rotation={[-Math.PI / 2, 0, 0]} visible={lamp}>
+          <planeGeometry args={[0.3, 0.22]} />
+          <meshBasicMaterial color="#fff1d6" transparent opacity={0.55} toneMapped={false} />
+        </mesh>
       </group>
+      {/* Sempre montada, para a cena não recompilar ao acender. */}
+      <pointLight position={[0, 0.45, 0.04]} color="#ffe9c4" intensity={lamp ? 0.8 : 0} distance={1.4} decay={2} />
       <mesh position={[0, 0.55, -0.2]} castShadow>
         <cylinderGeometry args={[0.025, 0.025, 1.05, 16]} />
         {METAL}
