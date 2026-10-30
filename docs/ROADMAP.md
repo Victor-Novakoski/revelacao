@@ -11,10 +11,10 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [ ] Conectar o repo na Vercel (feito pelo Victor no painel)
 
 ## Etapa 2 · A revelação (fatia vertical)
-- [ ] Uma bandeja e uma foto de teste
-- [ ] Shader de revelação: densidade por tempo e agitação, grão
-- [ ] Gesto de balançar a bandeja (mouse e toque), líquido reagindo
-- [ ] Critério: balançar e ver a imagem surgir tem que ser gostoso
+- [x] Uma bandeja e uma foto de teste
+- [x] Shader de revelação: densidade por tempo e agitação, grão
+- [x] Gesto de balançar a bandeja (mouse e toque), líquido reagindo
+- [ ] Critério: balançar e ver a imagem surgir tem que ser gostoso (validar jogando)
 
 ## Etapa 3 · A ferramenta das fotos
 - [ ] `revela build`: tons de cinza, negativo, WebP, `rolos.json`

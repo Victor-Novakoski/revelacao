@@ -15,6 +15,8 @@ Blender (camadas de cada foto)
 - **Sala 3D** (`scenes/darkroom`): poucos objetos, a luz vermelha faz o trabalho. Pós-processamento com bloom, grão e vinheta.
 - **Os três gestos:** ampliador (foco e tempo de luz), bandeja (balançar o revelador), varal (secar). Depois o mural com lupa.
 - **Shader de revelação** (`shaders/develop.frag`, etapa 2): a densidade de cada ponto da foto cresce com o tempo no revelador e com a agitação, com grão e manchas. A foto é a soma de camadas (fundo, figura, detalhes); a camada da figura tem curva de revelação mais lenta, então só aparece quando você revela mais.
+- **A bandeja** (etapa 2): o modelo fica em `game/develop.ts`, sem Three.js e com testes. Arrastar inclina a bandeja; o líquido é uma mola com pouco amortecimento que vai e volta. Agitar renova o revelador perto do papel: revela mais rápido e por igual. Parada, revela devagar e manchada.
+- **Mapa de revelação** (`shaders/accumulate.frag`): uma textura float pequena (256x192) que cobre o papel, somada a cada quadro (duas texturas que se alternam). Cada ponto revela conforme está coberto pelo líquido, então inclinar demais deixa uma ponta para trás. Sem float para escrever, usa meia precisão e soma a cada 0,12 s. `shaders/surface.glsl` tem a altura do líquido, a mesma conta do modelo em TS, usada pelo papel, pelo líquido (`liquid.vert/frag`) e pelo mapa.
 - **Estado** (`game/`): Zustand, com persistência local (dia atual, fotos reveladas, escolhas). O sorteio de onde a figura aparece é feito com semente salva, para ser estável entre visitas.
 - **Som** (`audio/`, etapa 4): Tone.js e Web Audio. Rádio com filtro AM, mudança de velocidade, som 3D (HRTF) e reverb da sala.
 

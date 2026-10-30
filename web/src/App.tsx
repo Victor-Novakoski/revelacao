@@ -1,5 +1,7 @@
 import { Darkroom } from './scenes/darkroom/Darkroom'
 import { TitleCard } from './ui/TitleCard'
+import { DevelopHud } from './ui/DevelopHud'
+import { TrayControls } from './ui/TrayControls'
 import { useGame } from './game/store'
 import { useReducedMotion } from './game/motion'
 
@@ -17,12 +19,10 @@ export default function App() {
       {screen === 'title' ? (
         <TitleCard onEnter={enter} />
       ) : (
-        <div className="hud">
-          <p className="soon">A primeira bandeja chega na etapa 2.</p>
-          <button className="ghost" onClick={leave}>
-            Voltar
-          </button>
-        </div>
+        <>
+          <TrayControls />
+          <DevelopHud onLeave={leave} />
+        </>
       )}
     </main>
   )
