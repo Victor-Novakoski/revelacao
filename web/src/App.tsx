@@ -10,6 +10,8 @@ import { EnlargerPanel } from './ui/EnlargerPanel'
 import { LinePanel } from './ui/LinePanel'
 import { Wall } from './ui/Wall'
 import { EndCard } from './ui/EndCard'
+import { BurnPanel } from './ui/BurnPanel'
+import { ChoiceCard } from './ui/ChoiceCard'
 import { currentStep } from './game/day'
 import { hasProgress, script, useGame, viewOf } from './game/store'
 import { useSettings } from './game/settings'
@@ -21,9 +23,10 @@ export default function App() {
   const screen = useGame((s) => s.screen)
   const day = useGame((s) => s.day)
   const cursor = useGame((s) => s.cursor)
+  const ending = useGame((s) => s.ending)
   const resume = useGame(hasProgress)
   const game = useGame.getState()
-  const view = viewOf({ screen, day, cursor })
+  const view = viewOf({ screen, day, cursor, ending })
   const reducedMotion = useReducedMotion()
   // No fim do dia, o jogador pode rever o mural sem andar o roteiro.
   const [reviewing, setReviewing] = useState(false)
@@ -66,14 +69,27 @@ export default function App() {
         return <LinePanel />
       case 'wall':
         return <Wall gallery={false} hint={wallHint} onDone={game.next} doneLabel="Pôr nos envelopes" />
+      case 'burn':
+        return <BurnPanel />
+      case 'choice':
+        return <ChoiceCard />
       case 'end':
-        return <EndCard onWall={() => setReviewing(true)} onTitle={game.leave} />
+        return (
+          <EndCard onWall={() => setReviewing(true)} onTitle={game.leave} onNext={game.nextDay} onRestart={game.restart} />
+        )
       default:
         return null
     }
   }
 
-  const dim = view === 'counter' || view === 'wall' || view === 'end' || screen === 'gallery' || reviewing
+  const dim =
+    view === 'counter' ||
+    view === 'wall' ||
+    view === 'burn' ||
+    view === 'choice' ||
+    view === 'end' ||
+    screen === 'gallery' ||
+    reviewing
 
   return (
     <main className="app">

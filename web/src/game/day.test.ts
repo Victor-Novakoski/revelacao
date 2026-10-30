@@ -8,6 +8,7 @@ import {
   keepPrint,
   moodOf,
   printQuality,
+  endingOf,
   retry,
   rollMood,
   stepLines,
@@ -138,5 +139,48 @@ describe('a qualidade das cópias', () => {
     const prints = keepPrint([print('p1', 0.3), print('p2')], print('p1', 1))
     expect(prints).toHaveLength(2)
     expect(prints.find((p) => p.photo === 'p1')?.developed).toBe(1)
+  })
+
+  it('o rolo queimado anda um gesto por vez', () => {
+    const burn: DayScript = {
+      day: 6,
+      title: 'Queima',
+      steps: [
+        { kind: 'burn', actions: [{ text: 'a', label: 'Abrir' }, { text: 'b', label: 'Riscar', fire: true }] },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    let c = advance(burn, START, [])
+    expect(c).toMatchObject({ step: 0, index: 1 })
+    c = advance(burn, c, [])
+    expect(burn.steps[c.step].kind).toBe('end')
+    expect(validCursor(burn, { step: 0, index: 5, gesture: 'enlarger' })).toEqual(START)
+  })
+
+  it('a escolha do fim só anda depois de escolher, e segue as falas do final', () => {
+    const last: DayScript = {
+      day: 10,
+      title: 'Fim',
+      steps: [
+        {
+          kind: 'choice',
+          prompt: 'E agora?',
+          options: [
+            { id: 'a', label: 'A', lines: [line('a1'), line('a2')], title: 'A', text: '', look: 'fire' },
+            { id: 'b', label: 'B', lines: [line('b1')], title: 'B', text: '', look: 'white' },
+          ],
+        },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    expect(advance(last, START, [], null)).toEqual(START)
+    expect(stepLines(last, last.steps[0], [], 'a').map((l) => l.text)).toEqual(['a1', 'a2'])
+    let c = advance(last, START, [], 'a')
+    expect(c.index).toBe(1)
+    c = advance(last, c, [], 'a')
+    expect(last.steps[c.step].kind).toBe('end')
+    expect(endingOf(last, 'b')?.title).toBe('B')
+    expect(endingOf(last, 'x')).toBeUndefined()
+    expect(endingOf(DAY, 'a')).toBeUndefined()
   })
 })

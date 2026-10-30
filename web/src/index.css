@@ -433,6 +433,73 @@ button:disabled { opacity: 0.55; cursor: default; }
 }
 .title-card .actions { margin-bottom: 4px; }
 
+/* O mural de "Ver as fotos": um botão por dia. */
+.wall .days {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 8px;
+  max-width: 720px;
+}
+.wall .days button { min-height: 44px; padding: 0 16px; font-size: 14px; }
+.gallery-day { margin: 0 0 12px; text-align: center; color: var(--muted); font-style: italic; }
+
+/* O rolo que voltou, e o fogo. O brilho respira devagar; com movimento
+   reduzido, fica parado. */
+.burn {
+  position: absolute;
+  inset: auto 0 max(4vh, env(safe-area-inset-bottom)) 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+.burn .glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 85%, rgba(255, 150, 60, 0.32), rgba(255, 90, 30, 0.08) 45%, transparent 70%);
+  animation: breathe 3.2s ease-in-out infinite alternate;
+}
+@keyframes breathe {
+  from { opacity: 0.75; }
+  to { opacity: 1; }
+}
+
+.choice-card h2 {
+  margin: 8px auto 20px;
+  max-width: 22ch;
+  font: 700 clamp(30px, 6vw, 52px)/1.05 'Cormorant Garamond', serif;
+}
+.actions.column { flex-direction: column; align-items: center; }
+.actions.column button { width: min(360px, 100%); }
+
+/* Os finais. "Revelar até o fim" escurece e depois estoura em branco,
+   devagar, sem salto. */
+.ending-look { position: fixed; inset: 0; pointer-events: none; }
+.ending-look.fire {
+  background: radial-gradient(ellipse at 50% 90%, rgba(255, 140, 50, 0.3), transparent 65%);
+  animation: breathe 3.2s ease-in-out infinite alternate;
+}
+.ending-look.white { background: #f4efe6; animation: whiteout 9s ease-in both; }
+@keyframes whiteout {
+  0% { background: rgba(0, 0, 0, 0); }
+  45% { background: rgba(0, 0, 0, 0.92); }
+  100% { background: rgba(244, 239, 230, 1); }
+}
+.end-card.white { color: #1a1210; text-shadow: none; animation: ink 9s ease-in both; }
+.end-card.white .lead, .end-card.white .kicker { color: #4a3a33; }
+.end-card.white .ghost { color: #1a1210; border-color: rgba(26, 18, 16, 0.4); }
+.end-card.white .enter { color: #1a1210; }
+@keyframes ink {
+  0%, 70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .burn .glow, .ending-look.fire { animation: none; }
+  .ending-look.white, .end-card.white { animation: none; }
+}
+
 /* No celular, os títulos descem para não ficar sob os botões do canto. */
 @media (max-width: 520px) {
   .develop-top { top: max(64px, env(safe-area-inset-top)); }

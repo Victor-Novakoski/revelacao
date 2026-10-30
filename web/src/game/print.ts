@@ -24,6 +24,15 @@ export function printDensity(scene: number, figure: number, developed: number, e
   return Math.min(1, Math.max(0, density))
 }
 
+// O quanto a camada da figura já revelou (a mesma conta de "late" acima).
+// Abaixo de um quarto, ela ainda não dá para ver nem com a lupa.
+export function figureShows(developed: number) {
+  const induction = Math.max(developed - 0.08, 0) / 0.92
+  return induction * smoothstep(0.75, 1.35, developed)
+}
+
+export const FIGURE_VISIBLE = 0.25
+
 // Desfoque de caixa em duas passadas, para a cópia fora de foco.
 export function boxBlur(src: Float32Array, w: number, h: number, radius: number): Float32Array {
   const r = Math.round(radius)

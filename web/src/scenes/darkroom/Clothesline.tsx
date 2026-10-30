@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react'
 import { CanvasTexture, SRGBColorSpace } from 'three'
 import { LINE_Y, LINE_Z } from './layout'
 import { rolls } from '../../game/day'
-import { script, useGame } from '../../game/store'
+import { printsOf, script, useGame } from '../../game/store'
 import { printCanvas } from '../../photos'
 
 const LINE_HALF = 2.4
@@ -135,7 +135,7 @@ function OldPrints() {
 // O varal sobre a bancada, onde as cópias secam presas por prendedores.
 // Antes da primeira cópia do dia, ficam as de ontem.
 export function Clothesline() {
-  const empty = useGame((s) => s.prints.length === 0)
+  const empty = useGame((s) => printsOf(s.day, s.prints).length === 0)
   return (
     <group position={[0, LINE_Y, LINE_Z]}>
       <mesh rotation={[0, 0, Math.PI / 2]}>
