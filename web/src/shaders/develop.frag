@@ -34,18 +34,29 @@ float sampleDev(vec2 uv) {
   return mix(mix(a, b, f.x), mix(d, e, f.x), f.y);
 }
 
+// As camadas num ponto: x a cena, y a figura desenhada, z onde está a
+// figura de foto real e w o tom dela vezes z (ver photos/real.ts).
+vec4 sampleLayers(vec2 uv) {
+  return vec4(texture2D(uPhoto, uv).r, texture2D(uFigure, uv).rgb);
+}
+
 // Fora de foco: média de um disco de amostras em volta do ponto.
-vec2 sampleBlurred(vec2 uv) {
-  if (uBlur < 0.01) return vec2(texture2D(uPhoto, uv).r, texture2D(uFigure, uv).r);
+vec4 sampleBlurred(vec2 uv) {
+  if (uBlur < 0.01) return sampleLayers(uv);
   float r = uBlur * 0.02;
-  vec2 sum = vec2(texture2D(uPhoto, uv).r, texture2D(uFigure, uv).r);
+  vec4 sum = sampleLayers(uv);
   for (int i = 0; i < 8; i++) {
     float a = float(i) * 0.785398;
     vec2 o = vec2(cos(a), sin(a) * 1.333) * r;
-    sum += vec2(texture2D(uPhoto, uv + o).r, texture2D(uFigure, uv + o).r);
-    sum += vec2(texture2D(uPhoto, uv + o * 0.5).r, texture2D(uFigure, uv + o * 0.5).r);
+    sum += sampleLayers(uv + o);
+    sum += sampleLayers(uv + o * 0.5);
   }
   return sum / 17.0;
+}
+
+// A mesma curva da cena, para um tom qualquer.
+float silver(float gray, float induction) {
+  return paperCurve(min(induction * pow(1.0 - gray, 1.1) * uExposure, 1.6));
 }
 
 void main() {
@@ -57,15 +68,18 @@ void main() {
   float dev = sampleDev(uv);
   float induction = max(dev - 0.08, 0.0) / 0.92;
 
-  vec2 layers = sampleBlurred(uv);
-  float exposure = pow(1.0 - layers.x, 1.1);
-  float base = paperCurve(min(induction * exposure * uExposure, 1.6));
+  vec4 layers = sampleBlurred(uv);
+  float base = silver(layers.x, induction);
 
   float figure = layers.y * 0.85;
   float late = induction * smoothstep(0.75, 1.35, dev);
   float creature = paperCurve(figure * late);
 
   float density = 1.0 - (1.0 - base) * (1.0 - creature);
+  if (layers.z > 0.0) {
+    float tone = layers.w / layers.z;
+    density = mix(density, silver(tone, induction), min(1.0, layers.z * late));
+  }
   density += 0.35 * pow(max(dev * uExposure - 1.15, 0.0), 1.3);
 
   // Grão parado, mais forte nos meios-tons. Não treme.

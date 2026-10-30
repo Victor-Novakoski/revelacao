@@ -111,7 +111,7 @@ export const DAY3: DayScript = {
         say('augusto', 'Por nada. Coisa de revelador.'),
         narrate('Ela guarda o envelope na bolsa e vai embora. Leva a foto com ela.'),
         narrate('No fim da tarde, o rádio dá a notícia de novo.'),
-        say('radio', 'O senhor Hélio Vilela foi visto pela última vez fotografando na praça, no domingo. A família pede notícias.'),
+        say('radio', 'O senhor Hélio Vilela foi visto pela última vez em Campinas, no domingo, a caminho da capital. A família pede notícias.'),
         narrate('Da câmera achada na estrada, o locutor não diz nada. Do Elias, também não.'),
         narrate('O envelope da Marlene fica na prateleira, esperando segunda-feira.'),
       ],

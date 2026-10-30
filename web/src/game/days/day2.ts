@@ -2,50 +2,51 @@ import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
 // Dia 2, terça-feira, 15 de outubro. O Elias traz a câmera achada na
-// estrada. No rolo, um domingo na praça e alguém parado ao fundo em todas as
-// fotos. Na última, mais perto da câmera do que o fotógrafo poderia estar.
+// estrada. No rolo, a viagem do Vilela de Anápolis a Campinas, a caminho de
+// São Paulo, e o mesmo homem em todas as fotos, em cidades diferentes. Na
+// última, mais perto da câmera do que o fotógrafo poderia estar.
 // A polícia leva a câmera; o que estava nas fotos fica.
 
 export const PRACA: Roll = {
   id: 'vilela-praca',
   customer: 'elias',
   film: '120',
-  title: 'Domingo na praça',
+  title: 'De Anápolis a Campinas',
   photos: [
     {
       id: 'coreto',
-      verso: 'Praça, domingo. A banda. H.V.',
+      verso: 'Anápolis. O coreto da Praça João Pessoa. H.V.',
       exposure: 11,
       focus: 0.52,
-      details: [seen('vilela-praca', 'coreto', 'Entre as árvores, lá no fundo, alguém parado. Todo mundo está andando, menos ele.')],
+      details: [seen('vilela-praca', 'coreto', 'Ao lado do arbusto, um homem parado, de frente para a lente. O corpo saiu nítido. O rosto, borrado.')],
     },
     {
       id: 'pipoqueiro',
-      verso: 'O pipoqueiro. H.V.',
+      verso: 'Campinas. Jardim Carlos Gomes. H.V.',
       exposure: 10,
       focus: 0.52,
-      details: [seen('vilela-praca', 'pipoqueiro', 'De pé, ao lado do banco do fundo. Alto demais para o banco.')],
+      details: [seen('vilela-praca', 'pipoqueiro', 'Entre as palmeiras, o homem do coreto. Oitocentos quilômetros depois, a mesma roupa. Todo mundo passeia, menos ele.')],
     },
     {
       id: 'lago',
-      verso: 'O lago. H.V.',
+      verso: 'Praça Bento Quirino. H.V.',
       exposure: 9,
       focus: 0.52,
-      details: [seen('vilela-praca', 'lago', 'Na outra margem, na beira da água. As árvores têm reflexo. Ele não.')],
+      details: [seen('vilela-praca', 'lago', 'No meio de quem atravessa a rua. Sol a pino, e ele é o único sem sombra no chão.')],
     },
     {
       id: 'familia',
-      verso: 'Minha mulher e as meninas. H.V.',
+      verso: 'Largo do Rosário. Amanhã, São Paulo. H.V.',
       exposure: 11,
       focus: 0.52,
-      details: [seen('vilela-praca', 'familia', 'Atrás da família, mais perto agora. Os braços descem até os joelhos.')],
+      details: [seen('vilela-praca', 'familia', 'Mais perto agora. Casaca comprida, colete, corrente de relógio. Roupa de outro século.')],
     },
     {
       id: 'perto',
       verso: 'Sem anotação. Só um risco de lápis, como se a mão tivesse escorregado.',
       exposure: 12,
       focus: 0.52,
-      details: [seen('vilela-praca', 'perto', 'Mais perto da câmera do que o fotógrafo poderia estar.')],
+      details: [seen('vilela-praca', 'perto', 'Mais perto da câmera do que o fotógrafo poderia estar. O rosto, de novo, é só um borrão.')],
     },
   ],
 }
@@ -96,13 +97,13 @@ export const DAY2: DayScript = {
     {
       kind: 'deliver',
       roll: 'vilela-praca',
-      before: [bell('elias', 'Vim correndo. O que tem nas fotos?'), say('augusto', 'Veja o senhor mesmo. Repare no fundo.')],
+      before: [bell('elias', 'Vim correndo. O que tem nas fotos?'), say('augusto', 'Veja o senhor mesmo. Repare nas pessoas.')],
       after: moods('elias', {
-        good: 'É gente na praça, ué... Espera. Esse aí está em todas. E nessa última está colado na lente. Quem segurava a câmera?',
-        pale: 'Estão tão clarinhas que mal dá para ver o povo. O senhor disse para olhar o fundo... o que tem no fundo?',
-        dark: 'Escuras, mas tem um vulto mais escuro que o resto. Em todas. Não é sombra de árvore, é?',
-        blurry: 'Borradas... mas o borrão comprido lá atrás está em todas. Não é sujeira, é?',
-        mixed: 'Umas boas, outras não. Mas esse sujeito alto está em todas, Seu Augusto.',
+        good: 'É só a viagem do homem, ué... Espera. Esse aí está em todas, em cidade diferente. E nessa última está colado na lente. Quem segurava a câmera?',
+        pale: 'Estão tão clarinhas que mal dá para ver o povo. O senhor disse para olhar as pessoas... qual delas?',
+        dark: 'Escuras, mas tem um vulto de casaco comprido. Em todas. Em Anápolis e em Campinas, Seu Augusto.',
+        blurry: 'Borradas... mas o mesmo borrão comprido está em todas. Não é sujeira, é?',
+        mixed: 'Umas boas, outras não. Mas esse sujeito de casaco está em todas, Seu Augusto.',
       }),
     },
     {

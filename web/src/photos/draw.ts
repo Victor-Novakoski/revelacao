@@ -150,10 +150,11 @@ export function augusto(ctx: Ctx, x: number, foot: number, h: number, blur = 0) 
   }
 }
 
-// A figura, desenhada na própria camada: branco sobre preto. Alta e magra
-// demais, braços que descem até perto dos joelhos, cabeça pequena.
+// A figura, desenhada na própria camada: vermelho sobre preto (verde e azul
+// são da figura de foto real, ver real.ts). Alta e magra demais, braços que
+// descem até perto dos joelhos, cabeça pequena.
 export function creature(ctx: Ctx, x: number, foot: number, h: number) {
-  ctx.fillStyle = '#fff'
+  ctx.fillStyle = '#f00'
   ctx.beginPath()
   ctx.ellipse(x, foot - h * 0.93, h * 0.055, h * 0.075, 0, 0, Math.PI * 2)
   ctx.fill()

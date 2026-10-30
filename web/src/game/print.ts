@@ -13,13 +13,19 @@ const smoothstep = (a: number, b: number, x: number) => {
 
 // scene e figure de 0 (preto) a 1 (branco), como saem da foto. Devolve a
 // densidade de prata, de 0 (papel branco) a 1 (preto).
-export function printDensity(scene: number, figure: number, developed: number, exposure: number) {
+//
+// A figura desenhada (figure) só escurece. A de foto real (photos/real.ts)
+// tem tom próprio, de 0 a 1 como a cena: onde ela está (mix), a cópia vai da
+// cena para ela conforme a camada revela, então o rosto pode sair mais claro
+// que o arbusto atrás.
+export function printDensity(scene: number, figure: number, developed: number, exposure: number, mix = 0, tone = 0) {
   const induction = Math.max(developed - 0.08, 0) / 0.92
-  const negative = Math.pow(1 - scene, 1.1)
-  const base = paperCurve(Math.min(induction * negative * exposure, 1.6))
+  const silver = (gray: number) => paperCurve(Math.min(induction * Math.pow(1 - gray, 1.1) * exposure, 1.6))
+  const base = silver(scene)
   const late = induction * smoothstep(0.75, 1.35, developed)
   const creature = paperCurve(figure * 0.85 * late)
   let density = 1 - (1 - base) * (1 - creature)
+  if (mix > 0) density += (silver(tone) - density) * Math.min(1, mix * late)
   density += 0.35 * Math.pow(Math.max(developed * exposure - 1.15, 0), 1.3)
   return Math.min(1, Math.max(0, density))
 }

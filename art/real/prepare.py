@@ -1,0 +1,47 @@
+# Prepara as fotos reais do jogo a partir dos originais baixados (ver
+# README.md): recorta cada foto no quadrado do filme 120 e trata a pessoa
+# recortada (rosto borrado, tom da foto). Depois, `revela age` envelhece
+# cada cena. Uso: python3 prepare.py <originais> <saída>
+import sys
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
+
+src, out = sys.argv[1], sys.argv[2]
+SIDE = 648
+
+# (saída, original, recorte em fração da largura e da altura: x0, y0, x1, y1)
+SCENES = [
+    ('anapolis-coreto', 'anapolis.png', (682 / 1280, 452 / 847, 982 / 1280, 752 / 847)),
+    ('campinas-jardim', 'jardim-carlos-gomes-2.jpg', (290 / 800, 20 / 533, 760 / 800, 490 / 533)),
+    ('campinas-bento-quirino', 'praca-bento-quirino-2.jpg', (300 / 800, 20 / 521, 760 / 800, 480 / 521)),
+    ('campinas-rosario', 'largo-do-rosario-2.jpg', (20 / 800, 15 / 520, 490 / 800, 485 / 520)),
+    ('campinas-pompeo', 'praca-antonio-pompeo-3.jpg', (300 / 800, 60 / 615, 770 / 800, 530 / 615)),
+]
+
+for name, f, (x0, y0, x1, y1) in SCENES:
+    im = Image.open(f'{src}/{f}').convert('L')
+    box = (round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height))
+    im.crop(box).resize((SIDE, SIDE), Image.LANCZOS).save(f'{out}/{name}.png')
+
+# A pessoa: o rosto vira um borrão claro (mexeu a cabeça na exposição), o
+# corpo fica nítido, e o tom desce para o da foto.
+cut = Image.open(f'{src}/pessoa-recorte.png')
+cut = cut.crop(cut.getbbox())
+g, a = cut.convert('L'), cut.getchannel('A')
+w, h = g.size
+face = Image.new('L', g.size, 0)
+ImageDraw.Draw(face).ellipse([w * 0.3, 0, w * 0.75, h * 0.16], fill=255)
+g = Image.composite(g.point(lambda p: min(255, int(p * 2 + 40))), g, face.filter(ImageFilter.GaussianBlur(10)))
+smear = Image.new('L', g.size, 0)
+for dy in range(-18, 19, 3):
+    smear = ImageChops.lighter(smear, ImageChops.offset(g, 0, dy))
+smear = Image.blend(g.filter(ImageFilter.BoxBlur(6)), smear, 0.5)
+head = Image.new('L', g.size, 0)
+ImageDraw.Draw(head).rectangle([0, 0, w, int(h * 0.17)], fill=255)
+head = head.filter(ImageFilter.GaussianBlur(18))
+g = Image.composite(smear, g, head)
+a = Image.composite(ImageChops.lighter(a, ImageChops.offset(a, 0, -14).filter(ImageFilter.GaussianBlur(4))), a, head)
+g = ImageEnhance.Contrast(g).enhance(0.75).point(lambda p: int(p * 0.5 + 14))
+# Um pouco esticada: alta demais para gente.
+size = (round(w * 600 / h / 1.07), 600)
+person = Image.merge('LA', (g.resize(size, Image.LANCZOS), a.resize(size, Image.LANCZOS)))
+person.save(f'{out}/pessoa.png')

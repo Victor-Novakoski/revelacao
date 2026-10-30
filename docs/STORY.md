@@ -29,7 +29,7 @@ Dez dias. Cada cliente traz um rolo e pede para revelar "só as boas", então ca
 | Dia | O que acontece |
 | --- | --- |
 | 1 | Rotina: Dona Cida e Seu Nakamura. É o tutorial dos três gestos |
-| 2 | Elias traz a câmera e o rolo da praça. Você liga, ele volta correndo, e o Inspetor Moura leva a câmera |
+| 2 | Elias traz a câmera e o rolo da viagem do Vilela. Você liga, ele volta correndo, e o Inspetor Moura leva a câmera |
 | 3 | A figura ao longe, numa foto da Dona Cida. O rádio noticia o sumiço de um tal Vilela |
 | 4 | Mais perto, no fundo da igreja de um casamento do Nakamura. Elias começa a sumir das fotos que deixou |
 | 5 | Elias não atende. Moura não lembra dele, só de você entregando a câmera. Só a Senhorita Amanda lembra: "aquele moço do caminhão?" |
@@ -41,7 +41,7 @@ Dez dias. Cada cliente traz um rolo e pede para revelar "só as boas", então ca
 Em detalhe:
 
 1. **Rotina.** Os clientes fixos trazem rolos. O jogador aprende os três gestos: ampliador, bandeja, varal.
-2. **A câmera.** Elias acha uma câmera quebrada com um rolo dentro e traz para revelar. O rolo é de um passeio de domingo na praça. Em todas as fotos há alguém parado ao fundo, fora de foco, enquanto a multidão se mexe. Na última, essa pessoa está mais perto da câmera do que o próprio fotógrafo poderia estar.
+2. **A câmera.** Elias acha uma câmera quebrada com um rolo dentro e traz para revelar. O rolo é da viagem do Vilela de Anápolis a Campinas, a caminho de São Paulo: um rolo de 120 dura semanas e só as melhores viram cópia. Em todas as fotos, em cidades diferentes, está o mesmo homem de casaca, parado e de frente para a lente, com o rosto borrado. Na última, ele está mais perto da câmera do que o próprio fotógrafo poderia estar.
 3. **A polícia.** Você liga para o cliente, ele vem correndo. Chamam a polícia e entregam a câmera. Mas você viu aquilo, e agora aquilo está agarrado em você.
 4. **A aproximação.** De volta à rotina, nas fotos dos outros clientes a mesma figura aparece ao longe. Às vezes mais perto, às vezes mais longe, sempre a mesma.
 5. **O esquecimento.** Com medo, você liga para o cliente da câmera. Ele não atende. Você chama a polícia, e o policial não lembra dele, só de você entregando a câmera. Antes disso, o jogador já percebeu o cliente sumindo das próprias fotos.
@@ -131,13 +131,13 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 
 | Dia | Rolo | Fotos | A figura |
 | --- | --- | --- | --- |
-| 2 · terça, 15/10 | H. Vilela (câmera do Elias), "Domingo na praça" (120) | coreto, pipoqueiro, lago, a família do Vilela, o caminho vazio | Ao fundo em todas, cada vez mais perto; no lago, sem reflexo; na última, colada na lente |
+| 2 · terça, 15/10 | H. Vilela (câmera do Elias), "De Anápolis a Campinas" (120, fotos reais) | o coreto de Anápolis; em Campinas, o Jardim Carlos Gomes, a Praça Bento Quirino, o Largo do Rosário e a Praça Antônio Pompeo | O mesmo homem em todas, cada vez mais perto; na rua de sol, sem sombra; na última, colado na lente |
 | 3 · quarta, 16/10 | Dona Cida, "Piquenique no parque" (35 mm) | toalha xadrez, meninos correndo, Juvenal de chapéu na cara, patos | Bem longe, na fileira de árvores, na dos meninos correndo |
 | 3 | Marlene, "As normalistas" (35 mm) | escadaria da Escola Normal, as três no banco, sorveteria, Marlene sozinha | Nenhuma. A Marlene sai tremida na dela, só ela |
 | 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120) | porta da igreja, o altar, o bolo, retrato | Ao lado do altar, entre as colunas |
 | 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
 | 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120) | Keiko com o laço, os Okada, formatura do rapaz, família Ito | Na fresta da cortina, atrás do rapaz |
-| 6 · sábado, 19/10 | O rolo da praça, de novo (sem remetente) | coreto, pipoqueiro, lago, o caminho (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
+| 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
 | 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm) | porta da igreja, a vela, o almoço (o gato de novo), os meninos de terno | Nenhuma. A Marlene não vem buscar |
 | 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |
 | 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm) | lençóis, roda de crianças, Juvenal na poltrona, o portão | Perto em todas, e ninguém vê |
