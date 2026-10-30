@@ -1,8 +1,9 @@
 import type * as ToneNS from 'tone'
 import { LAMP, RADIO, TAP, type Point } from '../scenes/darkroom/layout'
 import { useCaptions } from './captions'
-import { BARS, WALTZ, at, length } from './waltz'
-import { FADE_IN, LEVELS, RADIO_BPM, dripPitch, fadeTime, nextDrip, radioWarp } from './mix'
+import { BARS, WALTZ, at, length, played, type Note } from './waltz'
+import { FADE_IN, LEVELS, RADIO_BPM, behindLeft, dripPitch, fadeTime, nextDrip, radioWarp } from './mix'
+import type { Cue } from '../game/script'
 
 type Tone = typeof ToneNS
 
@@ -22,6 +23,9 @@ let starting = false
 let wantAudible = true
 let hidden = false
 let bellFree = 0
+let waltzWrong = false
+let warp = 0
+let listener: { position: Point; forward: Point; up: Point } = { position: [0, 1.6, 2], forward: [0, 0, -1], up: [0, 1, 0] }
 
 const say = (text: string, seconds?: number) => useCaptions.getState().say(text, seconds)
 
@@ -91,10 +95,10 @@ function radio(tone: Tone, out: ToneNS.InputNode) {
     envelope: { attack: 0.001, decay: 0.012, sustain: 0 },
   }).connect(band)
 
-  const part = new tone.Part<{ time: string; notes: string[]; beats: number }>((time, n) => {
-    piano.triggerAttackRelease(n.notes, length(n.beats), time, 0.5 + Math.random() * 0.1)
+  const part = new tone.Part<Note & { time: string }>((time, n) => {
+    piano.triggerAttackRelease(played(n, waltzWrong), length(n.beats), time, 0.5 + Math.random() * 0.1)
     if (Math.random() < 0.08) crackle.triggerAttackRelease(0.01, time + Math.random() * 0.3)
-  }, WALTZ.map((n) => ({ time: at(n.bar, n.beat), notes: n.notes, beats: n.beats })))
+  }, WALTZ.map((n) => ({ ...n, time: at(n.bar, n.beat) })))
   part.loop = true
   part.loopEnd = at(BARS, 0)
   part.start(0)
@@ -170,7 +174,8 @@ export function setHidden(isHidden: boolean) {
 
 // "O rádio desafina" quando a criatura está na foto em revelação.
 export function setRadioWarp(amount: number, seconds = 6) {
-  if (!room) return
+  if (!room || Math.abs(amount - warp) < 0.05) return
+  warp = amount
   const { bpm, detune } = radioWarp(amount)
   room.tone.getTransport().bpm.rampTo(bpm, seconds)
   room.radio.set({ detune })
@@ -198,8 +203,92 @@ export function hushLamp(seconds = 1) {
   gain.linearRampToValueAtTime(1, now + seconds + 1.2)
 }
 
+// A valsa com a nota errada, no último dia.
+export function setWaltzWrong(wrong: boolean) {
+  waltzWrong = wrong
+}
+
+// Os sons da história. A legenda aparece mesmo sem som; tudo baixinho.
+export function playCue(cue: Cue) {
+  say(CUE_CAPTIONS[cue], cue === 'creak' ? 4 : 6)
+  if (!room) return
+  const { tone } = room
+  const now = tone.now()
+  switch (cue) {
+    case 'phone': {
+      // O sinal de chamada, duas vezes, abafado no fone.
+      const ear = new tone.Filter({ type: 'bandpass', frequency: 900, Q: 0.8 }).connect(room.master)
+      const ring = new tone.Gain(0).connect(ear)
+      const a = new tone.Oscillator({ frequency: 425, type: 'sine', volume: LEVELS.phone }).connect(ring).start(now)
+      for (const t of [0, 4]) {
+        ring.gain.setValueAtTime(0, now + t)
+        ring.gain.linearRampToValueAtTime(1, now + t + 0.05)
+        ring.gain.setValueAtTime(1, now + t + 1)
+        ring.gain.linearRampToValueAtTime(0, now + t + 1.05)
+      }
+      a.stop(now + 6)
+      tone.getTransport().scheduleOnce(() => ear.dispose(), `+7`)
+      break
+    }
+    case 'line':
+      hushLamp(2.5)
+      break
+    case 'creak': {
+      // Uma vez só no jogo: madeira rangendo atrás e à esquerda.
+      const at3d = behindLeft(listener.position, listener.forward, listener.up)
+      const out = panner(tone, at3d, room.master)
+      const wood = new tone.Filter({ type: 'bandpass', frequency: 420, Q: 9 }).connect(out)
+      const creak = new tone.NoiseSynth({
+        volume: LEVELS.creak,
+        noise: { type: 'brown' },
+        envelope: { attack: 0.25, decay: 0.6, sustain: 0.4, release: 0.5 },
+      }).connect(wood)
+      wood.frequency.setValueAtTime(420, now)
+      wood.frequency.exponentialRampToValueAtTime(230, now + 1.4)
+      creak.triggerAttackRelease(1.2, now)
+      tone.getTransport().scheduleOnce(() => out.dispose(), `+4`)
+      break
+    }
+    case 'match': {
+      // O risco do fósforo e o chiado do filme queimando.
+      const out = new tone.Filter({ type: 'highpass', frequency: 600 }).connect(room.master)
+      const scratch = new tone.NoiseSynth({
+        volume: LEVELS.match,
+        envelope: { attack: 0.005, decay: 0.18, sustain: 0, release: 0.05 },
+      }).connect(out)
+      scratch.triggerAttackRelease(0.15, now)
+      const hiss = new tone.Noise({ type: 'pink', volume: LEVELS.match - 10 }).connect(out)
+      hiss.start(now + 0.4).stop(now + 6)
+      hiss.volume.setValueAtTime(-60, now + 0.4)
+      hiss.volume.linearRampToValueAtTime(LEVELS.match - 10, now + 2)
+      hiss.volume.linearRampToValueAtTime(-60, now + 6)
+      tone.getTransport().scheduleOnce(() => out.dispose(), `+7`)
+      break
+    }
+    case 'silence': {
+      // Silêncio de repente é permitido; a volta é devagar.
+      const gain = room.master.gain
+      gain.cancelScheduledValues(now)
+      gain.setValueAtTime(gain.value, now)
+      gain.linearRampToValueAtTime(0, now + 0.08)
+      gain.setValueAtTime(0, now + 3)
+      gain.linearRampToValueAtTime(wantAudible && !hidden ? 1 : 0, now + 7)
+      break
+    }
+  }
+}
+
+const CUE_CAPTIONS: Record<Cue, string> = {
+  phone: '[O telefone chama do outro lado da linha]',
+  line: '[Do outro lado, uma goteira. E a mesma valsa do seu rádio]',
+  creak: '[Um rangido baixinho, atrás de você, à esquerda]',
+  match: '[Um fósforo risca. O filme chia e queima]',
+  silence: '[Silêncio. Até a lâmpada para de zumbir]',
+}
+
 // O ouvido acompanha a câmera da cena, para o som 3D virar com ela.
 export function setListener(position: Point, forward: Point, up: Point) {
+  listener = { position, forward, up }
   if (!room) return
   const l = room.tone.getListener()
   l.positionX.value = position[0]

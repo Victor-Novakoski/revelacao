@@ -11,20 +11,41 @@ import {
   keepPrint,
   printQuality,
   retry,
+  rolls,
   validCursor,
   type Cursor,
   type Print,
 } from './day'
 import type { DayScript, Quality } from './script'
 import { DAY1 } from './days/day1'
+import { DAY2 } from './days/day2'
+import { DAY3 } from './days/day3'
+import { DAY4 } from './days/day4'
+import { DAY5 } from './days/day5'
+import { DAY6 } from './days/day6'
+import { DAY7 } from './days/day7'
+import { DAY8 } from './days/day8'
+import { DAY9 } from './days/day9'
+import { DAY10 } from './days/day10'
 
-export const DAYS: Record<number, DayScript> = { 1: DAY1 }
-export const LAST_DAY = 1
+export const DAYS: Record<number, DayScript> = {
+  1: DAY1,
+  2: DAY2,
+  3: DAY3,
+  4: DAY4,
+  5: DAY5,
+  6: DAY6,
+  7: DAY7,
+  8: DAY8,
+  9: DAY9,
+  10: DAY10,
+}
+export const LAST_DAY = Math.max(...Object.keys(DAYS).map(Number))
 
 export const script = (day: number) => DAYS[day] ?? DAY1
 
 export type Screen = 'title' | 'day' | 'gallery'
-export type View = 'room' | 'counter' | 'enlarger' | 'tray' | 'line' | 'wall' | 'end'
+export type View = 'room' | 'counter' | 'enlarger' | 'tray' | 'line' | 'wall' | 'burn' | 'choice' | 'end'
 export type Phase = 'developing' | 'pulled'
 
 // O que está no ampliador. O foco e os segundos ficam de uma foto para a
@@ -43,6 +64,8 @@ type GameState = {
   notes: Record<string, string>
   // Detalhes que a lupa já achou.
   found: string[]
+  // O final escolhido no último dia.
+  ending: string | null
   enlarger: EnlargerState
   // A lâmpada do ampliador acesa, enquanto a folha leva luz.
   lamp: boolean
@@ -62,6 +85,8 @@ type GameState = {
   leave: () => void
   showGallery: () => void
   next: () => void
+  nextDay: () => void
+  choose: (ending: string) => void
   setFocus: (focus: number) => void
   setSeconds: (seconds: number) => void
   expose: () => void
@@ -107,7 +132,7 @@ function hung(s: Pick<GameState, 'day' | 'cursor' | 'prints'>) {
   return !!current && s.prints.some((p) => p.roll === current.roll.id && p.photo === current.photo.id)
 }
 
-export function viewOf(state: Pick<GameState, 'screen' | 'day' | 'cursor'>): View {
+export function viewOf(state: Pick<GameState, 'screen' | 'day' | 'cursor'> & { ending?: string | null }): View {
   if (state.screen === 'gallery') return 'wall'
   if (state.screen !== 'day') return 'room'
   const step = currentStep(script(state.day), state.cursor)
@@ -119,6 +144,10 @@ export function viewOf(state: Pick<GameState, 'screen' | 'day' | 'cursor'>): Vie
       return state.cursor.gesture
     case 'wall':
       return 'wall'
+    case 'burn':
+      return 'burn'
+    case 'choice':
+      return state.ending ? 'counter' : 'choice'
     case 'end':
       return 'end'
   }
@@ -133,6 +162,7 @@ export const useGame = create<GameState>()(
       prints: [],
       notes: {},
       found: [],
+      ending: null,
       enlarger: freshEnlarger,
       lamp: false,
       ...freshSheet(0, null),
@@ -153,6 +183,7 @@ export const useGame = create<GameState>()(
           prints: [],
           notes: {},
           found: [],
+          ending: null,
           enlarger: freshEnlarger,
           ...freshSheet(s.sheet + 1, null),
         })),
@@ -166,11 +197,25 @@ export const useGame = create<GameState>()(
         if (from === 'enlarger' && !s.enlarger.exposed) return
         if (from === 'tray' && s.phase !== 'pulled') return
         if (from === 'line' && !hung(s)) return
-        const cursor = advance(script(s.day), s.cursor, s.prints)
+        const cursor = advance(script(s.day), s.cursor, s.prints, s.ending)
         const to = viewOf({ ...s, cursor })
         if (to === 'tray') set({ cursor, ...freshSheet(s.sheet + 1, sheetFor(s)) })
         else if (to === 'enlarger') set({ cursor, enlarger: { ...s.enlarger, exposed: false } })
         else set({ cursor })
+      },
+
+      // Fim do dia: a loja abre de novo no dia seguinte. As cópias dos outros
+      // dias ficam guardadas, para o mural de "Ver as fotos".
+      nextDay: () => {
+        const s = get()
+        if (viewOf(s) !== 'end' || s.day >= LAST_DAY) return
+        set({ day: s.day + 1, cursor: START, enlarger: { ...s.enlarger, exposed: false }, ...freshSheet(s.sheet + 1, null) })
+      },
+      choose: (ending) => {
+        const s = get()
+        if (viewOf(s) !== 'choice') return
+        const step = currentStep(script(s.day), s.cursor)
+        if (step.kind === 'choice' && step.options.some((o) => o.id === ending)) set({ ending })
       },
 
       setFocus: (focus) => set((s) => ({ enlarger: { ...s.enlarger, focus: Math.min(1, Math.max(0, focus)) } })),
@@ -212,7 +257,15 @@ export const useGame = create<GameState>()(
       name: 'revelacao:game',
       version: 1,
       storage: createJSONStorage(() => localStorage),
-      partialize: ({ day, cursor, prints, notes, found, enlarger }) => ({ day, cursor, prints, notes, found, enlarger }),
+      partialize: ({ day, cursor, prints, notes, found, ending, enlarger }) => ({
+        day,
+        cursor,
+        prints,
+        notes,
+        found,
+        ending,
+        enlarger,
+      }),
       merge: (saved, current) => {
         const s = (saved ?? {}) as Partial<GameState>
         const day = s.day && DAYS[s.day] ? s.day : 1
@@ -220,6 +273,7 @@ export const useGame = create<GameState>()(
           ...current,
           ...s,
           day,
+          ending: s.ending ?? null,
           cursor: validCursor(script(day), s.cursor),
           enlarger: { ...freshEnlarger, ...s.enlarger, exposed: false },
         }
@@ -229,4 +283,11 @@ export const useGame = create<GameState>()(
 )
 
 // Já começou o dia? Na tela de título, o botão vira "Continuar".
-export const hasProgress = (s: Pick<GameState, 'cursor' | 'prints'>) => s.cursor.step > 0 || s.cursor.index > 0 || s.prints.length > 0
+export const hasProgress = (s: Pick<GameState, 'day' | 'cursor' | 'prints'>) =>
+  s.day > 1 || s.cursor.step > 0 || s.cursor.index > 0 || s.prints.length > 0
+
+// As cópias de um dia (as dos outros dias também ficam guardadas).
+export const printsOf = (day: number, prints: Print[]) => {
+  const ids = new Set(rolls(script(day)).map((r) => r.id))
+  return prints.filter((p) => ids.has(p.roll))
+}

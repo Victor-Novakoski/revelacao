@@ -2,22 +2,24 @@ import { useEffect, useRef } from 'react'
 import { currentStep, stepLines } from '../game/day'
 import { SPEAKERS } from '../game/script'
 import { script, useGame } from '../game/store'
-import { ringBell } from '../audio/engine'
+import { playCue, ringBell } from '../audio/engine'
 
 // O balcão da loja: as falas, uma de cada vez.
 export function Counter() {
   const day = useGame((s) => s.day)
   const cursor = useGame((s) => s.cursor)
   const prints = useGame((s) => s.prints)
+  const ending = useGame((s) => s.ending)
   const next = useGame((s) => s.next)
   const button = useRef<HTMLButtonElement>(null)
 
   const plan = script(day)
-  const lines = stepLines(plan, currentStep(plan, cursor), prints)
+  const lines = stepLines(plan, currentStep(plan, cursor), prints, ending)
   const line = lines[Math.min(cursor.index, lines.length - 1)]
 
   useEffect(() => {
     if (line?.bell) ringBell()
+    if (line?.cue) playCue(line.cue)
   }, [line])
   useEffect(() => button.current?.focus(), [])
 

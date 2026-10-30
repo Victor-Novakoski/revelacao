@@ -4,7 +4,9 @@ import type { Group, PointLight } from 'three'
 import { PAPER, TRAY, developStage, stepSim } from '../../game/develop'
 import { script, useGame } from '../../game/store'
 import { printTone, rolls } from '../../game/day'
-import { photoLayers } from '../../photos'
+import { hasFigure, photoLayers } from '../../photos'
+import { figureShows } from '../../game/print'
+import { setRadioWarp } from '../../audio/engine'
 import { TrayGpu } from './trayGpu'
 
 type Props = { reducedMotion: boolean; active: boolean }
@@ -74,6 +76,12 @@ export function DevelopTray({ reducedMotion, active }: Props) {
       const exposure = game.sheetPhoto?.exposure ?? 1
       game.progress(Math.floor(sim.elapsed), developStage(printTone(sim.developed, exposure)))
     }
+
+    // O rádio desafina enquanto a figura surge no papel, e volta ao normal
+    // quando a folha sai da bandeja.
+    const sheet = game.sheetPhoto
+    const haunted = active && game.phase === 'developing' && !!sheet && hasFigure(`${sheet.roll}/${sheet.photo}`)
+    setRadioWarp(haunted ? Math.min(1, figureShows(sim.developed) * 1.4) : 0, haunted ? 4 : 8)
 
     if (tray.current) {
       tray.current.rotation.z = -sim.tilt.x

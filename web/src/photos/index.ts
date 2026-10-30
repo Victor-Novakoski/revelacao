@@ -1,15 +1,19 @@
 import { blurRadius, boxBlur, printDensity } from '../game/print'
 import { DAY1_SCENES, type Scene } from './day1'
 import { frameOf, PRINT, type Film } from './frame'
+import { STORY_FIGURES, STORY_SCENES } from './story'
 
 // As camadas de cada foto (cena e figura) e a cópia pronta, para o varal e
 // o mural. As camadas são desenhadas uma vez e guardadas.
 
 export { PRINT } from './frame'
 
-const SCENES: Record<string, Scene> = { ...DAY1_SCENES }
+const SCENES: Record<string, Scene> = { ...DAY1_SCENES, ...STORY_SCENES }
 // A figura, por foto. No dia 1 ela não está em foto nenhuma.
-const FIGURES: Record<string, Scene> = {}
+const FIGURES: Record<string, Scene> = { ...STORY_FIGURES }
+
+export const hasScene = (key: string) => key in SCENES
+export const hasFigure = (key: string) => key in FIGURES
 
 export type Layers = {
   scene: HTMLCanvasElement

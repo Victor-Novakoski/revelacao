@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { rolls } from '../game/day'
 import type { Detail, PhotoSpec, Roll } from '../game/script'
-import { noteKey, script, useGame } from '../game/store'
+import { LAST_DAY, noteKey, script, useGame } from '../game/store'
+import { FIGURE_VISIBLE, figureShows } from '../game/print'
 import { PRINT, printCanvas, type PrintLook } from '../photos'
+import { hushLamp } from '../audio/engine'
 import { PrintView } from './PrintView'
 
 type Entry = { key: string; roll: Roll; photo: PhotoSpec; look: PrintLook }
@@ -14,8 +16,9 @@ const FULL: PrintLook = { developed: 1.35, exposure: 0.85, blur: 0 }
 const ZOOM = 2.6
 const LENS = 168
 
-function useEntries(gallery: boolean): Entry[] {
-  const day = useGame((s) => s.day)
+function useEntries(gallery: boolean, galleryDay: number): Entry[] {
+  const current = useGame((s) => s.day)
+  const day = gallery ? galleryDay : current
   const prints = useGame((s) => s.prints)
   return useMemo(
     () =>
@@ -45,8 +48,12 @@ function Loupe({ entry, source }: { entry: Entry; source: HTMLCanvasElement }) {
   const move = (u: number, v: number) => {
     const at = { u: Math.min(1, Math.max(0, u)), v: Math.min(1, Math.max(0, v)) }
     setPos(at)
-    const detail = entry.photo.details?.find((d) => hit(d, at.u, at.v))
+    // A figura só se acha numa cópia que ficou tempo no revelador.
+    const shows = figureShows(entry.look.developed) >= FIGURE_VISIBLE
+    const detail = entry.photo.details?.find((d) => (!d.figure || shows) && hit(d, at.u, at.v))
     if (detail) {
+      // O zumbido da lâmpada some quando a lupa passa sobre ela.
+      if (detail.figure && seen !== detail.text) hushLamp(1)
       setSeen(detail.text)
       find(detail.id)
     }
@@ -166,7 +173,8 @@ type Props = { gallery: boolean; hint?: string; onDone: () => void; doneLabel: s
 // O mural: as cópias do dia, secas, presas na parede. Abrir uma mostra de
 // perto, com a lupa; virar mostra o verso e as anotações.
 export function Wall({ gallery, hint, onDone, doneLabel }: Props) {
-  const entries = useEntries(gallery)
+  const [galleryDay, setGalleryDay] = useState(1)
+  const entries = useEntries(gallery, galleryDay)
   const [open, setOpen] = useState<number | null>(null)
   const [back, setBack] = useState(false)
   const entry = open === null ? null : entries[open]
@@ -209,6 +217,21 @@ export function Wall({ gallery, hint, onDone, doneLabel }: Props) {
     <section className="wall" aria-label="Mural de fotos">
       <h2>{gallery ? 'As fotos' : 'O mural'}</h2>
       {hint && <p className="tutorial">{hint}</p>}
+      {gallery && (
+        <nav className="days" aria-label="Escolha o dia">
+          {Array.from({ length: LAST_DAY }, (_, i) => i + 1).map((d) => (
+            <button
+              key={d}
+              className={d === galleryDay ? 'enter' : 'ghost'}
+              aria-pressed={d === galleryDay}
+              onClick={() => setGalleryDay(d)}
+            >
+              Dia {d}
+            </button>
+          ))}
+        </nav>
+      )}
+      {gallery && <p className="gallery-day">{script(galleryDay).title}</p>}
       <ul className="grid">
         {entries.map((e, i) => (
           <li key={e.key}>

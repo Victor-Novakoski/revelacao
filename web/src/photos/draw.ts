@@ -111,3 +111,83 @@ export function falloff(ctx: Ctx, x: number, y: number, w: number, h: number, st
   ctx.fillStyle = g
   ctx.fillRect(x, y, w, h)
 }
+
+// Desenha com transparência: a pessoa sumindo da foto.
+export function faded(ctx: Ctx, alpha: number, draw: () => void) {
+  ctx.save()
+  ctx.globalAlpha = Math.max(0, Math.min(1, alpha))
+  draw()
+  ctx.restore()
+}
+
+// O rosto borrado: a mesma cabeça repetida, arrastada para os lados. amount
+// de 0 (nítido) a 1 (não sobra rosto).
+export function smear(ctx: Ctx, x: number, y: number, rx: number, ry: number, tone: number, amount: number) {
+  ellipse(ctx, x, y, rx, ry, tone)
+  if (amount <= 0) return
+  ctx.save()
+  ctx.globalAlpha = 0.28
+  for (let i = 0; i < 9; i++) {
+    const t = i / 8 - 0.5
+    ellipse(ctx, x + t * rx * 5 * amount, y + Math.sin(i * 2.1) * ry * 0.6 * amount, rx * (1 + amount), ry, tone)
+  }
+  ctx.restore()
+}
+
+// Seu Augusto: terno escuro, camisa clara, gravata borboleta. O rosto
+// borra conforme blur.
+export function augusto(ctx: Ctx, x: number, foot: number, h: number, blur = 0) {
+  person(ctx, { x, foot, h, tone: 0.16, face: 0.74, hair: 0.1 })
+  const top = foot - h
+  const head = h * 0.13
+  poly(ctx, [[x - h * 0.04, top + head * 1.1], [x + h * 0.04, top + head * 1.1], [x, top + h * 0.3]], 0.9)
+  poly(ctx, [[x - h * 0.035, top + head * 1.15], [x, top + head * 1.3], [x - h * 0.035, top + head * 1.45]], 0.05)
+  poly(ctx, [[x + h * 0.035, top + head * 1.15], [x, top + head * 1.3], [x + h * 0.035, top + head * 1.45]], 0.05)
+  if (blur > 0) {
+    // Por cima do rosto nítido, o borrão do fundo e da própria cabeça.
+    ellipse(ctx, x, top + head * 0.55, head * 0.5, head * 0.6, 0.4)
+    smear(ctx, x, top + head * 0.55, head * 0.45, head * 0.55, 0.74, blur)
+  }
+}
+
+// A figura, desenhada na própria camada: branco sobre preto. Alta e magra
+// demais, braços que descem até perto dos joelhos, cabeça pequena.
+export function creature(ctx: Ctx, x: number, foot: number, h: number) {
+  ctx.fillStyle = '#fff'
+  ctx.beginPath()
+  ctx.ellipse(x, foot - h * 0.93, h * 0.055, h * 0.075, 0, 0, Math.PI * 2)
+  ctx.fill()
+  ctx.beginPath()
+  ctx.moveTo(x - h * 0.08, foot - h * 0.83)
+  ctx.lineTo(x + h * 0.08, foot - h * 0.83)
+  ctx.lineTo(x + h * 0.05, foot)
+  ctx.lineTo(x - h * 0.05, foot)
+  ctx.closePath()
+  ctx.fill()
+  ctx.fillRect(x - h * 0.12, foot - h * 0.81, h * 0.035, h * 0.56)
+  ctx.fillRect(x + h * 0.085, foot - h * 0.81, h * 0.035, h * 0.56)
+}
+
+// Árvore de praça: tronco e copa redonda.
+export function tree(ctx: Ctx, x: number, foot: number, h: number, tone = 0.3) {
+  rect(ctx, x - h * 0.04, foot - h * 0.45, h * 0.08, h * 0.45, tone - 0.1)
+  ellipse(ctx, x, foot - h * 0.68, h * 0.3, h * 0.3, tone)
+  ellipse(ctx, x - h * 0.15, foot - h * 0.6, h * 0.2, h * 0.18, tone + 0.05)
+}
+
+// Gente andando ao fundo, pequena, com sorteio fixo.
+export function crowd(ctx: Ctx, seed: number, n: number, x0: number, x1: number, foot: number, h: number) {
+  const rand = seeded(seed)
+  for (let i = 0; i < n; i++) {
+    const s = h * (0.85 + rand() * 0.3)
+    person(ctx, {
+      x: x0 + rand() * (x1 - x0),
+      foot: foot + rand() * h * 0.15,
+      h: s,
+      tone: 0.15 + rand() * 0.7,
+      dress: rand() < 0.5,
+      hair: rand() * 0.3,
+      arms: rand() < 0.2 ? 'side' : 'down',
+    })
+  }
+}

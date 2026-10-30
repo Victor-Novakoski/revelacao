@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { START } from './day'
 import { DAY1 } from './days/day1'
-import { hasProgress, useGame, viewOf } from './store'
+import { LAST_DAY, hasProgress, printsOf, useGame, viewOf } from './store'
 
 const game = () => useGame.getState()
 const view = () => viewOf(game())
@@ -162,5 +162,40 @@ describe('useGame', () => {
     game().restart()
     expect(game().cursor).toEqual(START)
     expect(game().prints).toEqual([])
+  })
+
+  it('no fim do dia, a loja abre no dia seguinte e as cópias de ontem ficam guardadas', () => {
+    game().open()
+    game().nextDay()
+    expect(game().day).toBe(1)
+    for (let i = 0; i < 300 && view() !== 'end'; i++) {
+      const v = view()
+      if (v === 'enlarger') game().expose()
+      if (v === 'tray') develop(1)
+      if (v === 'line') game().hang()
+      game().next()
+    }
+    game().nextDay()
+    expect(game().day).toBe(2)
+    expect(game().cursor).toEqual(START)
+    expect(view()).toBe('counter')
+    expect(game().prints).toHaveLength(8)
+    expect(printsOf(2, game().prints)).toHaveLength(0)
+    expect(hasProgress({ ...game(), prints: [], cursor: START })).toBe(true)
+  })
+
+  it('o jogo inteiro, do primeiro dia até um final', () => {
+    game().open()
+    for (let i = 0; i < 6000 && !(view() === 'end' && game().day === LAST_DAY); i++) {
+      const v = view()
+      if (v === 'enlarger') game().expose()
+      if (v === 'tray') develop(1)
+      if (v === 'line') game().hang()
+      if (v === 'choice') game().choose('revelar')
+      if (v === 'end') game().nextDay()
+      else game().next()
+    }
+    expect(game().day).toBe(LAST_DAY)
+    expect(view()).toBe('end')
   })
 })

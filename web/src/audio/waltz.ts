@@ -38,3 +38,12 @@ export const WALTZ: Note[] = [...left, ...melody]
 // Tempo no formato do Tone.js: "compasso:tempo:semicolcheia".
 export const at = (bar: number, beat: number) => `${bar}:${beat}:0`
 export const length = (beats: number) => `0:${beats}:0`
+
+// No último dia a valsa volta com uma nota errada: a nota longa do sétimo
+// compasso desce meio tom e briga com o acorde.
+export const WRONG_BAR = 7
+
+export function played(n: Note, wrong: boolean): string[] {
+  if (!wrong || n.bar !== WRONG_BAR || n.notes[0] !== 'A4') return n.notes
+  return ['G#4']
+}

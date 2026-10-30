@@ -1,5 +1,5 @@
 import { verdict } from './develop'
-import type { DayScript, Gesture, Line, Mood, PhotoSpec, Quality, Roll, Step } from './script'
+import type { DayScript, Ending, Gesture, Line, Mood, PhotoSpec, Quality, Roll, Step } from './script'
 
 // Andar pelo roteiro de um dia, sem React e sem Three.js. O cursor diz em
 // que passo o jogador está; dentro de uma conversa, index é a fala; dentro
@@ -86,10 +86,18 @@ export function moodOf(day: DayScript, roll: string, prints: Print[]): Mood {
   return rollMood(qualities)
 }
 
-// As falas de um passo de conversa. Na entrega, dependem das cópias.
-export function stepLines(day: DayScript, step: Step, prints: Print[]): Line[] {
+export function endingOf(day: DayScript, ending: string | null | undefined): Ending | undefined {
+  if (!ending) return undefined
+  for (const s of day.steps) if (s.kind === 'choice') return s.options.find((o) => o.id === ending)
+  return undefined
+}
+
+// As falas de um passo de conversa. Na entrega, dependem das cópias; na
+// escolha do fim, do final escolhido.
+export function stepLines(day: DayScript, step: Step, prints: Print[], ending?: string | null): Line[] {
   if (step.kind === 'talk') return step.lines
   if (step.kind === 'deliver') return [...step.before, ...step.after[moodOf(day, step.roll, prints)]]
+  if (step.kind === 'choice') return step.options.find((o) => o.id === ending)?.lines ?? []
   return []
 }
 
@@ -107,13 +115,21 @@ export function currentPhoto(day: DayScript, c: Cursor): { roll: Roll; photo: Ph
 const nextStep = (day: DayScript, c: Cursor): Cursor =>
   c.step + 1 < day.steps.length ? { step: c.step + 1, index: 0, gesture: 'enlarger' } : c
 
-// Um passo à frente. No fim do dia, fica parado.
-export function advance(day: DayScript, c: Cursor, prints: Print[]): Cursor {
+// Um passo à frente. No fim do dia, fica parado; na escolha, só anda
+// depois de escolher.
+export function advance(day: DayScript, c: Cursor, prints: Print[], ending?: string | null): Cursor {
   const step = currentStep(day, c)
   switch (step.kind) {
     case 'talk':
     case 'deliver':
       return c.index + 1 < stepLines(day, step, prints).length ? { ...c, index: c.index + 1 } : nextStep(day, c)
+    case 'choice': {
+      const lines = stepLines(day, step, prints, ending)
+      if (lines.length === 0) return c
+      return c.index + 1 < lines.length ? { ...c, index: c.index + 1 } : nextStep(day, c)
+    }
+    case 'burn':
+      return c.index + 1 < step.actions.length ? { ...c, index: c.index + 1 } : nextStep(day, c)
     case 'roll': {
       const g = GESTURES.indexOf(c.gesture)
       if (g < GESTURES.length - 1) return { ...c, gesture: GESTURES[g + 1] }
@@ -142,6 +158,7 @@ export function validCursor(day: DayScript, c: Cursor | undefined): Cursor {
   if (!c || c.step < 0 || c.step >= day.steps.length) return START
   const step = day.steps[c.step]
   if (step.kind === 'roll' && c.index >= step.roll.photos.length) return START
+  if (step.kind === 'burn' && c.index >= step.actions.length) return START
   if (!GESTURES.includes(c.gesture)) return START
   return c
 }
