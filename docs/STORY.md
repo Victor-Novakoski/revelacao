@@ -11,7 +11,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 | Nome | Quem é |
 | --- | --- |
 | **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Terno, gravata borboleta, sempre arrumado |
-| **Amanda** | Dona da livraria ao lado, vive lendo e é muito perspicaz. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ex.: "O Espelho", de Machado de Assis, sobre um homem que perde a própria imagem; "O Retrato Oval", de Poe, sobre um retrato que tira a vida de quem posa). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
+| **Amanda** | Dona da livraria ao lado, apaixonada por livros de terror e muito perspicaz. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ver "Os livros da Amanda"). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
 | **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
 | **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
@@ -74,6 +74,19 @@ A trilha é só o rádio da bancada:
 - **O telefone.** Você liga para o cliente sumido, alguém atende e do outro lado só se ouve uma goteira e a mesma música do seu rádio.
 - **O silêncio.** O zumbido da lâmpada some por um segundo quando a lupa passa sobre a criatura.
 - **O rangido.** Um rangido 3D baixinho, atrás e à esquerda, uma única vez no jogo.
+
+## Os livros da Amanda
+
+Clássicos de terror em domínio público. Cada um ecoa o momento da história:
+
+| Dia | Livro | O eco |
+| --- | --- | --- |
+| 1 | "Noite na Taverna", Álvares de Azevedo | Terror gótico brasileiro, só para apresentar o gosto dela |
+| 2 | "O Retrato de Dorian Gray", Oscar Wilde | Uma imagem que guarda o que a pessoa esconde |
+| 4 | "O Retrato Oval", Edgar Allan Poe | Um retrato que tira a vida de quem posa |
+| 5 | "Drácula", Bram Stoker | Quem não aparece no espelho (e o Elias sumindo das fotos) |
+| 7 | "O Coração Delator", Edgar Allan Poe | A culpa que não deixa esquecer, depois do fogo |
+| 9 | "O Espelho", Machado de Assis | Um homem que perde a própria imagem |
 
 ## Estilo das fotos
 
