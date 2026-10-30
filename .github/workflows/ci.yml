@@ -33,10 +33,12 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: tools/revela/go.mod
-          cache-dependency-path: tools/revela/go.mod
+          cache-dependency-path: tools/revela/go.sum
       - name: gofmt
         run: test -z "$(gofmt -l .)"
       - run: go vet ./...
-      - run: go test ./...
+      - run: go test -race ./...
       - name: Conferir os rolos
         run: go run ./cmd/revela check ../../art/rolls
+      - name: Revelar os rolos
+        run: go run ./cmd/revela build ../../art/rolls "$RUNNER_TEMP/rolls"

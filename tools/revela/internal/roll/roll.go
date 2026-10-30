@@ -7,8 +7,22 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
+	"strings"
 )
+
+// validID é o formato de id de rolo e de foto: vira nome de pasta e de URL.
+var validID = regexp.MustCompile(`^[a-z0-9][a-z0-9-]*$`)
+
+// NegativeName é o nome reservado para o negativo de cada foto na saída.
+const NegativeName = "negative"
+
+// LayerName é o nome da camada na saída: o arquivo sem pasta e sem extensão.
+func LayerName(layer string) string {
+	base := filepath.Base(layer)
+	return strings.TrimSuffix(base, filepath.Ext(base))
+}
 
 // Roll descreve um rolo: as fotos e as camadas de cada uma.
 type Roll struct {
@@ -45,7 +59,8 @@ func Load(dir string) (Roll, error) {
 	return r, nil
 }
 
-// Check confere um rolo: id, pelo menos uma foto, ids únicos e camadas que existem no disco.
+// Check confere um rolo: ids válidos e únicos, pelo menos uma foto e camadas
+// que existem no disco, dentro da pasta do rolo.
 func Check(dir string) []Problem {
 	manifest := filepath.Join(dir, "roll.json")
 	r, err := Load(dir)
@@ -55,6 +70,8 @@ func Check(dir string) []Problem {
 	var probs []Problem
 	if r.ID == "" {
 		probs = append(probs, Problem{manifest, "falta o id do rolo"})
+	} else if !validID.MatchString(r.ID) {
+		probs = append(probs, Problem{manifest, fmt.Sprintf("id de rolo inválido: %q (use letras minúsculas, números e hífen)", r.ID)})
 	}
 	if len(r.Photos) == 0 {
 		probs = append(probs, Problem{manifest, "o rolo não tem fotos"})
@@ -63,6 +80,8 @@ func Check(dir string) []Problem {
 	for i, p := range r.Photos {
 		if p.ID == "" {
 			probs = append(probs, Problem{manifest, fmt.Sprintf("a foto %d não tem id", i+1)})
+		} else if !validID.MatchString(p.ID) {
+			probs = append(probs, Problem{manifest, fmt.Sprintf("id de foto inválido: %q (use letras minúsculas, números e hífen)", p.ID)})
 		} else if seen[p.ID] {
 			probs = append(probs, Problem{manifest, fmt.Sprintf("id de foto repetido: %s", p.ID)})
 		}
@@ -70,7 +89,20 @@ func Check(dir string) []Problem {
 		if len(p.Layers) == 0 {
 			probs = append(probs, Problem{manifest, fmt.Sprintf("a foto %q não tem camadas", p.ID)})
 		}
+		names := map[string]bool{}
 		for _, layer := range p.Layers {
+			name := LayerName(layer)
+			switch {
+			case name == NegativeName:
+				probs = append(probs, Problem{manifest, fmt.Sprintf("a camada %q da foto %q usa o nome reservado %q", layer, p.ID, NegativeName)})
+			case names[name]:
+				probs = append(probs, Problem{manifest, fmt.Sprintf("a foto %q tem duas camadas chamadas %q", p.ID, name)})
+			}
+			names[name] = true
+			if !filepath.IsLocal(layer) {
+				probs = append(probs, Problem{manifest, fmt.Sprintf("a camada %q da foto %q sai da pasta do rolo", layer, p.ID)})
+				continue
+			}
 			path := filepath.Join(dir, layer)
 			if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 				probs = append(probs, Problem{path, fmt.Sprintf("camada da foto %q não encontrada", p.ID)})

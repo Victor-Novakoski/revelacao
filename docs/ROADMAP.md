@@ -17,9 +17,9 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [ ] Critério: balançar e ver a imagem surgir tem que ser gostoso (validar jogando)
 
 ## Etapa 3 · A ferramenta das fotos
-- [ ] `revela build`: tons de cinza, negativo, WebP, `rolos.json`
-- [ ] Pool de goroutines e testes
-- [ ] CLI na CI
+- [x] `revela build`: tons de cinza, negativo, WebP, `rolos.json`
+- [x] Pool de goroutines e testes
+- [x] CLI na CI
 
 ## Etapa 4 · A sala
 - [ ] Câmara escura 3D completa, ampliador e varal

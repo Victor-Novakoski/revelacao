@@ -22,9 +22,41 @@ Blender (camadas de cada foto)
 
 ## A ferramenta `revela` (Go)
 
-- `revela check <dir>`: confere se cada rolo tem `roll.json` e as camadas que ele cita.
-- `revela build <dir> <out>` (etapa 3): converte para tons de cinza, gera o negativo, comprime em WebP e escreve `rolos.json` com tamanhos e hashes. Processa as fotos em paralelo com um pool de goroutines.
-- Roda na CI: um PR com foto quebrada não passa.
+- `revela check <dir>`: confere cada rolo: ids (letras minúsculas, números e hífen, porque viram pasta e URL), camadas que existem e ficam dentro da pasta do rolo, nomes de camada sem repetir.
+- `revela build [-j N] [-q Q] <dir> <out>`: converte cada camada para tons de cinza (transparência vira preto), gera o negativo da foto, comprime tudo em WebP e escreve `rolos.json` com tamanhos e hashes. Cada foto é um trabalho de um pool de goroutines (`internal/pool`), uma por CPU por padrão; a ordem do `rolos.json` não depende de quem termina antes.
+- Roda na CI (`check` e `build`): um PR com foto quebrada não passa.
+
+### Entrada: `art/rolls/<rolo>/roll.json`
+
+```json
+{
+  "id": "praca",
+  "title": "Domingo na praça",
+  "photos": [
+    { "id": "p1", "note": "o coreto", "layers": ["p1/scene.png", "p1/figure.png"] }
+  ]
+}
+```
+
+As camadas são PNG ou JPEG do mesmo tamanho. A primeira é a cena; as outras (a figura, detalhes) são máscaras claras sobre fundo preto ou transparente.
+
+### Saída: `<out>/rolos.json` e `<out>/<rolo>/<foto>/<camada>.webp`
+
+```json
+{
+  "version": 1,
+  "rolls": [{
+    "id": "praca", "title": "Domingo na praça",
+    "photos": [{
+      "id": "p1", "note": "o coreto", "width": 1280, "height": 960,
+      "layers": [{ "name": "scene", "src": "praca/p1/scene.webp", "bytes": 81234, "sha256": "…" }],
+      "negative": { "name": "negative", "src": "praca/p1/negative.webp", "bytes": 80012, "sha256": "…" }
+    }]
+  }]
+}
+```
+
+`src` é relativo ao `rolos.json`. O jogo usa o hash para furar o cache quando a foto muda. O negativo sai só da cena: a figura nunca aparece no filme, só no papel revelado. O nome `negative` é reservado. O `rolos.json` é escrito por último e de uma vez, então um build que falha não deixa manifesto pela metade.
 
 ## Por que sem backend
 
