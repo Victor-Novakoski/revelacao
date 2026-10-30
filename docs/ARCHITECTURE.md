@@ -12,7 +12,7 @@ Blender (camadas de cada foto)
 ## No navegador
 
 - **React** cuida das telas: título, menus, mural, legendas. O 3D fica no `<Canvas>` do React Three Fiber.
-- **Sala 3D** (`scenes/darkroom`): poucos objetos, a luz vermelha faz o trabalho. Pós-processamento com bloom, grão e vinheta.
+- **Sala 3D** (`scenes/darkroom`): poucos objetos, a luz vermelha faz o trabalho. Pós-processamento com bloom, grão e vinheta. As posições das peças que fazem som ficam em `layout.ts`. Duas lâmpadas de segurança: a do teto, que faz sombra e zumbe, e uma fraca sobre o ampliador. Nada na sala se mexe sozinho além da lâmpada.
 - **Os três gestos:** ampliador (foco e tempo de luz), bandeja (balançar o revelador), varal (secar). Depois o mural com lupa.
 - **Shader de revelação** (`shaders/develop.frag`, etapa 2): a densidade de cada ponto da foto cresce com o tempo no revelador e com a agitação, com grão e manchas. A foto é a soma de camadas (fundo, figura, detalhes); a camada da figura tem curva de revelação mais lenta, então só aparece quando você revela mais.
 - **A bandeja** (etapa 2): o modelo fica em `game/develop.ts`, sem Three.js e com testes. Arrastar inclina a bandeja; o líquido é uma mola com pouco amortecimento que vai e volta. Agitar renova o revelador perto do papel: revela mais rápido e por igual. Parada, revela devagar e manchada.

@@ -22,7 +22,7 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [x] CLI na CI
 
 ## Etapa 4 · A sala
-- [ ] Câmara escura 3D completa, ampliador e varal
+- [x] Câmara escura 3D completa, ampliador e varal
 - [x] Som ambiente: lâmpada, gotas, rádio (Tone.js), botão de mudo, legendas
 
 ## Etapa 5 · O primeiro dia
