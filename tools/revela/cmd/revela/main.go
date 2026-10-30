@@ -2,10 +2,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"os"
+	"time"
 
+	"github.com/victor-novakoski/revelacao/tools/revela/internal/build"
 	"github.com/victor-novakoski/revelacao/tools/revela/internal/roll"
 )
 
@@ -13,7 +16,13 @@ const usage = `revela prepara as fotos do jogo Revelação.
 
 Uso:
   revela check <pasta-de-rolos>   confere os rolos e as camadas
-  revela build <entrada> <saída>  gera WebP e rolos.json (etapa 3)
+  revela build [-j N] [-q Q] <entrada> <saída>
+                                  gera as camadas em cinza, o negativo
+                                  de cada foto em WebP e o rolos.json
+
+Opções do build:
+  -j N   fotos processadas ao mesmo tempo (padrão: uma por CPU)
+  -q Q   qualidade do WebP, de 1 a 100 (padrão: 82)
 `
 
 func main() {
@@ -33,8 +42,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 		}
 		return check(args[1], stdout, stderr)
 	case "build":
-		fmt.Fprintln(stderr, "revela build ainda não existe: chega na etapa 3 do roadmap")
-		return 1
+		return runBuild(args[1:], stdout, stderr)
 	default:
 		fmt.Fprint(stderr, usage)
 		return 2
@@ -60,5 +68,34 @@ func check(root string, stdout, stderr io.Writer) int {
 		return 1
 	}
 	fmt.Fprintf(stdout, "%d rolo(s) conferido(s), tudo certo\n", len(dirs))
+	return 0
+}
+
+func runBuild(args []string, stdout, stderr io.Writer) int {
+	fs := flag.NewFlagSet("build", flag.ContinueOnError)
+	fs.SetOutput(io.Discard)
+	workers := fs.Int("j", 0, "")
+	quality := fs.Int("q", build.DefaultQuality, "")
+	if err := fs.Parse(args); err != nil || fs.NArg() != 2 || *quality < 1 || *quality > 100 || *workers < 0 {
+		fmt.Fprint(stderr, usage)
+		return 2
+	}
+	start := time.Now()
+	m, err := build.Run(fs.Arg(0), fs.Arg(1), build.Options{Workers: *workers, Quality: *quality})
+	if err != nil {
+		fmt.Fprintln(stderr, err)
+		return 1
+	}
+	photos, total := 0, 0
+	for _, r := range m.Rolls {
+		for _, p := range r.Photos {
+			photos++
+			total += p.Negative.Bytes
+			for _, l := range p.Layers {
+				total += l.Bytes
+			}
+		}
+	}
+	fmt.Fprintf(stdout, "%d rolo(s), %d foto(s), %.1f KB em %s\n", len(m.Rolls), photos, float64(total)/1024, time.Since(start).Round(time.Millisecond))
 	return 0
 }

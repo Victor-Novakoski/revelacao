@@ -67,3 +67,22 @@ func TestDirsOnlyListsRolls(t *testing.T) {
 		t.Fatalf("esperava [a b], veio %v", dirs)
 	}
 }
+
+func TestCheckRejectsUnsafeNames(t *testing.T) {
+	dir := t.TempDir()
+	write(t, filepath.Join(dir, "roll.json"), `{"id":"Praça 1","photos":[{"id":"../p1","layers":["../fora.png","a/fundo.png","b/fundo.jpg","negative.png"]}]}`)
+	write(t, filepath.Join(dir, "a/fundo.png"), "x")
+	write(t, filepath.Join(dir, "b/fundo.jpg"), "x")
+	write(t, filepath.Join(dir, "negative.png"), "x")
+
+	var msgs []string
+	for _, p := range Check(dir) {
+		msgs = append(msgs, p.Msg)
+	}
+	got := strings.Join(msgs, "|")
+	for _, want := range []string{"id de rolo inválido", "id de foto inválido", "sai da pasta do rolo", "duas camadas chamadas \"fundo\"", "nome reservado"} {
+		if !strings.Contains(got, want) {
+			t.Errorf("faltou o problema %q em %q", want, got)
+		}
+	}
+}
