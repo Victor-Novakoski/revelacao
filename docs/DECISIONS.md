@@ -4,6 +4,10 @@ Registro das escolhas e do porquê. A mais nova em cima.
 
 | Data | Decisão | Por quê |
 | --- | --- | --- |
+| 30/10/2026 | Etapa 6: onde a figura fica em cada foto é um dado só (`photos/figures.ts`), usado pelo desenho e pelo detalhe da lupa | Com dezenas de fotos, desenho e lupa descasariam. Um teste confere que toda foto com figura tem o detalhe, e que o dia 1 e a Senhorita Amanda nunca têm |
+| 30/10/2026 | Etapa 6: a lupa só acha a figura numa cópia que ficou tempo no revelador | "Tirar cedo é seguro, mas perde pistas" vira regra de jogo, com a mesma conta da camada da figura |
+| 30/10/2026 | Etapa 6: o rolo queimado é um passo próprio, um gesto por botão, e o fim é uma escolha com três finais guardada no estado | O jogador faz o gesto em vez de ler; a escolha fica salva para o cartão do fim e para "Começar de novo" |
+| 30/10/2026 | Etapa 6: sons da história (telefone, rangido, fósforo, silêncio) gerados no Tone.js, baixos e com legenda | Mesma regra do som da sala: nada a licenciar e nenhum susto. O silêncio de repente é o único corte brusco |
 | 30/10/2026 | Etapa 5: as fotos do dia 1 são desenhadas em código (canvas), como a foto de teste, até a arte do Blender. O roteiro é um arquivo TypeScript por dia, sem JSON nem backend | O dia precisava ser jogável agora; trocar o desenho pela camada do Blender não muda o roteiro nem os detalhes da lupa, que ficam em fração da foto. Roteiro em TS é checado pelo compilador e pelos testes |
 | 30/10/2026 | Etapa 5: o tempo de luz do ampliador multiplica o tom da cópia, mas a figura depende só do tempo no revelador | É como o papel funciona (a luz define o quanto escurece) e deixa uma escolha para o jogador: menos luz e mais revelador mostra mais detalhe sem escurecer |
 | 30/10/2026 | Etapa 5: a fala do cliente na entrega muda com as cópias (no ponto, pálidas, escuras, borradas ou misturadas) | O jogador sente que o trabalho importa sem placar nem nota |

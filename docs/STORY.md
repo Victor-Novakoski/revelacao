@@ -125,8 +125,36 @@ Nenhuma figura no dia 1. Os detalhes da lupa ensinam a vasculhar a foto com cois
 
 O dia: Dona Cida e Seu Nakamura deixam os rolos de manhã; os filmes vão para o tanque no escuro (narrado, o gesto do tanque fica para depois); as oito cópias passam por ampliador, bandeja e varal; o mural com a lupa; as entregas (a fala do cliente muda conforme as cópias saíram: no ponto, pálidas, escuras, borradas ou misturadas); às seis, a Senhorita Amanda devolve o guarda-chuva com "Noite na Taverna" na mão.
 
+### Dias 2 a 10
+
+Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `web/src/photos/week1.ts` (dias 2 a 5) e `week2.ts` (dias 6 a 10). Onde a figura fica em cada foto está em `web/src/photos/figures.ts`: o desenho e o detalhe da lupa saem do mesmo dado. Esta é a lista de cenas para o Blender.
+
+| Dia | Rolo | Fotos | A figura |
+| --- | --- | --- | --- |
+| 2 · terça, 15/10 | H. Vilela (câmera do Elias), "Domingo na praça" (120) | coreto, pipoqueiro, lago, a família do Vilela, o caminho vazio | Ao fundo em todas, cada vez mais perto; no lago, sem reflexo; na última, colada na lente |
+| 3 · quarta, 16/10 | Dona Cida, "Piquenique no parque" (35 mm) | toalha xadrez, meninos correndo, Juvenal de chapéu na cara, patos | Bem longe, na fileira de árvores, na dos meninos correndo |
+| 3 | Marlene, "As normalistas" (35 mm) | escadaria da Escola Normal, as três no banco, sorveteria, Marlene sozinha | Nenhuma. A Marlene sai tremida na dela, só ela |
+| 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120) | porta da igreja, o altar, o bolo, retrato | Ao lado do altar, entre as colunas |
+| 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
+| 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120) | Keiko com o laço, os Okada, formatura do rapaz, família Ito | Na fresta da cortina, atrás do rapaz |
+| 6 · sábado, 19/10 | O rolo da praça, de novo (sem remetente) | coreto, pipoqueiro, lago, o caminho (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
+| 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm) | porta da igreja, a vela, o almoço (o gato de novo), os meninos de terno | Nenhuma. A Marlene não vem buscar |
+| 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |
+| 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm) | lençóis, roda de crianças, Juvenal na poltrona, o portão | Perto em todas, e ninguém vê |
+| 9 | Seu Nakamura, "Casamento na Mooca" (120) | escadaria, as famílias, o brinde, o arroz | Perto em todas; o arroz não cai em cima dele |
+| 9 | Senhorita Amanda, "A livraria" (35 mm) | vitrine, estante de terror, o gato Poe, ela no balcão | Nunca. "Atrás dela, só livros" |
+| 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | a bancada vista do teto, o ampliador, o varal, a pia vista do chão, o rosto, o fogo de sábado | Na sua câmara escura, mais perto a cada foto; o seu rosto borra junto |
+
+O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e não fala do Elias; no dia 10 ele diz que a Foto Íris está aberta e o revelador está sozinho nos fundos, e o som some de repente. A valsa volta com a nota errada no dia 10. O telefone com a goteira é no dia 5; o rangido, uma vez só, no fim do dia 9.
+
+Os finais, depois do mural do dia 10:
+
+- **Queimar de novo:** álcool, fósforo, alívio, e a fala do dia 1 de novo: "Segunda-feira, 14 de outubro de 1957". O botão abre a loja do começo.
+- **Revelar até o fim:** a tela escurece e estoura em branco, devagar (com movimento reduzido, fica branca direto).
+- **Entregar o rolo:** na sexta de manhã, Seu Augusto dá o envelope à Dona Cida. No rádio, a valsa toca certinha.
+
 ## Em aberto
 
-- As fotos dos dias 2 a 10 (lista de cenas para o Blender).
-- Textos dos dias 2 a 10 e o roteiro do locutor.
+- As fotos do Blender (a lista acima e a do dia 1).
+- A voz do locutor (hoje é texto e legenda).
 - O gesto do tanque no escuro total, para o filme.
