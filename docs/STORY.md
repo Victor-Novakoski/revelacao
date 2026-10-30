@@ -11,6 +11,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 | Nome | Quem é |
 | --- | --- |
 | **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Terno, gravata borboleta, sempre arrumado |
+| **Amanda** | Namorada do Seu Augusto. Tem a floricultura ao lado e passa todo dia com um café. É a única que percebe que ele está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
 | **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
 | **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
@@ -31,7 +32,7 @@ Dez dias. Cada cliente traz um rolo e pede para revelar "só as boas", então ca
 | 2 | Elias traz a câmera e o rolo da praça. Você liga, ele volta correndo, e o Inspetor Moura leva a câmera |
 | 3 | A figura ao longe, numa foto da Dona Cida. O rádio noticia o sumiço de um tal Vilela |
 | 4 | Mais perto, no fundo da igreja de um casamento do Nakamura. Elias começa a sumir das fotos que deixou |
-| 5 | Elias não atende. Moura não lembra dele, só de você entregando a câmera |
+| 5 | Elias não atende. Moura não lembra dele, só de você entregando a câmera. Só a Amanda lembra: "aquele moço do caminhão?" |
 | 6 | O rolo entregue à polícia chega para revelar, sem remetente. Você o estraga e põe fogo |
 | 7 e 8 | Calmaria: fotos normais. A Marlene não volta |
 | 9 | A figura volta, perto, nas fotos de todo mundo |
