@@ -19,4 +19,4 @@ Cada arquivo de arte ou som que entrar no repo ganha uma linha aqui: caminho, or
 
 | Arquivo | Origem | Licença |
 | --- | --- | --- |
-| _nenhum ainda_ | | |
+| `web/src/scenes/darkroom/testPhoto.ts` (foto de teste da praça, desenhada em código) | Própria, feita para o projeto | Própria |
