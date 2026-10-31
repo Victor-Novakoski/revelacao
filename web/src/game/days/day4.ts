@@ -1,8 +1,8 @@
 import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
-// Dia 4, quinta-feira, 17 de outubro. A figura, mais perto, no fundo da
-// igreja de um casamento do Nakamura. E o rolo que o Elias deixou: ele vai
+// Dia 4, quinta-feira, 17 de outubro. A figura, mais perto, no altar de
+// um casamento do Nakamura. E o rolo que o Elias deixou: ele vai
 // sumindo de foto em foto. Ele não vem buscar.
 
 const cambuci: Roll = {
@@ -17,7 +17,7 @@ const cambuci: Roll = {
       verso: 'O altar. N.',
       exposure: 14,
       focus: 0.36,
-      details: [seen('nakamura-cambuci', 'altar', 'Ao lado do altar, entre as colunas, alguém alto. Mais perto do que no parque.')],
+      details: [seen('nakamura-cambuci', 'altar', 'No altar, entre as palmeiras, alguém alto ao lado dos noivos. Mais perto do que no sítio.')],
     },
     { id: 'bolo', verso: 'O bolo. N.', exposure: 10, focus: 0.36 },
     {
@@ -25,7 +25,7 @@ const cambuci: Roll = {
       verso: 'Retrato dos noivos. N.',
       exposure: 9,
       focus: 0.36,
-      details: [{ id: 'maos', x: 0.51, y: 0.6, r: 0.05, text: 'A noiva aperta a mão do noivo com força.' }],
+      details: [{ id: 'quadro', x: 0.31, y: 0.15, r: 0.06, text: 'Na parede, um retrato antigo. Parece olhar para os noivos.' }],
     },
   ],
 }
@@ -102,7 +102,7 @@ export const DAY4: DayScript = {
     {
       kind: 'talk',
       lines: [
-        say('augusto', 'Seu Nakamura, na do altar... o senhor lembra de alguém em pé lá na frente, perto das colunas?'),
+        say('augusto', 'Seu Nakamura, na do altar... o senhor lembra de alguém em pé lá na frente, perto dos noivos?'),
         say('nakamura', 'Na hora da foto, ninguém fica perto do altar. Só o padre e Deus.'),
         narrate('Ele olha a cópia de perto, devagar.'),
         say('nakamura', 'Não vejo nada. Mas o senhor está com cara de quem viu.'),

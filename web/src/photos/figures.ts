@@ -16,8 +16,8 @@ export const PLACEMENTS: Record<string, Placement> = {
   'vilela-praca/perto': { x: 0.648, foot: 1.625, h: 1.665, real: true },
   // Dia 3: bem longe, no alto do morro do sítio.
   'cida-piquenique/turma': { x: 0.9, foot: 0.455, h: 0.1, real: true },
-  // Dia 4: no fundo da igreja, entre as colunas.
-  'nakamura-cambuci/altar': { x: 0.62, foot: 0.52, h: 0.25 },
+  // Dia 4: no altar, entre as palmeiras, ao lado dos noivos.
+  'nakamura-cambuci/altar': { x: 0.333, foot: 0.608, h: 0.203, real: true },
   // Dia 5: na fresta da cortina do estúdio.
   'nakamura-estudio/rapaz': { x: 0.75, foot: 0.86, h: 0.6 },
   // Dia 6: o rolo voltou, e ela veio para a frente.

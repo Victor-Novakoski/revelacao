@@ -8,11 +8,9 @@ import {
   bride,
   cap,
   churchFront,
-  churchInside,
   elias,
   girl,
   groom,
-  hall,
   lady,
   praca,
   sign,
@@ -102,43 +100,13 @@ export const marleneSo: Scene = (ctx, fr) => {
   falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
 }
 
-// Dia 4 · Seu Nakamura, "Casamento no Cambuci" (120).
+// Dia 4 · Seu Nakamura, "Casamento no Cambuci" (120). Fotos de verdade,
+// ver photos/real.ts.
 
-export const portaCambuci: Scene = (ctx, fr) => {
-  churchFront(ctx, fr, 0.66)
-  person(ctx, groom(X(0.45), Y(0.82), Y(0.5)))
-  person(ctx, bride(X(0.56), Y(0.84), Y(0.48)))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-export const altar: Scene = (ctx, fr) => {
-  churchInside(ctx, fr)
-  // Os noivos, de costas, pequenos diante do altar.
-  person(ctx, groom(X(0.47), Y(0.56), Y(0.16)))
-  person(ctx, bride(X(0.53), Y(0.56), Y(0.15)))
-  person(ctx, { x: X(0.5), foot: Y(0.5), h: Y(0.15), tone: 0.9, hair: 0.6 })
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
-}
-
-export const boloCambuci: Scene = (ctx, fr) => {
-  hall(ctx, fr, false)
-  // O bolo de três andares no meio da mesa.
-  rect(ctx, X(0.42), Y(0.56), X(0.16), Y(0.14), 0.96)
-  rect(ctx, X(0.445), Y(0.45), X(0.11), Y(0.11), 0.94)
-  rect(ctx, X(0.47), Y(0.37), X(0.06), Y(0.08), 0.92)
-  person(ctx, groom(X(0.3), Y(0.92), Y(0.6)))
-  person(ctx, bride(X(0.7), Y(0.92), Y(0.56)))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const retratoCambuci: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  person(ctx, groom(X(0.44), Y(0.96), Y(0.78)))
-  person(ctx, bride(X(0.58), Y(0.98), Y(0.74)))
-  // As mãos dadas, apertadas.
-  ellipse(ctx, X(0.51), Y(0.6), X(0.02), Y(0.018), 0.74)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+export const portaCambuci = realScene('cambuci-porta')
+export const altar = realScene('cambuci-altar')
+export const boloCambuci = realScene('cambuci-bolo')
+export const retratoCambuci = realScene('cambuci-retrato')
 
 // Dia 4 · o Elias, "A rota de Santos" (35 mm). Ele vai sumindo das fotos.
 

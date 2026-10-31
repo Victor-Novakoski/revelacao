@@ -17,6 +17,10 @@ SCENES = [
     ('campinas-bento-quirino', 'praca-bento-quirino-2.jpg', (300 / 800, 20 / 521, 760 / 800, 480 / 521)),
     ('campinas-rosario', 'largo-do-rosario-2.jpg', (20 / 800, 15 / 520, 490 / 800, 485 / 520)),
     ('campinas-pompeo', 'praca-antonio-pompeo-3.jpg', (300 / 800, 60 / 615, 770 / 800, 530 / 615)),
+    ('cambuci-porta', 'smulders-3812.jpg', (60 / 960, 0 / 749, 809 / 960, 749 / 749)),
+    ('cambuci-altar', 'smulders-3794.jpg', (100 / 960, 0 / 751, 851 / 960, 751 / 751)),
+    ('cambuci-bolo', 'smulders-3820.jpg', (100 / 960, 0 / 748, 848 / 960, 748 / 748)),
+    ('cambuci-retrato', 'smulders-3805.jpg', (0 / 960, 0 / 728, 728 / 960, 728 / 728)),
 ]
 
 # As de 35 mm, no mesmo formato.

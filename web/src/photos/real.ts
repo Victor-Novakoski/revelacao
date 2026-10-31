@@ -22,6 +22,10 @@ const FILES = {
   'amersfoort-turma': 'amersfoort-turma.jpg',
   'renee-soneca': 'renee-soneca.jpg',
   'sarphatipark-patos': 'sarphatipark-patos.jpg',
+  'cambuci-porta': 'cambuci-porta.jpg',
+  'cambuci-altar': 'cambuci-altar.jpg',
+  'cambuci-bolo': 'cambuci-bolo.jpg',
+  'cambuci-retrato': 'cambuci-retrato.jpg',
   pessoa: 'pessoa.png',
 } as const
 
