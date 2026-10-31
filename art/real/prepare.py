@@ -29,6 +29,10 @@ SCENES_35 = [
     ('amersfoort-turma', 'amersfoort-genietend.jpg', (204 / 960, 72 / 932, 724 / 960, 419 / 932)),
     ('renee-soneca', 'renee-gras.jpg', (0 / 960, 40 / 735, 960 / 960, 680 / 735)),
     ('sarphatipark-patos', 'sarphatipark-eenden.jpg', (110 / 960, 40 / 803, 960 / 960, 607 / 803)),
+    ('comunhao-porta', 'nickerie-5484.jpg', (0 / 960, 240 / 932, 960 / 960, 880 / 932)),
+    ('comunhao-altar', 'nickerie-5472.jpg', (0 / 960, 120 / 937, 960 / 960, 760 / 937)),
+    ('comunhao-igreja', 'nickerie-5473.jpg', (0 / 960, 150 / 946, 960 / 960, 790 / 946)),
+    ('comunhao-procissao', 'nickerie-5482.jpg', (0 / 960, 200 / 931, 960 / 960, 840 / 931)),
 ]
 
 for scenes, size in ((SCENES, (SIDE, SIDE)), (SCENES_35, FILM_35)):

@@ -138,7 +138,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
 | 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120) | Keiko com o laço, os Okada, formatura do rapaz, família Ito | Na fresta da cortina, atrás do rapaz |
 | 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
-| 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm) | porta da igreja, a vela, o almoço (o gato de novo), os meninos de terno | Nenhuma. A Marlene não vem buscar |
+| 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |
 | 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |
 | 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm) | lençóis, roda de crianças, Juvenal na poltrona, o portão | Perto em todas, e ninguém vê |
 | 9 | Seu Nakamura, "Casamento na Mooca" (120) | escadaria, as famílias, o brinde, o arroz | Perto em todas; o arroz não cai em cima dele |

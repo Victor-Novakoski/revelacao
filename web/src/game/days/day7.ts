@@ -2,7 +2,7 @@ import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say } from './lines'
 
 // Dia 7, segunda-feira, 21 de outubro. Calmaria: fotos normais, a primeira
-// comunhão da Lúcia. A Marlene não vem buscar as fotos, e ninguém comenta.
+// comunhão da Lúcia, na igreja cheia. A Marlene não vem buscar as fotos, e ninguém comenta.
 
 const comunhao: Roll = {
   id: 'cida-comunhao',
@@ -10,22 +10,22 @@ const comunhao: Roll = {
   film: '35mm',
   title: 'Primeira comunhão da Lúcia',
   photos: [
-    { id: 'porta', verso: 'A Lúcia na porta da igreja. Domingo, 20/10/57', exposure: 9, focus: 0.64 },
+    { id: 'porta', verso: 'Na porta da igreja, depois da missa. Domingo, 20/10/57', exposure: 9, focus: 0.64 },
     {
-      id: 'vela',
-      verso: 'Com a vela. Parece um anjo',
+      id: 'altar',
+      verso: 'O altar todo enfeitado. O padre pediu uma',
       exposure: 8,
       focus: 0.64,
-      details: [{ id: 'vela', x: 0.54, y: 0.42, r: 0.05, text: 'A chama da vela saiu certinha, sem tremer.' }],
+      details: [{ id: 'flores', x: 0.27, y: 0.36, r: 0.05, text: 'Palmas no altar. Alguém acordou cedo para arrumar.' }],
     },
     {
-      id: 'almoco',
-      verso: 'O almoço lá em casa',
+      id: 'igreja',
+      verso: 'A igreja cheia de anjinhos. A Lúcia está lá no meio',
       exposure: 10,
       focus: 0.64,
-      details: [{ id: 'gato2', x: 0.73, y: 0.83, r: 0.05, text: 'O gato de novo, agora embaixo da mesa.' }],
+      details: [{ id: 'freira', x: 0.645, y: 0.47, r: 0.05, text: 'A irmã de olho nos meninos do banco da frente.' }],
     },
-    { id: 'meninos', verso: 'O Toninho e o Zezinho de terno, pela primeira vez', exposure: 8, focus: 0.64 },
+    { id: 'procissao', verso: 'A procissão. O Toninho e o Zezinho de camisa branca', exposure: 8, focus: 0.64 },
   ],
 }
 
@@ -55,7 +55,7 @@ export const DAY7: DayScript = {
         pale: 'Clarinhas... combinou com o vestido branco, até.',
         dark: 'Escuras, Seu Augusto. O vestido branco ficou cinza.',
         blurry: 'Borradas. Logo hoje, que ela estava tão quietinha.',
-        mixed: 'Umas boas, outras nem tanto. A da vela ficou um sonho.',
+        mixed: 'Umas boas, outras nem tanto. A da igreja cheia ficou um sonho.',
       }),
     },
     {

@@ -1,5 +1,6 @@
 import { augusto, crowd, ellipse, falloff, gradient, gray, person, poly, rect, seeded, type Ctx } from './draw'
 import type { Scene } from './day1'
+import { realScene } from './real'
 import {
   X,
   Y,
@@ -12,7 +13,6 @@ import {
   girl,
   groom,
   hall,
-  lady,
   parlor,
   sign,
   studio,
@@ -23,49 +23,13 @@ import { coreto, lago, pertoVolta, pipoqueiro } from './week1'
 // As fotos dos dias 6 a 10. Como em week1.ts, a figura fica na camada
 // própria (photos/figures.ts).
 
-// Dia 7 · Dona Cida, "Primeira comunhão da Lúcia" (35 mm).
+// Dia 7 · Dona Cida, "Primeira comunhão da Lúcia" (35 mm). Fotos de
+// verdade, ver photos/real.ts.
 
-const comunhaoPorta: Scene = (ctx, fr) => {
-  churchFront(ctx, fr, 0.7)
-  person(ctx, girl(X(0.5), Y(0.86), Y(0.42), 0.97))
-  // O véu e o terço.
-  poly(ctx, [[X(0.47), Y(0.46)], [X(0.53), Y(0.46)], [X(0.56), Y(0.62)], [X(0.44), Y(0.62)]], 0.95)
-  person(ctx, lady(X(0.66), Y(0.9), Y(0.56)))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const vela: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  person(ctx, girl(X(0.5), Y(1.3), Y(1.0), 0.97))
-  // A vela acesa na mão, com a fita.
-  rect(ctx, X(0.53), Y(0.42), X(0.02), Y(0.3), 0.96)
-  ellipse(ctx, X(0.54), Y(0.4), X(0.008), Y(0.02), 1)
-  rect(ctx, X(0.52), Y(0.6), X(0.04), Y(0.02), 0.6)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const almoco: Scene = (ctx, fr) => {
-  parlor(ctx, fr)
-  person(ctx, lady(X(0.22), Y(0.94), Y(0.72)))
-  person(ctx, { x: X(0.8), foot: Y(0.96), h: Y(0.74), tone: 0.2, hair: 0.85 })
-  person(ctx, girl(X(0.44), Y(0.86), Y(0.42), 0.97))
-  person(ctx, boy(X(0.6), Y(0.86), Y(0.44), 0.2))
-  rect(ctx, fr.x, Y(0.62), fr.w, Y(0.38), 0.88)
-  for (const px of [0.25, 0.45, 0.65]) ellipse(ctx, X(px), Y(0.7), X(0.05), Y(0.02), 0.96)
-  ellipse(ctx, X(0.5), Y(0.64), X(0.08), Y(0.03), 0.6)
-  // O gato de novo, agora embaixo da mesa.
-  ellipse(ctx, X(0.72), Y(0.84), X(0.035), Y(0.02), 0.45)
-  ellipse(ctx, X(0.745), Y(0.828), X(0.013), Y(0.015), 0.45)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const meninos: Scene = (ctx, fr) => {
-  yard(ctx, fr, false)
-  person(ctx, boy(X(0.42), Y(0.92), Y(0.52), 0.15))
-  person(ctx, boy(X(0.58), Y(0.93), Y(0.4), 0.15))
-  for (const bx of [0.42, 0.58]) rect(ctx, X(bx) - 3, Y(0.52), 6, Y(0.08), 0.92)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+const comunhaoPorta = realScene('comunhao-porta')
+const comunhaoAltar = realScene('comunhao-altar')
+const comunhaoIgreja = realScene('comunhao-igreja')
+const procissao = realScene('comunhao-procissao')
 
 // Dia 8 · Seu Nakamura, "Bodas de prata" (120).
 
@@ -333,9 +297,9 @@ export const WEEK2_SCENES: Record<string, Scene> = {
   'vilela-volta/lago': lago,
   'vilela-volta/perto': pertoVolta,
   'cida-comunhao/porta': comunhaoPorta,
-  'cida-comunhao/vela': vela,
-  'cida-comunhao/almoco': almoco,
-  'cida-comunhao/meninos': meninos,
+  'cida-comunhao/altar': comunhaoAltar,
+  'cida-comunhao/igreja': comunhaoIgreja,
+  'cida-comunhao/procissao': procissao,
   'nakamura-bodas/casal': bodasCasal,
   'nakamura-bodas/bolo': bodasBolo,
   'nakamura-bodas/danca': danca,

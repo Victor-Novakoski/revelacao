@@ -26,6 +26,10 @@ const FILES = {
   'cambuci-altar': 'cambuci-altar.jpg',
   'cambuci-bolo': 'cambuci-bolo.jpg',
   'cambuci-retrato': 'cambuci-retrato.jpg',
+  'comunhao-porta': 'comunhao-porta.jpg',
+  'comunhao-altar': 'comunhao-altar.jpg',
+  'comunhao-igreja': 'comunhao-igreja.jpg',
+  'comunhao-procissao': 'comunhao-procissao.jpg',
   pessoa: 'pessoa.png',
 } as const
 
