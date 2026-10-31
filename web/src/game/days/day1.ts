@@ -7,36 +7,38 @@ import type { DayScript, Line, Roll } from '../script'
 // foto normal.
 
 const cida: Roll = {
-  id: 'cida-toninho',
+  id: 'cida-lucia',
   customer: 'cida',
   film: '35mm',
-  title: 'Aniversário do Toninho',
+  title: 'Aniversário da Lúcia',
   photos: [
     {
-      id: 'bolo',
-      verso: 'Toninho, 7 anos. O bolo. 13/10/57',
+      id: 'presente',
+      verso: 'Lúcia, 9 anos. O presente. 13/10/57',
       exposure: 8,
       focus: 0.64,
-      details: [{ id: 'dedo', x: 0.58, y: 0.5, r: 0.06, text: 'O Toninho já está com o dedo na cobertura.' }],
+      details: [{ id: 'trico', x: 0.51, y: 0.68, r: 0.07, text: 'A boneca veio de touca e vestido de tricô. Ponto de quem tem paciência.' }],
     },
     {
-      id: 'portao',
-      verso: 'Os netos no portão. Toninho, Lúcia e o Zezinho',
+      id: 'netos',
+      verso: 'Os netos e os primos, no banco do retratista',
       exposure: 8,
       focus: 0.64,
+      details: [{ id: 'rosinha', x: 0.5, y: 0.38, r: 0.05, text: 'A Lúcia não larga a boneca nem para a foto.' }],
     },
     {
-      id: 'poltrona',
-      verso: 'O Juvenal depois do almoço, como sempre',
-      exposure: 10,
+      id: 'boneca',
+      verso: 'A Lúcia e a Rosinha',
+      exposure: 9,
       focus: 0.64,
-      details: [{ id: 'gato', x: 0.4, y: 0.79, r: 0.06, text: 'Tem um gato dormindo embaixo da poltrona também.' }],
+      details: [{ id: 'fala', x: 0.375, y: 0.5, r: 0.06, text: 'A boneca tem a boca aberta. A Lúcia jura que ela fala.' }],
     },
     {
       id: 'quintal',
-      verso: 'Eu e a Lúcia no quintal. Quem tirou foi o Toninho',
+      verso: 'Eu com a minha irmã e as meninas. Quem tirou foi o Toninho',
       exposure: 7,
       focus: 0.64,
+      details: [{ id: 'toco', x: 0.79, y: 0.65, r: 0.07, text: 'Um toco de cerca bem na frente. Coisa de quem tem sete anos.' }],
     },
   ],
 }
@@ -45,33 +47,35 @@ const nakamura: Roll = {
   id: 'nakamura-casamento',
   customer: 'nakamura',
   film: '120',
-  title: 'Casamento na Liberdade',
+  title: 'Casamento no Bom Retiro',
   photos: [
     {
-      id: 'escadaria',
-      verso: 'Noivos na escadaria. Sábado, 12/10/57. N.',
+      id: 'chegada',
+      verso: 'Os noivos chegando. Sábado, 12/10/57. N.',
       exposure: 10,
       focus: 0.36,
+      details: [{ id: 'menina', x: 0.635, y: 0.65, r: 0.06, text: 'Uma menina de vestido branco atrás da noiva, de olho em tudo.' }],
     },
     {
-      id: 'familia',
-      verso: 'As duas famílias. N.',
+      id: 'dossel',
+      verso: 'Debaixo do dossel, no quintal. N.',
       exposure: 12,
       focus: 0.36,
-      details: [{ id: 'padrinho', x: 0.62, y: 0.39, r: 0.05, text: 'O padrinho piscou. Sempre tem um.' }],
+      details: [{ id: 'xale', x: 0.467, y: 0.44, r: 0.06, text: 'O dossel é um pano esticado em quatro varas. Os noivos ficam embaixo.' }],
     },
     {
       id: 'brinde',
       verso: 'O brinde. N.',
       exposure: 10,
       focus: 0.36,
+      details: [{ id: 'andares', x: 0.3, y: 0.54, r: 0.06, text: 'Bolo de três andares. Ninguém teve coragem de cortar ainda.' }],
     },
     {
-      id: 'arroz',
-      verso: 'Saída da igreja. N.',
+      id: 'danca',
+      verso: 'A dança, já de noite. N.',
       exposure: 9,
       focus: 0.36,
-      details: [{ id: 'menino', x: 0.27, y: 0.8, r: 0.06, text: 'Um menino catando o arroz do chão.' }],
+      details: [{ id: 'arcos', x: 0.4, y: 0.45, r: 0.06, text: 'Arcos de flores. As moças dançam com eles nas mãos.' }],
     },
   ],
 }
@@ -87,11 +91,11 @@ export const DAY1: DayScript = {
       lines: [
         { who: 'narrator', text: 'Segunda-feira, 14 de outubro de 1957. Oito da manhã. A Foto Íris abre as portas.' },
         { who: 'augusto', text: 'Gravata no lugar, balcão limpo, rádio ligado lá nos fundos. Bom dia, São Paulo.' },
-        bell('cida', 'Bom dia, Seu Augusto! Trouxe o aniversário do Toninho. Sete anos, acredita?'),
-        { who: 'augusto', text: 'Sete já, Dona Cida? Parece que foi ontem que a senhora trouxe o batizado.' },
+        bell('cida', 'Bom dia, Seu Augusto! Trouxe o aniversário da Lúcia. Nove anos, acredita?'),
+        { who: 'augusto', text: 'Nove já, Dona Cida? Parece que foi ontem que a senhora trouxe o batizado.' },
         { who: 'cida', text: 'Revela só as boas, viu? Metade eu tirei com o dedo na frente.' },
         { who: 'narrator', text: 'Dona Cida deixa um rolo de 35 milímetros no balcão e promete voltar depois do almoço.' },
-        bell('nakamura', 'Bom dia, Augusto-san. O casamento de sábado, lá na Liberdade.'),
+        bell('nakamura', 'Bom dia, Augusto-san. O casamento de sábado, lá no Bom Retiro. Dançaram até meia-noite.'),
         { who: 'augusto', text: 'Filme 120, como sempre. O senhor não confia em outro.' },
         { who: 'nakamura', text: 'Negativo grande perdoa noivo nervoso. Escolhi quatro chapas. A família quer ver hoje.' },
         { who: 'augusto', text: 'Às cinco estão no envelope, Seu Nakamura.' },
@@ -138,20 +142,20 @@ export const DAY1: DayScript = {
     },
     {
       kind: 'deliver',
-      roll: 'cida-toninho',
+      roll: 'cida-lucia',
       before: [
         bell('cida', 'Voltei, Seu Augusto! Ficaram prontas?'),
         { who: 'augusto', text: 'Estão aqui no envelope, Dona Cida. Quatro, só as boas.' },
       ],
       after: {
         good: [
-          { who: 'cida', text: 'Ai, que beleza! O Toninho com a cara toda de glacê. Vou mandar uma para a minha irmã em Bauru.' },
+          { who: 'cida', text: 'Ai, que beleza! A Lúcia agarrada na boneca nova. Vou mandar uma para a minha irmã em Bauru.' },
         ],
         pale: [{ who: 'cida', text: 'Estão clarinhas, não estão? Parece que foi tirada na garoa. Bom, dá para ver quem é quem.' }],
         dark: [
           {
             who: 'cida',
-            text: 'Nossa, como estão escuras! O Juvenal sumiu inteirinho na poltrona. Ainda bem que eu sei que ele estava lá.',
+            text: 'Nossa, como estão escuras! A Lúcia e a boneca viraram uma sombra só. Ainda bem que eu sei como elas são.',
           },
         ],
         blurry: [{ who: 'cida', text: 'Estão borradas, Seu Augusto. Os óculos são meus, mas o defeito não é.' }],
@@ -168,7 +172,7 @@ export const DAY1: DayScript = {
       after: {
         good: [{ who: 'nakamura', text: 'Bom trabalho. A noiva vai chorar de novo. Até sábado que vem.' }],
         pale: [{ who: 'nakamura', text: 'Pálidas. Vestido de noiva já é branco, Augusto-san. Não precisa ajudar.' }],
-        dark: [{ who: 'nakamura', text: 'Escuras demais. O noivo de terno preto virou uma sombra. Amanhã refazemos.' }],
+        dark: [{ who: 'nakamura', text: 'Escuras demais. A dança de noite virou um breu só. Amanhã refazemos.' }],
         blurry: [{ who: 'nakamura', text: 'Fora de foco. Na minha câmera não estava assim. O senhor está cansado?' }],
         mixed: [{ who: 'nakamura', text: 'Algumas eu aproveito. As outras o senhor refaz amanhã. Obrigado.' }],
       },

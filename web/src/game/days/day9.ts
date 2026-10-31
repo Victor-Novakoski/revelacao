@@ -2,7 +2,7 @@ import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
 // Dia 9, quarta-feira, 23 de outubro. A figura volta, perto, nas fotos de
-// todo mundo. Os clientes não veem nada. Só nas fotos da Senhorita Amanda
+// todo mundo, até nas da Lúcia. Os clientes não veem nada. Só nas fotos da Senhorita Amanda
 // ela não está.
 
 const quintal: Roll = {
@@ -12,32 +12,32 @@ const quintal: Roll = {
   title: 'O quintal',
   photos: [
     {
-      id: 'lencois',
-      verso: 'Lençol novo no varal',
+      id: 'bolhas',
+      verso: 'A Lúcia e as bolinhas de sabão',
       exposure: 7,
       focus: 0.64,
-      details: [seen('cida-quintal', 'lencois', 'Na frente do lençol, alguém alto. Não tem sombra no chão.')],
+      details: [seen('cida-quintal', 'bolhas', 'Atrás dela, alguém alto. A sombra da Lúcia está na parede. A dele, não.')],
     },
     {
-      id: 'roda',
-      verso: 'Os meninos brincando de roda',
+      id: 'gramado',
+      verso: 'As três no gramado, dividindo a bala',
       exposure: 8,
       focus: 0.64,
-      details: [seen('cida-quintal', 'roda', 'Na roda das crianças tem uma pessoa a mais.')],
+      details: [seen('cida-quintal', 'gramado', 'De pé, logo atrás das meninas. Elas não olham.')],
     },
     {
-      id: 'poltrona',
-      verso: 'O Juvenal, como sempre',
+      id: 'gato',
+      verso: 'A Lúcia e o Bichano, na poltrona do Juvenal',
       exposure: 10,
       focus: 0.64,
-      details: [seen('cida-quintal', 'poltrona', 'Atrás da poltrona do Seu Juvenal. A mão quase no ombro dele.')],
+      details: [seen('cida-quintal', 'gato', 'Atrás dela, rente ao ombro. A Lúcia só tem olhos para o gato.')],
     },
     {
-      id: 'portao',
-      verso: 'Os três no portão, de novo. Como cresceram',
+      id: 'escada',
+      verso: 'As três subindo para casa. Como cresceram',
       exposure: 8,
       focus: 0.64,
-      details: [seen('cida-quintal', 'portao', 'Do lado de dentro do portão, bem atrás das crianças.')],
+      details: [seen('cida-quintal', 'escada', 'Na porta de casa, lá em cima, esperando por elas.')],
     },
   ],
 }
@@ -49,32 +49,32 @@ const mooca: Roll = {
   title: 'Casamento na Mooca',
   photos: [
     {
-      id: 'escadaria',
-      verso: 'Noivos na escadaria. N.',
+      id: 'convidados',
+      verso: 'A noiva entre os convidados. N.',
       exposure: 10,
       focus: 0.36,
-      details: [seen('nakamura-mooca', 'escadaria', 'Entre os convidados, o mais alto de todos. Ninguém fica perto dele.')],
+      details: [seen('nakamura-mooca', 'convidados', 'Todo mundo sentado. Ele não. De pé atrás da fileira, o mais alto de todos.')],
     },
     {
       id: 'familia',
       verso: 'As duas famílias. N.',
       exposure: 12,
       focus: 0.36,
-      details: [seen('nakamura-mooca', 'familia', 'Bem no meio das duas fileiras, uma cabeça a mais.')],
+      details: [seen('nakamura-mooca', 'familia', 'Bem no meio das duas famílias, uma cabeça a mais.')],
     },
     {
-      id: 'brinde',
-      verso: 'O brinde. N.',
+      id: 'noivos',
+      verso: 'Os noivos, no altar. N.',
       exposure: 10,
       focus: 0.36,
-      details: [seen('nakamura-mooca', 'brinde', 'Todo mundo de braço erguido. Ele não. Está logo atrás da noiva.')],
+      details: [seen('nakamura-mooca', 'noivos', 'Entre os noivos, um passo atrás. Só o rosto aparece.')],
     },
     {
       id: 'saida',
       verso: 'Saída da igreja. N.',
       exposure: 9,
       focus: 0.36,
-      details: [seen('nakamura-mooca', 'saida', 'No meio do arroz, parado. Em volta dele não cai nenhum grão.')],
+      details: [seen('nakamura-mooca', 'saida', 'Entre os fotógrafos, o único sem câmera. Ele não olha para os noivos: olha para cá.')],
     },
   ],
 }
@@ -85,27 +85,41 @@ const livraria: Roll = {
   film: '35mm',
   title: 'A livraria',
   photos: [
-    { id: 'vitrine', verso: 'A vitrine de Natal (ainda sem os enfeites)', exposure: 9, focus: 0.7 },
+    {
+      id: 'vitrine',
+      verso: 'A vitrine, ainda sem os enfeites de Natal',
+      exposure: 9,
+      focus: 0.7,
+      details: [{ id: 'mocas', x: 0.5, y: 0.42, r: 0.1, text: 'Duas moças de cara no vidro. Na vitrine, só capas de livro.' }],
+    },
     {
       id: 'estantes',
-      verso: 'A estante de terror, minha favorita',
+      verso: 'O Seu Mendes e o filho, que lê de graça há um ano',
       exposure: 11,
       focus: 0.7,
-      details: [{ id: 'fora', x: 0.635, y: 0.44, r: 0.05, text: 'Um livro deitado fora do lugar: "Drácula".' }],
+      details: [{ id: 'gibi', x: 0.44, y: 0.5, r: 0.08, text: 'Um gibi estrangeiro, de capa amassada. O menino nem viu a câmera.' }],
     },
     {
       id: 'gato',
       verso: 'O verdadeiro dono da livraria',
       exposure: 9,
       focus: 0.7,
-      details: [{ id: 'poe', x: 0.75, y: 0.84, r: 0.05, text: 'O gato se chama Poe. Está escrito na tigela.' }],
+      details: [{ id: 'poe', x: 0.5, y: 0.58, r: 0.06, text: 'O Poe e a tigela de leite. Os camundongos da gaiola nem se mexem.' }],
     },
     {
       id: 'balcao',
       verso: 'Eu, com o disparador automático. Sorria!',
       exposure: 10,
       focus: 0.7,
-      details: [{ id: 'atras', x: 0.5, y: 0.5, r: 0.12, text: 'Atrás dela, só livros. Nem sombra.' }],
+      details: [
+        {
+          id: 'atras',
+          x: 0.39,
+          y: 0.56,
+          r: 0.1,
+          text: 'O disparador correu: ela não chegou a entrar. Só uma freguesa de costas, nos cartões-postais. Nem sombra de mais ninguém.',
+        },
+      ],
     },
   ],
 }
@@ -118,7 +132,7 @@ export const DAY9: DayScript = {
       kind: 'talk',
       lines: [
         narrate('Quarta-feira, 23 de outubro. Três rolos no balcão antes das nove.'),
-        bell('cida', 'Seu Augusto, o quintal! Lençol novo, os meninos brincando. Coisa à toa, mas eu gosto.'),
+        bell('cida', 'Seu Augusto, o quintal! A Lúcia com as amigas, o gato na poltrona. Coisa à toa, mas eu gosto.'),
         bell('nakamura', 'Augusto-san. Casamento na Mooca. O último do mês.'),
         bell('amanda', 'Hoje eu sou a cliente, Seu Augusto. Fotografei a livraria para o catálogo de Natal.'),
         say('augusto', 'A senhorita fotografa?'),
@@ -135,8 +149,8 @@ export const DAY9: DayScript = {
       roll: 'cida-quintal',
       before: [bell('cida', 'Voltei, Seu Augusto! E o meu quintal?'), say('augusto', 'Aqui, Dona Cida.')],
       after: moods('cida', {
-        good: 'Que beleza! O Juvenal dormindo de novo. Esse homem dorme até em foto.',
-        pale: 'Clarinhas, mas o lençol ficou branquinho. Era o que eu queria mostrar.',
+        good: 'Que beleza! O Bichano no colo dela, nem parece bravo.',
+        pale: 'Clarinhas, mas a Lúcia ficou um anjo. Era o que eu queria mostrar.',
         dark: 'Escuras, Seu Augusto. Parece que foi de noite.',
         blurry: 'Borradas. O senhor voltou a ficar cansado?',
         mixed: 'Umas boas, outras nem tanto. Mas estão todos aí, é o que importa.',
@@ -145,7 +159,7 @@ export const DAY9: DayScript = {
     {
       kind: 'talk',
       lines: [
-        say('augusto', 'Dona Cida... a senhora não vê ninguém atrás do Seu Juvenal?'),
+        say('augusto', 'Dona Cida... a senhora não vê ninguém atrás da Lúcia, na poltrona?'),
         say('cida', 'Atrás da poltrona? Só a parede, Seu Augusto. O senhor anda vendo coisa.'),
       ],
     },
@@ -156,7 +170,7 @@ export const DAY9: DayScript = {
       after: moods('nakamura', {
         good: 'Bom trabalho. Um casamento bonito para fechar o mês.',
         pale: 'Pálidas. Os noivos merecem mais, Augusto-san.',
-        dark: 'Escuras. O arroz sumiu no céu.',
+        dark: 'Escuras. O vestido da noiva ficou cinza.',
         blurry: 'Fora de foco. De novo.',
         mixed: 'Algumas boas. Eu escolho.',
       }),
@@ -176,9 +190,9 @@ export const DAY9: DayScript = {
       after: moods('amanda', {
         good: 'Perfeitas. O Poe saiu com cara de dono da livraria. E é.',
         pale: 'Clarinhas. Os livros parecem ainda mais velhos. Gostei.',
-        dark: 'Escuras. Combina com a estante de terror, pelo menos.',
+        dark: 'Escuras. Parece livraria de romance policial. Gostei.',
         blurry: 'Borradas. Livro não pisca, mas o revelador pelo jeito sim.',
-        mixed: 'Umas boas, outras nem tanto. A do Poe ficou ótima.',
+        mixed: 'Umas boas, outras nem tanto. A do Poe ficou ótima. A minha nem fui eu.',
       }),
     },
     {

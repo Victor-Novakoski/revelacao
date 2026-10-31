@@ -10,11 +10,11 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 
 | Nome | Quem é |
 | --- | --- |
-| **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Terno, gravata borboleta, sempre arrumado |
+| **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Camisa, gravata, sempre arrumado |
 | **Senhorita Amanda** | Dona da livraria ao lado, apaixonada por livros de terror e muito perspicaz. Sempre de preto. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ver "Os livros da Amanda"). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
-| **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
+| **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com a porta riscada a giz (nomes de cidade de outras rotas). Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
-| **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
+| **Seu Nakamura** | Fotógrafo de casamentos da Liberdade, chamado para festas da cidade inteira |
 | **Marlene** | Normalista que fotografa as amigas. Um dia para de vir, e ninguém comenta |
 | **Inspetor Moura** | O policial que leva a câmera e depois não lembra do Elias |
 | **H. Vilela** | Iniciais gravadas na bolsa da câmera. O dono original, que nunca aparece |
@@ -103,23 +103,23 @@ Realistas, em preto e branco, renderizadas no Blender. O grão e o desfoque da r
 
 ## Os rolos
 
-O roteiro e os textos de cada dia ficam em `web/src/game/days/`. Até as fotos do Blender chegarem, cada cena é desenhada em código (`web/src/photos/`), com as mesmas posições, para os detalhes da lupa não mudarem de lugar.
+O roteiro e os textos de cada dia ficam em `web/src/game/days/`. As fotos são reais, em domínio público ou CC0 (`web/src/photos/real.ts`, origem em `art/real/README.md`); os detalhes da lupa ficam em fração da foto.
 
 ### Dia 1 · segunda-feira, 14/10/1957
 
-**Dona Cida, "Aniversário do Toninho"** (35 mm, domingo 13/10):
+**Dona Cida, "Aniversário da Lúcia"** (35 mm, domingo 13/10, fotos reais):
 
-1. O bolo: a família atrás da mesa, sete velinhas. Na lupa, o Toninho já está com o dedo na cobertura.
-2. Os netos no portão de ferro: Toninho, Lúcia e o Zezinho.
-3. Seu Juvenal dormindo na poltrona depois do almoço, jornal no colo. Na lupa, um gato dormindo embaixo da poltrona.
-4. Dona Cida e a Lúcia no quintal, varal de lençóis ao fundo. Torta, porque quem tirou foi o Toninho.
+1. O presente: a filha e o genro entregam a boneca nova, de touca e vestido de tricô. A lupa mostra o tricô.
+2. Os netos e os primos no banco alto do retratista. Na lupa, a Lúcia não larga a boneca nem para a foto.
+3. A Lúcia e a Rosinha, a boneca de boca aberta que, segundo ela, fala.
+4. Dona Cida com a irmã e as meninas no quintal. Quem tirou foi o Toninho, e um toco de cerca entrou na frente.
 
-**Seu Nakamura, "Casamento na Liberdade"** (120, 6x6, sábado 12/10):
+**Seu Nakamura, "Casamento no Bom Retiro"** (120, 6x6, sábado 12/10, fotos reais):
 
-1. Os noivos na escadaria da igreja.
-2. As duas famílias em duas fileiras. Na lupa, o padrinho piscou.
-3. O brinde no salão com lanternas de papel.
-4. A saída da igreja, arroz no ar. Na lupa, um menino catando o arroz do chão.
+1. Os noivos chegando, com uma menina de vestido branco atrás da noiva.
+2. A cerimônia debaixo do dossel, no quintal, com a vizinhança toda em volta.
+3. O brinde, com o bolo de três andares ainda inteiro.
+4. A dança, já de noite, com as moças levando arcos de flores.
 
 Nenhuma figura no dia 1. Os detalhes da lupa ensinam a vasculhar a foto com coisas inocentes; a partir do dia 3 a lupa acha outra coisa.
 
@@ -132,18 +132,18 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | Dia | Rolo | Fotos | A figura |
 | --- | --- | --- | --- |
 | 2 · terça, 15/10 | H. Vilela (câmera do Elias), "De Anápolis a Campinas" (120, fotos reais) | o coreto de Anápolis; em Campinas, o Jardim Carlos Gomes, a Praça Bento Quirino, o Largo do Rosário e a Praça Antônio Pompeo | O mesmo homem em todas, cada vez mais perto; na rua de sol, sem sombra; na última, colado na lente |
-| 3 · quarta, 16/10 | Dona Cida, "Piquenique no parque" (35 mm) | toalha xadrez, meninos correndo, Juvenal de chapéu na cara, patos | Bem longe, na fileira de árvores, na dos meninos correndo |
-| 3 | Marlene, "As normalistas" (35 mm) | escadaria da Escola Normal, as três no banco, sorveteria, Marlene sozinha | Nenhuma. A Marlene sai tremida na dela, só ela |
-| 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120) | porta da igreja, o altar, o bolo, retrato | Ao lado do altar, entre as colunas |
-| 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
-| 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120) | Keiko com o laço, os Okada, formatura do rapaz, família Ito | Na fresta da cortina, atrás do rapaz |
+| 3 · quarta, 16/10 | Dona Cida, "Piquenique no sítio" (35 mm, fotos reais) | a turma na toalha (Juvenal de colete), a turma toda, a Lúcia dormindo no mato, na volta os patos do Jardim da Luz | Bem longe, no alto do morro, na foto da turma |
+| 3 | Marlene, "As normalistas" (35 mm) | fotos reais do passeio de sábado: a turma debaixo do pinheiro, as três no banco, o lanche na caixa de frutas, as três de novo | Nenhuma. A Marlene sai tremida na última, só ela |
+| 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120, fotos reais) | os noivos na porta com a cauda do vestido, o altar, o bolo de três andares, retrato na sala | No altar, entre as palmeiras, ao lado dos noivos |
+| 4 | Elias, "A rota de Santos" (35 mm) | fotos reais: ele de óculos de poeira na janela do caminhão, na serra, parado no posto, e a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última a boleia vazia |
+| 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120, fotos reais) | Keiko com o laço, Dona Okada e a neta, formatura do rapaz, família Ito | No fundo pintado, atrás do rapaz |
 | 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
-| 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm) | porta da igreja, a vela, o almoço (o gato de novo), os meninos de terno | Nenhuma. A Marlene não vem buscar |
-| 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |
-| 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm) | lençóis, roda de crianças, Juvenal na poltrona, o portão | Perto em todas, e ninguém vê |
-| 9 | Seu Nakamura, "Casamento na Mooca" (120) | escadaria, as famílias, o brinde, o arroz | Perto em todas; o arroz não cai em cima dele |
-| 9 | Senhorita Amanda, "A livraria" (35 mm) | vitrine, estante de terror, o gato Poe, ela no balcão | Nunca. "Atrás dela, só livros" |
-| 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | a bancada vista do teto, o ampliador, o varal, a pia vista do chão, o rosto, o fogo de sábado | Na sua câmara escura, mais perto a cada foto; o seu rosto borra junto |
+| 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |
+| 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | fotos reais de uma festa em casa: o envelope dos colegas, o álbum do casamento, ele tocando a valsa ao piano, os filhos, os dois | Nenhuma |
+| 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm, fotos reais) | a Lúcia fazendo bolinha de sabão, as três no gramado, a Lúcia com o gato na poltrona, as três subindo a escada de casa | Perto em todas, e ninguém vê. Na das bolinhas, a Lúcia tem sombra e ele não |
+| 9 | Seu Nakamura, "Casamento na Mooca" (120, fotos reais) | a noiva entre os convidados, as duas famílias, os noivos no altar, a saída entre os fotógrafos | Perto em todas; na última, ninguém fotografa ele |
+| 9 | Senhorita Amanda, "A livraria" (35 mm) | fotos reais: a vitrine com duas moças, o Seu Mendes e o filho na estante, o gato Poe e a tigela de leite, o balcão (o disparador correu e ela não entrou) | Nunca. "Nem sombra de mais ninguém" |
+| 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | fotos reais: seis retratos seus num estúdio em que você nunca posou, cada vez mais perto; o último, de cigarro aceso no sábado | Atrás de você, mais perto a cada foto; o seu rosto borra junto |
 
 O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e não fala do Elias; no dia 10 ele diz que a Foto Íris está aberta e o revelador está sozinho nos fundos, e o som some de repente. A valsa volta com a nota errada no dia 10. O tanque no escuro aparece nos dias 1 (ensina o gesto), 2 (o filme velho da câmera, que resiste) e 6 (o rolo que voltou, que entra fácil demais); nos outros dias é narrado. O telefone com a goteira é no dia 5; o rangido, uma vez só, no fim do dia 9.
 

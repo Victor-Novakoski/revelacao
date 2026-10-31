@@ -12,6 +12,6 @@ export const STORY_SCENES: Record<string, Scene> = { ...WEEK1_SCENES, ...WEEK2_S
 export const STORY_FIGURES: Record<string, Scene> = Object.fromEntries(
   Object.entries(PLACEMENTS).map(([key, p]) => [
     key,
-    p.real ? realFigure(p.x, p.foot, p.h) : (((ctx) => creature(ctx, X(p.x), Y(p.foot), Y(p.h))) as Scene),
+    p.real ? realFigure(p.x, p.foot, p.h, p.front) : (((ctx) => creature(ctx, X(p.x), Y(p.foot), Y(p.h))) as Scene),
   ]),
 )

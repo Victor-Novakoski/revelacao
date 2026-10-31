@@ -1,8 +1,8 @@
 import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
-// Dia 4, quinta-feira, 17 de outubro. A figura, mais perto, no fundo da
-// igreja de um casamento do Nakamura. E o rolo que o Elias deixou: ele vai
+// Dia 4, quinta-feira, 17 de outubro. A figura, mais perto, no altar de
+// um casamento do Nakamura. E o rolo que o Elias deixou: ele vai
 // sumindo de foto em foto. Ele não vem buscar.
 
 const cambuci: Roll = {
@@ -17,7 +17,7 @@ const cambuci: Roll = {
       verso: 'O altar. N.',
       exposure: 14,
       focus: 0.36,
-      details: [seen('nakamura-cambuci', 'altar', 'Ao lado do altar, entre as colunas, alguém alto. Mais perto do que no parque.')],
+      details: [seen('nakamura-cambuci', 'altar', 'No altar, entre as palmeiras, alguém alto ao lado dos noivos. Mais perto do que no sítio.')],
     },
     { id: 'bolo', verso: 'O bolo. N.', exposure: 10, focus: 0.36 },
     {
@@ -25,7 +25,7 @@ const cambuci: Roll = {
       verso: 'Retrato dos noivos. N.',
       exposure: 9,
       focus: 0.36,
-      details: [{ id: 'maos', x: 0.51, y: 0.6, r: 0.05, text: 'A noiva aperta a mão do noivo com força.' }],
+      details: [{ id: 'quadro', x: 0.31, y: 0.15, r: 0.06, text: 'Na parede, um retrato antigo. Parece olhar para os noivos.' }],
     },
   ],
 }
@@ -42,30 +42,30 @@ const rota: Roll = {
       exposure: 8,
       focus: 0.5,
       details: [
-        { id: 'luneta', x: 0.79, y: 0.62, r: 0.05, text: 'A luneta pintada na porta da cabine.' },
-        { id: 'elias-claro', x: 0.84, y: 0.5, r: 0.06, text: 'O Elias saiu mais claro que o caminhão. Deve ser o sol.' },
+        { id: 'giz', x: 0.24, y: 0.66, r: 0.05, text: 'Na porta, nomes de cidade riscados a giz. Caminhão de segunda mão.' },
+        { id: 'elias-claro', x: 0.2, y: 0.4, r: 0.06, text: 'O Elias saiu mais claro que o caminhão. Deve ser o sol.' },
       ],
     },
     {
       id: 'serra',
-      verso: 'Na serra, de manhã cedo',
+      verso: 'Na serra, de óculos contra a poeira',
       exposure: 7,
       focus: 0.5,
-      details: [{ id: 'elias-serra', x: 0.26, y: 0.6, r: 0.07, text: 'Dá para ver a neblina da serra através do Elias.' }],
+      details: [{ id: 'elias-serra', x: 0.4, y: 0.4, r: 0.07, text: 'Dá para ver a cabine através do Elias.' }],
     },
     {
-      id: 'bar',
-      verso: 'Café no posto, como toda semana',
+      id: 'janela',
+      verso: 'Parado no posto, esperando o café',
       exposure: 10,
       focus: 0.5,
-      details: [{ id: 'xicara', x: 0.485, y: 0.56, r: 0.05, text: 'No balcão, a xícara dele. Ele mesmo quase não está.' }],
+      details: [{ id: 'elias-janela', x: 0.3, y: 0.55, r: 0.08, text: 'Na janela, só um vulto. Os óculos ainda brilham.' }],
     },
     {
       id: 'cabine',
       verso: 'Eu na boleia',
       exposure: 12,
       focus: 0.5,
-      details: [{ id: 'bone', x: 0.68, y: 0.55, r: 0.06, text: 'O boné dele no banco. A cabine está vazia.' }],
+      details: [{ id: 'vazia', x: 0.45, y: 0.6, r: 0.08, text: 'Pelo para-brisa, a boleia vazia. Ele mesmo escreveu "eu" no verso.' }],
     },
   ],
 }
@@ -102,7 +102,7 @@ export const DAY4: DayScript = {
     {
       kind: 'talk',
       lines: [
-        say('augusto', 'Seu Nakamura, na do altar... o senhor lembra de alguém em pé lá na frente, perto das colunas?'),
+        say('augusto', 'Seu Nakamura, na do altar... o senhor lembra de alguém em pé lá na frente, perto dos noivos?'),
         say('nakamura', 'Na hora da foto, ninguém fica perto do altar. Só o padre e Deus.'),
         narrate('Ele olha a cópia de perto, devagar.'),
         say('nakamura', 'Não vejo nada. Mas o senhor está com cara de quem viu.'),
