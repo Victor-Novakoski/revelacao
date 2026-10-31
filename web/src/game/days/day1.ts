@@ -188,8 +188,14 @@ export const DAY1: DayScript = {
         { who: 'augusto', text: 'E a senhorita lê isso antes de dormir?' },
         { who: 'amanda', text: 'É o melhor horário. O senhor devia experimentar. Quem mexe com fotografia tem cara de quem gosta de assombração.' },
         { who: 'augusto', text: 'Eu só revelo o que estava na frente da lente, senhorita.' },
-        { who: 'amanda', text: 'É o que todo mundo diz no primeiro capítulo. Boa noite, Seu Augusto.' },
-        { who: 'narrator', text: 'Ela sai. Lá nos fundos, o rádio ainda toca a valsa.' },
+        { who: 'amanda', text: 'É o que todo mundo diz no primeiro capítulo.' },
+        { who: 'augusto', text: 'E no último?' },
+        { who: 'amanda', text: 'No último ninguém diz mais nada. Boa noite, Seu Augusto. Tranque bem a porta.' },
+        {
+          who: 'narrator',
+          text: 'Ela sai devagar, o livro aberto debaixo do braço. Seu Augusto passa a tranca, apaga a luz da frente e fica um instante parado no escuro da loja.',
+        },
+        { who: 'narrator', text: 'Lá nos fundos, o rádio ainda toca a valsa, baixinho, para ninguém.' },
       ],
     },
     {
