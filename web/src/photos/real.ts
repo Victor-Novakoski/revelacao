@@ -47,9 +47,16 @@ const FILES = {
   'comunhao-igreja': 'comunhao-igreja.jpg',
   'comunhao-procissao': 'comunhao-procissao.jpg',
   pessoa: 'pessoa.png',
+  // O que fica na frente da figura em cada cena (ver art/real/front.py).
+  'estudio-rapaz-frente': 'estudio-rapaz-frente.png',
+  'mooca-convidados-frente': 'mooca-convidados-frente.png',
+  'mooca-noivos-frente': 'mooca-noivos-frente.png',
+  'quintal-bolhas-frente': 'quintal-bolhas-frente.png',
+  'quintal-gato-frente': 'quintal-gato-frente.png',
 } as const
 
 type Name = keyof typeof FILES
+export type Front = { [K in Name]: K extends `${infer S}-frente` ? S : never }[Name]
 
 const images = new Map<Name, HTMLImageElement>()
 let loading: Promise<void> | null = null
@@ -68,7 +75,7 @@ export function loadRealPhotos(): Promise<void> {
 
 // A foto ocupa o quadro do filme inteiro.
 export const realScene =
-  (name: Exclude<Name, 'pessoa'>): Scene =>
+  (name: Exclude<Name, 'pessoa' | `${string}-frente`>): Scene =>
   (ctx, fr) => {
     const img = images.get(name)
     if (img) ctx.drawImage(img, fr.x, fr.y, fr.w, fr.h)
@@ -77,9 +84,10 @@ export const realScene =
 // O homem, com os pés em (x, foot) e altura h, tudo em fração da folha.
 // Vai em dois canais da camada da figura: verde é onde ele está e azul é o
 // tom dele já multiplicado por isso (o vermelho fica para a figura
-// desenhada). Ver printDensity em game/print.ts.
+// desenhada). Ver printDensity em game/print.ts. Com front, as pessoas da
+// cena ficam na frente dele: ele sai atrás delas.
 export const realFigure =
-  (x: number, foot: number, h: number): Scene =>
+  (x: number, foot: number, h: number, front?: Front): Scene =>
   (ctx, fr) => {
     const img = images.get('pessoa')
     if (!img) return
@@ -94,6 +102,11 @@ export const realFigure =
     tc.rect(fr.x, fr.y, fr.w, fr.h)
     tc.clip()
     tc.drawImage(img, X(x) - ww / 2, Y(foot) - hh, ww, hh)
+    const mask = front && images.get(`${front}-frente`)
+    if (mask) {
+      tc.globalCompositeOperation = 'destination-out'
+      tc.drawImage(mask, fr.x, fr.y, fr.w, fr.h)
+    }
     const src = tc.getImageData(0, 0, width, height).data
     const out = ctx.getImageData(0, 0, width, height)
     for (let i = 0; i < src.length; i += 4) {

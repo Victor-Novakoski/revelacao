@@ -2,9 +2,12 @@
 // meio, foot dos pés e h da altura. Dado puro: o desenho (photos/index.ts)
 // e o detalhe da lupa (game/days) saem daqui, então não descasam.
 
+import type { Front } from './real'
+
 // real: a figura é o homem recortado de foto (photos/real.ts), não a
-// desenhada.
-export type Placement = { x: number; foot: number; h: number; real?: boolean }
+// desenhada. front: a cena cujas pessoas ficam na frente dela (só a
+// cabeça e um ombro aparecem); a lupa mira mais alto, no rosto.
+export type Placement = { x: number; foot: number; h: number; real?: boolean; front?: Front }
 
 export const PLACEMENTS: Record<string, Placement> = {
   // Dia 2: a viagem do Vilela, de Anápolis a Campinas. O mesmo homem em
@@ -19,20 +22,20 @@ export const PLACEMENTS: Record<string, Placement> = {
   // Dia 4: no altar, entre as palmeiras, ao lado dos noivos.
   'nakamura-cambuci/altar': { x: 0.333, foot: 0.608, h: 0.203, real: true },
   // Dia 5: no fundo pintado do estúdio, entre o rapaz e a moça.
-  'nakamura-estudio/rapaz': { x: 0.648, foot: 0.905, h: 0.72, real: true },
+  'nakamura-estudio/rapaz': { x: 0.703, foot: 0.887, h: 0.765, real: true, front: 'estudio-rapaz' },
   // Dia 6: o rolo voltou, e ela veio para a frente.
   'vilela-volta/coreto': { x: 0.5, foot: 0.86, h: 0.6, real: true },
   'vilela-volta/pipoqueiro': { x: 0.44, foot: 0.92, h: 0.72, real: true },
   'vilela-volta/lago': { x: 0.36, foot: 0.98, h: 0.82, real: true },
   'vilela-volta/perto': { x: 0.5, foot: 1.7, h: 1.9, real: true },
   // Dia 9: perto, nas fotos de todo mundo. Nunca nas da Senhorita Amanda.
-  'cida-quintal/bolhas': { x: 0.77, foot: 1.244, h: 1.12, real: true },
+  'cida-quintal/bolhas': { x: 0.545, foot: 0.9, h: 0.76, real: true, front: 'quintal-bolhas' },
   'cida-quintal/gramado': { x: 0.842, foot: 1.06, h: 0.96, real: true },
-  'cida-quintal/gato': { x: 0.85, foot: 1.42, h: 1.28, real: true },
+  'cida-quintal/gato': { x: 0.752, foot: 1.06, h: 0.92, real: true, front: 'quintal-gato' },
   'cida-quintal/escada': { x: 0.158, foot: 0.86, h: 0.64, real: true },
-  'nakamura-mooca/convidados': { x: 0.669, foot: 0.725, h: 0.63, real: true },
+  'nakamura-mooca/convidados': { x: 0.56, foot: 0.725, h: 0.56, real: true, front: 'mooca-convidados' },
   'nakamura-mooca/familia': { x: 0.5, foot: 0.824, h: 0.495, real: true },
-  'nakamura-mooca/noivos': { x: 0.775, foot: 1.36, h: 1.26, real: true },
+  'nakamura-mooca/noivos': { x: 0.54, foot: 1.085, h: 0.99, real: true, front: 'mooca-noivos' },
   'nakamura-mooca/saida': { x: 0.79, foot: 0.905, h: 0.675, real: true },
   // Dia 10: na sua câmara escura, mais perto a cada foto.
   'sem-nome/bancada': { x: 0.82, foot: 0.78, h: 0.42 },
@@ -52,7 +55,7 @@ export function figureSpot(key: string): { x: number; y: number; r: number } {
   const r = clamp(p.h * 0.3, 0.04, 0.16)
   return {
     x: clamp(p.x, r + 0.01, 0.99 - r),
-    y: clamp(p.foot - p.h * 0.6, r + 0.01, 0.99 - r),
+    y: clamp(p.foot - p.h * (p.front ? 0.85 : 0.6), r + 0.01, 0.99 - r),
     r,
   }
 }

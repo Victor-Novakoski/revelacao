@@ -9,6 +9,7 @@ Saída em `web/public/photos/`, usada por `web/src/photos/real.ts`.
 1. Baixe os originais (tabela abaixo) para uma pasta, com os nomes da coluna "Arquivo". `pessoa-recorte.png` é o retrato recortado com `rembg` (modelo `u2net_human_seg`).
 2. `python3 prepare.py <originais> <tmp>` recorta as cenas e trata a pessoa.
 3. Para cada cena: `go run ./cmd/revela age -seed N <tmp>/<cena>.png <tmp>/<cena>-aged.png` (sementes 2 a 6 para as do Vilela, 7 a 10 para as do piquenique, 11 a 14 para as do casamento, 15 a 18 para as da comunhão, 19 a 22 para as do estúdio, 23 a 26 para as da Mooca, 27 a 30 para as do quintal e 31 a 34 para as da livraria, na ordem da tabela), e salve em JPEG qualidade 84 em `web/public/photos/<cena>.jpg`. `pessoa.png` vai como está.
+4. `python3 front.py <tmp> web/public/photos` faz as máscaras `<cena>-frente.png` das cenas em que a figura fica atrás das pessoas (precisa do `rembg`).
 
 ## Origem
 

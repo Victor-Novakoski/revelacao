@@ -16,7 +16,7 @@ const quintal: Roll = {
       verso: 'A Lúcia e as bolinhas de sabão',
       exposure: 7,
       focus: 0.64,
-      details: [seen('cida-quintal', 'bolhas', 'Do lado dela, alguém alto. A sombra da Lúcia está na parede. A dele, não.')],
+      details: [seen('cida-quintal', 'bolhas', 'Atrás dela, alguém alto. A sombra da Lúcia está na parede. A dele, não.')],
     },
     {
       id: 'gramado',
@@ -30,7 +30,7 @@ const quintal: Roll = {
       verso: 'A Lúcia e o Bichano, na poltrona do Juvenal',
       exposure: 10,
       focus: 0.64,
-      details: [seen('cida-quintal', 'gato', 'Atrás da poltrona. A mão quase no ombro dela.')],
+      details: [seen('cida-quintal', 'gato', 'Atrás dela, rente ao ombro. A Lúcia só tem olhos para o gato.')],
     },
     {
       id: 'escada',
@@ -67,7 +67,7 @@ const mooca: Roll = {
       verso: 'Os noivos, no altar. N.',
       exposure: 10,
       focus: 0.36,
-      details: [seen('nakamura-mooca', 'noivos', 'Logo atrás da noiva. Mais perto dela do que o noivo.')],
+      details: [seen('nakamura-mooca', 'noivos', 'Entre os noivos, um passo atrás. Só o rosto aparece.')],
     },
     {
       id: 'saida',
