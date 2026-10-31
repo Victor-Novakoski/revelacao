@@ -46,7 +46,7 @@ export const PRACA: Roll = {
       verso: 'Sem anotação. Só um risco de lápis, como se a mão tivesse escorregado.',
       exposure: 12,
       focus: 0.52,
-      details: [seen('vilela-praca', 'perto', 'Mais perto da câmera do que o fotógrafo poderia estar. O rosto, de novo, é só um borrão.')],
+      details: [seen('vilela-praca', 'perto', 'Na beirada da foto, mais perto da câmera do que o fotógrafo poderia estar. O rosto, de novo, é só um borrão.')],
     },
   ],
 }

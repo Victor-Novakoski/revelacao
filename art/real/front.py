@@ -17,6 +17,9 @@ SCENES = [
     ('mooca-noivos', None),
     ('quintal-bolhas', None),
     ('quintal-gato', None),
+    ('quintal-gramado', None),
+    ('mooca-familia', None),
+    ('mooca-saida', None),
     ('augusto-cadeira', None),
     ('augusto-olhar', None),
     ('augusto-cintura', None),
@@ -35,4 +38,36 @@ for name, floor in SCENES:
         ImageDraw.Draw(band).rectangle([0, round(m.height * floor), m.width, m.height], fill=255)
         m = ImageChops.lighter(m, band.filter(ImageFilter.GaussianBlur(3)))
     # Só o alfa conta: a figura é apagada onde ele é opaco.
+    Image.merge('LA', (Image.new('L', m.size, 0), m)).save(f'{out}/{name}-frente.png', optimize=True)
+
+# Nas fotos do Vilela não tem gente para esconder a figura: quem fica na
+# frente dela são as coisas da praça, desenhadas à mão em fração da cena.
+OBJECTS = {
+    # O arbusto redondo à direita do coreto e os canteiros baixos.
+    'anapolis-coreto': [
+        ('ellipse', (0.672, 0.335, 0.905, 0.535)),
+        ('rect', (0.5, 0.5, 1.0, 0.615)),
+    ],
+    # O tronco da palmeira da direita.
+    'campinas-jardim': [
+        ('poly', [(0.797, 0.0), (0.873, 0.0), (0.88, 0.5), (0.893, 0.8), (0.91, 0.87), (0.775, 0.87), (0.788, 0.8), (0.8, 0.5)]),
+    ],
+    # O carro.
+    'campinas-bento-quirino': [
+        ('poly', [(0.0, 0.87), (0.05, 0.825), (0.12, 0.79), (0.165, 0.748), (0.2, 0.735), (0.3, 0.728), (0.42, 0.73),
+                  (0.47, 0.75), (0.5, 0.785), (0.6, 0.8), (0.69, 0.815), (0.74, 0.85), (0.74, 0.93), (0.7, 1.0), (0.0, 1.0)]),
+    ],
+}
+
+for name, shapes in OBJECTS.items():
+    w, h = Image.open(f'{src}/{name}.png').size
+    m = Image.new('L', (w, h), 0)
+    d = ImageDraw.Draw(m)
+    for kind, g in shapes:
+        if kind == 'poly':
+            d.polygon([(x * w, y * h) for x, y in g], fill=255)
+        else:
+            box = [g[0] * w, g[1] * h, g[2] * w, g[3] * h]
+            (d.ellipse if kind == 'ellipse' else d.rectangle)(box, fill=255)
+    m = m.filter(ImageFilter.GaussianBlur(2))
     Image.merge('LA', (Image.new('L', m.size, 0), m)).save(f'{out}/{name}-frente.png', optimize=True)

@@ -16,20 +16,20 @@ const volta: Roll = {
   photos: [
     {
       ...photo('coreto'),
-      details: [seen('vilela-volta', 'coreto', 'Agora ele não está ao lado do arbusto. Está na frente da câmera, olhando para a lente.')],
+      details: [seen('vilela-volta', 'coreto', 'Agora ele não está ao lado do arbusto. Está atrás do arbusto da frente, bem mais perto, olhando para a lente.')],
     },
     {
       ...photo('pipoqueiro'),
-      details: [seen('vilela-volta', 'pipoqueiro', 'Entre as palmeiras, grande demais para a distância. As pessoas passam por ele sem olhar.')],
+      details: [seen('vilela-volta', 'pipoqueiro', 'Meio escondido atrás da palmeira, grande demais para a distância. As pessoas passam por ele sem olhar.')],
     },
     {
       ...photo('lago'),
-      details: [seen('vilela-volta', 'lago', 'Na frente do carro, deste lado da rua agora. Ainda sem sombra.')],
+      details: [seen('vilela-volta', 'lago', 'Atrás do carro, deste lado da rua agora. Só aparece do peito para cima.')],
     },
     {
       ...photo('perto'),
       verso: 'De Anápolis a Campinas. A letra é a sua.',
-      details: [seen('vilela-volta', 'perto', 'Tão perto que só cabe o peito. Atrás dele, desfocada, uma vitrine: FOTO ÍRIS.')],
+      details: [seen('vilela-volta', 'perto', 'Na beirada, tão perto que só cabe meio peito. Do outro lado, desfocada, uma vitrine: FOTO ÍRIS.')],
     },
   ],
 }

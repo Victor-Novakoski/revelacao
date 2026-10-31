@@ -49,6 +49,7 @@ go run ./cmd/revela build ../../art/rolls ../../web/public/rolls
 ## Regras do jogo (não quebrar)
 
 - **A criatura só existe nas fotografias.** Nunca aparece na sala 3D, nunca se mexe na tela, só muda de uma foto para a outra.
+- **A criatura fica sempre meio escondida:** atrás de gente, de uma árvore, de um carro, ou cortada pela beirada da foto. Nunca solta no meio do quadro, de frente, como se flutuasse.
 - **Sem jumpscare.** Nenhum som alto de repente, nenhuma imagem que salta. Volume sobe devagar; silêncio repentino é permitido.
 - **Movimento reduzido:** com `prefers-reduced-motion`, a lâmpada não pisca, a câmera não balança e nada treme. O jogo continua completo.
 - **Som só depois de um gesto** do jogador, com botão de mudo sempre visível. Todo som que importa para a história tem legenda.

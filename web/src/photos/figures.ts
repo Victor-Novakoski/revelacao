@@ -16,27 +16,28 @@ export const PLACEMENTS: Record<string, Placement> = {
   'vilela-praca/pipoqueiro': { x: 0.547, foot: 0.77, h: 0.144, real: true },
   'vilela-praca/lago': { x: 0.682, foot: 0.905, h: 0.212, real: true },
   'vilela-praca/familia': { x: 0.608, foot: 0.923, h: 0.288, real: true },
-  'vilela-praca/perto': { x: 0.648, foot: 1.625, h: 1.665, real: true },
+  'vilela-praca/perto': { x: 0.82, foot: 1.625, h: 1.665, real: true },
   // Dia 3: bem longe, no alto do morro do sítio.
   'cida-piquenique/turma': { x: 0.9, foot: 0.455, h: 0.1, real: true },
   // Dia 4: no altar, entre as palmeiras, ao lado dos noivos.
   'nakamura-cambuci/altar': { x: 0.333, foot: 0.608, h: 0.203, real: true },
   // Dia 5: no fundo pintado do estúdio, entre o rapaz e a moça.
   'nakamura-estudio/rapaz': { x: 0.703, foot: 0.887, h: 0.765, real: true, front: 'estudio-rapaz' },
-  // Dia 6: o rolo voltou, e ela veio para a frente.
-  'vilela-volta/coreto': { x: 0.5, foot: 0.86, h: 0.6, real: true },
-  'vilela-volta/pipoqueiro': { x: 0.44, foot: 0.92, h: 0.72, real: true },
-  'vilela-volta/lago': { x: 0.36, foot: 0.98, h: 0.82, real: true },
-  'vilela-volta/perto': { x: 0.5, foot: 1.7, h: 1.9, real: true },
+  // Dia 6: o rolo voltou, e ela veio para mais perto, sempre atrás de
+  // alguma coisa: o arbusto, a palmeira, o carro, a beirada da foto.
+  'vilela-volta/coreto': { x: 0.696, foot: 0.59, h: 0.405, real: true, front: 'anapolis-coreto' },
+  'vilela-volta/pipoqueiro': { x: 0.7025, foot: 0.824, h: 0.495, real: true, front: 'campinas-jardim' },
+  'vilela-volta/lago': { x: 0.419, foot: 0.878, h: 0.405, real: true, front: 'campinas-bento-quirino' },
+  'vilela-volta/perto': { x: 0.18, foot: 1.7, h: 1.9, real: true },
   // Dia 9: perto, nas fotos de todo mundo. Nunca nas da Senhorita Amanda.
   'cida-quintal/bolhas': { x: 0.545, foot: 0.9, h: 0.76, real: true, front: 'quintal-bolhas' },
-  'cida-quintal/gramado': { x: 0.842, foot: 1.06, h: 0.96, real: true },
+  'cida-quintal/gramado': { x: 0.714, foot: 0.564, h: 0.4, real: true, front: 'quintal-gramado' },
   'cida-quintal/gato': { x: 0.752, foot: 1.06, h: 0.92, real: true, front: 'quintal-gato' },
   'cida-quintal/escada': { x: 0.158, foot: 0.86, h: 0.64, real: true },
   'nakamura-mooca/convidados': { x: 0.56, foot: 0.725, h: 0.56, real: true, front: 'mooca-convidados' },
-  'nakamura-mooca/familia': { x: 0.5, foot: 0.824, h: 0.495, real: true },
+  'nakamura-mooca/familia': { x: 0.5, foot: 0.824, h: 0.495, real: true, front: 'mooca-familia' },
   'nakamura-mooca/noivos': { x: 0.54, foot: 1.085, h: 0.99, real: true, front: 'mooca-noivos' },
-  'nakamura-mooca/saida': { x: 0.79, foot: 0.905, h: 0.675, real: true },
+  'nakamura-mooca/saida': { x: 0.79, foot: 0.905, h: 0.675, real: true, front: 'mooca-saida' },
   // Dia 10: atrás do Seu Augusto, mais perto a cada retrato.
   'sem-nome/cadeira': { x: 0.185, foot: 0.82, h: 0.56, real: true, front: 'augusto-cadeira' },
   'sem-nome/olhar': { x: 0.752, foot: 0.94, h: 0.72, real: true, front: 'augusto-olhar' },

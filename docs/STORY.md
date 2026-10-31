@@ -131,13 +131,13 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 
 | Dia | Rolo | Fotos | A figura |
 | --- | --- | --- | --- |
-| 2 · terça, 15/10 | H. Vilela (câmera do Elias), "De Anápolis a Campinas" (120, fotos reais) | o coreto de Anápolis; em Campinas, o Jardim Carlos Gomes, a Praça Bento Quirino, o Largo do Rosário e a Praça Antônio Pompeo | O mesmo homem em todas, cada vez mais perto; na rua de sol, sem sombra; na última, colado na lente |
+| 2 · terça, 15/10 | H. Vilela (câmera do Elias), "De Anápolis a Campinas" (120, fotos reais) | o coreto de Anápolis; em Campinas, o Jardim Carlos Gomes, a Praça Bento Quirino, o Largo do Rosário e a Praça Antônio Pompeo | O mesmo homem em todas, cada vez mais perto; na rua de sol, sem sombra; na última, colado na lente e cortado pela beirada |
 | 3 · quarta, 16/10 | Dona Cida, "Piquenique no sítio" (35 mm, fotos reais) | a turma na toalha (Juvenal de colete), a turma toda, a Lúcia dormindo no mato, na volta os patos do Jardim da Luz | Bem longe, no alto do morro, na foto da turma |
 | 3 | Marlene, "As normalistas" (35 mm) | fotos reais do passeio de sábado: a turma debaixo do pinheiro, as três no banco, o lanche na caixa de frutas, as três de novo | Nenhuma. A Marlene sai tremida na última, só ela |
 | 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120, fotos reais) | os noivos na porta com a cauda do vestido, o altar, o bolo de três andares, retrato na sala | No altar, entre as palmeiras, ao lado dos noivos |
 | 4 | Elias, "A rota de Santos" (35 mm) | fotos reais: ele de óculos de poeira na janela do caminhão, na serra, parado no posto, e a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última a boleia vazia |
 | 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120, fotos reais) | Keiko com o laço, Dona Okada e a neta, formatura do rapaz, família Ito | No fundo pintado, atrás do rapaz |
-| 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
+| 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | Mais perto em cada foto, sempre meio escondido: atrás do arbusto, da palmeira, do carro, cortado pela beirada na última. Depois Seu Augusto vela, molha de álcool e queima |
 | 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |
 | 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | fotos reais de uma festa em casa: o envelope dos colegas, o álbum do casamento, ele tocando a valsa ao piano, os filhos, os dois | Nenhuma |
 | 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm, fotos reais) | a Lúcia fazendo bolinha de sabão, as três no gramado, a Lúcia com o gato na poltrona, as três subindo a escada de casa | Perto em todas, e ninguém vê. Na das bolinhas, a Lúcia tem sombra e ele não |
