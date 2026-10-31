@@ -5,7 +5,7 @@ export const LEVELS = {
   hum: -30,
   buzz: -44,
   drip: -18,
-  radio: -16,
+  radio: -18,
   statics: -40,
   crackle: -34,
   bell: -26,
@@ -14,6 +14,10 @@ export const LEVELS = {
   match: -28,
   tick: -30,
   snap: -24,
+  drone: -26,
+  rumble: -38,
+  glass: -34,
+  heart: -22,
 }
 
 // Ao entrar, o som sobe devagar. Ao tirar o mudo, também.
@@ -63,4 +67,31 @@ export function behindLeft(
     position[1] - fy * 1.4 - right[1] * 1.1 - 0.4,
     position[2] - fz * 1.4 - right[2] * 1.1,
   ]
+}
+
+const clamp01 = (v: number) => Math.min(1, Math.max(0, v))
+
+// O peso do dia: 0 no primeiro, 1 no último. Nunca é zero de verdade: até
+// o dia 1 tem um grave por baixo, para a sala nunca parecer segura.
+export function dayDread(day: number, lastDay: number) {
+  return clamp01((day - 1) / Math.max(1, lastDay - 1))
+}
+
+// Quanto de cada camada do medo toca, de 0 a 1. dread é o peso do dia e
+// warp é a figura aparecendo na bandeja. O coração só bate com a figura.
+// flutter é o quanto o disco do rádio balança (profundidade do vibrato).
+export function dreadMix(dread: number, warp: number) {
+  const d = clamp01(dread * 0.7 + warp * 0.6)
+  return {
+    cellar: 0.3 + 0.7 * d,
+    glass: 0.2 + 0.8 * d,
+    heart: clamp01(warp),
+    flutter: 0.04 + 0.16 * d,
+  }
+}
+
+// O apito entre os dois tons agudos sobe de tempos em tempos: entre 20 e
+// 50 segundos de espera, mais curto quanto mais pesado o dia.
+export function nextGlass(random: () => number, dread: number) {
+  return (20 + random() * 30) * (1 - 0.4 * clamp01(dread))
 }
