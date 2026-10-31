@@ -11,28 +11,34 @@ A meta da primeira entrega é uma foto revelada que já dê arrepio. Só depois 
 - [ ] Conectar o repo na Vercel (feito pelo Victor no painel)
 
 ## Etapa 2 · A revelação (fatia vertical)
-- [ ] Uma bandeja e uma foto de teste
-- [ ] Shader de revelação: densidade por tempo e agitação, grão
-- [ ] Gesto de balançar a bandeja (mouse e toque), líquido reagindo
-- [ ] Critério: balançar e ver a imagem surgir tem que ser gostoso
+- [x] Uma bandeja e uma foto de teste
+- [x] Shader de revelação: densidade por tempo e agitação, grão
+- [x] Gesto de balançar a bandeja (mouse e toque), líquido reagindo
+- [ ] Critério: balançar e ver a imagem surgir tem que ser gostoso (validar jogando)
 
 ## Etapa 3 · A ferramenta das fotos
-- [ ] `revela build`: tons de cinza, negativo, WebP, `rolos.json`
-- [ ] Pool de goroutines e testes
-- [ ] CLI na CI
+- [x] `revela build`: tons de cinza, negativo, WebP, `rolos.json`
+- [x] Pool de goroutines e testes
+- [x] CLI na CI
 
 ## Etapa 4 · A sala
-- [ ] Câmara escura 3D completa, ampliador e varal
-- [ ] Som ambiente: lâmpada, gotas, rádio (Tone.js), botão de mudo, legendas
+- [x] Câmara escura 3D completa, ampliador e varal
+- [x] Som ambiente: lâmpada, gotas, rádio (Tone.js), botão de mudo, legendas
 
 ## Etapa 5 · O primeiro dia
-- [ ] Clientes fixos, mural com lupa, anotações
-- [ ] Um dia jogável do começo ao fim
+- [x] Clientes fixos, mural com lupa, anotações
+- [x] Um dia jogável do começo ao fim
+- [ ] Critério: o dia 1 ensina os três gestos sem precisar ler manual (validar jogando)
 
 ## Etapa 6 · A história completa
-- [ ] Todos os dias do roteiro (docs/STORY.md)
-- [ ] Os três finais
+- [x] Todos os dias do roteiro (docs/STORY.md)
+- [x] Os três finais
+- [ ] Critério: jogar os dez dias de uma vez e ver se a calmaria dos dias 7 e 8 dura o bastante (validar jogando)
 
 ## Etapa 7 · Polimento e lançamento
-- [ ] Desempenho no celular, movimento reduzido, "Ver as fotos sem revelar"
-- [ ] README com GIF e entrada no portfólio
+- [x] O tanque no escuro total (dias 1, 2 e 6)
+- [x] Bundle dividido: a sala 3D carrega depois do título
+- [x] Desempenho no celular, movimento reduzido, "Ver as fotos sem revelar"
+- [x] README com GIF e capturas
+- [ ] Entrada no portfólio (depois do link da Vercel)
+- [ ] Fotos mais reais: época em domínio público e fotos próprias, envelhecidas pelo `revela` (esperando o Victor)

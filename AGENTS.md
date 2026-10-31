@@ -35,6 +35,7 @@ npm run build      # checagem de tipos + build
 cd tools/revela
 go test ./...
 go run ./cmd/revela check ../../art/rolls
+go run ./cmd/revela build ../../art/rolls ../../web/public/rolls
 ```
 
 ## Regras do repositório

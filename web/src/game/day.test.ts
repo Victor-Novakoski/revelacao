@@ -1,0 +1,205 @@
+import { describe, expect, it } from 'vitest'
+import {
+  START,
+  advance,
+  currentPhoto,
+  exposureFactor,
+  focusBlur,
+  keepPrint,
+  moodOf,
+  printQuality,
+  reel,
+  endingOf,
+  retry,
+  rollMood,
+  stepLines,
+  validCursor,
+  type Cursor,
+  type Print,
+} from './day'
+import type { DayScript, Line, Mood } from './script'
+
+const line = (text: string): Line => ({ who: 'narrator', text })
+const moods = (text: string): Record<Mood, Line[]> => ({
+  good: [line(`${text} boa`)],
+  pale: [line(`${text} pálida`)],
+  dark: [line(`${text} escura`)],
+  blurry: [line(`${text} borrada`)],
+  mixed: [line(`${text} mista`)],
+})
+
+const DAY: DayScript = {
+  day: 1,
+  title: 'Teste',
+  steps: [
+    { kind: 'talk', lines: [line('a'), line('b')] },
+    {
+      kind: 'roll',
+      roll: {
+        id: 'r',
+        customer: 'cida',
+        film: '35mm',
+        title: 'Rolo',
+        photos: [
+          { id: 'p1', verso: '', exposure: 8, focus: 0.5 },
+          { id: 'p2', verso: '', exposure: 8, focus: 0.5 },
+        ],
+      },
+    },
+    { kind: 'wall', hint: '' },
+    { kind: 'deliver', roll: 'r', before: [line('volta')], after: moods('cópia') },
+    { kind: 'end', title: 'Fim', text: '' },
+  ],
+}
+
+const print = (photo: string, developed = 1, exposure = 1, blur = 0): Print => ({
+  roll: 'r',
+  photo,
+  developed,
+  exposure,
+  blur,
+})
+
+describe('o cursor do dia', () => {
+  it('passa as falas uma a uma e depois vai para o rolo', () => {
+    let c = advance(DAY, START, [])
+    expect(c).toEqual({ step: 0, index: 1, gesture: 'enlarger' })
+    c = advance(DAY, c, [])
+    expect(c).toEqual({ step: 1, index: 0, gesture: 'enlarger' })
+  })
+
+  it('cada foto passa pelo ampliador, pela bandeja e pelo varal', () => {
+    let c: Cursor = { step: 1, index: 0, gesture: 'enlarger' }
+    const seen: string[] = []
+    while (c.step === 1) {
+      seen.push(`${currentPhoto(DAY, c)?.photo.id}:${c.gesture}`)
+      c = advance(DAY, c, [])
+    }
+    expect(seen).toEqual(['p1:enlarger', 'p1:tray', 'p1:line', 'p2:enlarger', 'p2:tray', 'p2:line'])
+    expect(c.step).toBe(2)
+  })
+
+  it('outra folha volta a foto para o ampliador', () => {
+    expect(retry({ step: 1, index: 1, gesture: 'tray' })).toEqual({ step: 1, index: 1, gesture: 'enlarger' })
+  })
+
+  it('para no fim do dia', () => {
+    const end = { step: 4, index: 0, gesture: 'enlarger' as const }
+    expect(advance(DAY, end, [])).toBe(end)
+  })
+
+  it('um cursor que não cabe no roteiro volta ao começo', () => {
+    expect(validCursor(DAY, { step: 9, index: 0, gesture: 'tray' })).toBe(START)
+    expect(validCursor(DAY, { step: 1, index: 5, gesture: 'tray' })).toBe(START)
+    expect(validCursor(DAY, undefined)).toBe(START)
+    expect(validCursor(DAY, { step: 1, index: 1, gesture: 'line' })).toEqual({ step: 1, index: 1, gesture: 'line' })
+  })
+})
+
+describe('o ampliador', () => {
+  it('fica nítido no ponto do foco e borra longe dele', () => {
+    expect(focusBlur(0.5, 0.5)).toBe(0)
+    expect(focusBlur(0.55, 0.5)).toBeCloseTo(0.2)
+    expect(focusBlur(0, 0.5)).toBe(1)
+  })
+
+  it('mais luz, cópia mais escura, com limite', () => {
+    expect(exposureFactor(8, 8)).toBe(1)
+    expect(exposureFactor(16, 8)).toBe(2)
+    expect(exposureFactor(60, 8)).toBe(2.5)
+    expect(exposureFactor(1, 8)).toBe(0.3)
+  })
+})
+
+describe('a qualidade das cópias', () => {
+  it('o tom é revelação vezes luz', () => {
+    expect(printQuality(print('p1', 1, 1))).toBe('right')
+    expect(printQuality(print('p1', 0.5, 1))).toBe('pale')
+    expect(printQuality(print('p1', 0.5, 2))).toBe('right')
+    expect(printQuality(print('p1', 1, 1.6))).toBe('dark')
+  })
+
+  it('fora de foco vale mais que o tom', () => {
+    expect(printQuality(print('p1', 1, 1, 0.5))).toBe('blurry')
+  })
+
+  it('o cliente reclama do defeito que pegou metade do rolo', () => {
+    expect(rollMood(['right', 'right'])).toBe('good')
+    expect(rollMood(['pale', 'right'])).toBe('pale')
+    expect(rollMood(['pale', 'right', 'right', 'dark'])).toBe('mixed')
+    expect(rollMood(['blurry', 'dark', 'dark', 'right'])).toBe('dark')
+  })
+
+  it('a fala da entrega depende das cópias', () => {
+    const deliver = DAY.steps[3]
+    expect(stepLines(DAY, deliver, [print('p1'), print('p2')]).map((l) => l.text)).toEqual(['volta', 'cópia boa'])
+    expect(moodOf(DAY, 'r', [print('p1', 0.3), print('p2')])).toBe('pale')
+  })
+
+  it('a cópia nova da mesma foto troca a antiga', () => {
+    const prints = keepPrint([print('p1', 0.3), print('p2')], print('p1', 1))
+    expect(prints).toHaveLength(2)
+    expect(prints.find((p) => p.photo === 'p1')?.developed).toBe(1)
+  })
+
+  it('o rolo queimado anda um gesto por vez', () => {
+    const burn: DayScript = {
+      day: 6,
+      title: 'Queima',
+      steps: [
+        { kind: 'burn', actions: [{ text: 'a', label: 'Abrir' }, { text: 'b', label: 'Riscar', fire: true }] },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    let c = advance(burn, START, [])
+    expect(c).toMatchObject({ step: 0, index: 1 })
+    c = advance(burn, c, [])
+    expect(burn.steps[c.step].kind).toBe('end')
+    expect(validCursor(burn, { step: 0, index: 5, gesture: 'enlarger' })).toEqual(START)
+  })
+
+  it('o tanque anda um gesto por vez, e o filme só enrola com o botão apertado', () => {
+    const tank: DayScript = {
+      day: 1,
+      title: 'Tanque',
+      steps: [
+        { kind: 'tank', actions: [{ text: 'a', label: 'Abrir' }, { text: 'b', label: 'Segure', hold: 4 }] },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    expect(advance(tank, START, [])).toMatchObject({ step: 0, index: 1 })
+    expect(tank.steps[advance(tank, { ...START, index: 1 }, []).step].kind).toBe('end')
+    expect(validCursor(tank, { step: 0, index: 2, gesture: 'enlarger' })).toEqual(START)
+    expect(reel(0, 1, 4)).toBeCloseTo(0.25)
+    expect(reel(0.25, 0, 4)).toBeCloseTo(0.25)
+    expect(reel(0.9, 2, 4)).toBe(1)
+    expect(reel(0, 0, 0)).toBe(1)
+  })
+
+  it('a escolha do fim só anda depois de escolher, e segue as falas do final', () => {
+    const last: DayScript = {
+      day: 10,
+      title: 'Fim',
+      steps: [
+        {
+          kind: 'choice',
+          prompt: 'E agora?',
+          options: [
+            { id: 'a', label: 'A', lines: [line('a1'), line('a2')], title: 'A', text: '', look: 'fire' },
+            { id: 'b', label: 'B', lines: [line('b1')], title: 'B', text: '', look: 'white' },
+          ],
+        },
+        { kind: 'end', title: 'Fim', text: '' },
+      ],
+    }
+    expect(advance(last, START, [], null)).toEqual(START)
+    expect(stepLines(last, last.steps[0], [], 'a').map((l) => l.text)).toEqual(['a1', 'a2'])
+    let c = advance(last, START, [], 'a')
+    expect(c.index).toBe(1)
+    c = advance(last, c, [], 'a')
+    expect(last.steps[c.step].kind).toBe('end')
+    expect(endingOf(last, 'b')?.title).toBe('B')
+    expect(endingOf(last, 'x')).toBeUndefined()
+    expect(endingOf(DAY, 'a')).toBeUndefined()
+  })
+})

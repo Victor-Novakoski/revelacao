@@ -66,12 +66,466 @@ h1 {
 button:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 .hint { margin: 16px 0 0; font-size: 13px; color: var(--muted); }
 
+.tray-controls {
+  position: absolute;
+  inset: 0;
+  touch-action: none;
+  cursor: grab;
+}
+.tray-controls:active { cursor: grabbing; }
+.tray-controls:focus-visible { outline: 2px solid var(--muted); outline-offset: -6px; }
+
+.develop-top {
+  position: absolute;
+  inset: max(16px, env(safe-area-inset-top)) 0 auto 0;
+  padding: 0 16px;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 2px 16px #000;
+}
+.timer {
+  margin: 0;
+  font: 500 32px/1 'Cormorant Garamond', serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+.stage-line {
+  margin: 6px 0 0;
+  font: italic 500 18px/1.3 'Cormorant Garamond', serif;
+  color: var(--muted);
+}
+
 .hud {
   position: absolute;
-  inset: auto 0 6vh 0;
-  display: grid;
-  justify-items: center;
+  inset: auto 0 max(4vh, env(safe-area-inset-bottom)) 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 12px;
   padding: 0 16px;
+  pointer-events: none;
 }
-.soon { margin: 0; color: var(--muted); }
+.hud > * { pointer-events: auto; }
+.hud .hint { flex-basis: 100%; margin: 0; text-align: center; pointer-events: none; }
+
+.sound-controls {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  display: flex;
+  gap: 8px;
+  z-index: 2;
+}
+.icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(242, 227, 213, 0.3);
+  border-radius: 50%;
+  background: rgba(5, 2, 2, 0.55);
+  color: var(--ink);
+  font: 600 12px Inter, sans-serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.icon:hover { border-color: rgba(242, 227, 213, 0.6); }
+.icon .off { opacity: 0.45; text-decoration: line-through; }
+
+.captions {
+  position: absolute;
+  inset: calc(max(16px, env(safe-area-inset-top)) + 92px) 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  pointer-events: none;
+}
+.captions p {
+  margin: 0;
+  max-width: 36ch;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: rgba(5, 2, 2, 0.72);
+  font: italic 500 17px/1.35 'Cormorant Garamond', serif;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* Etapa 5: o dia na loja. */
+
+.stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 2, 2, 0.6);
+  opacity: 0;
+  transition: opacity 0.8s;
+  pointer-events: none;
+}
+.stage.dim::after { opacity: 1; }
+/* O tanque: a luz vermelha apaga e a sala some no breu. */
+.stage.dark::after { opacity: 1; background: #000; transition-duration: 1.2s; }
+@media (prefers-reduced-motion: reduce) {
+  .stage::after { transition: none; }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+button:disabled { opacity: 0.55; cursor: default; }
+.link {
+  min-height: 44px;
+  margin-top: 8px;
+  padding: 0 12px;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 500 15px Inter, sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  cursor: pointer;
+}
+.link:hover { color: var(--ink); }
+
+.exit {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  z-index: 2;
+  font-size: 16px;
+}
+
+.tutorial {
+  margin: 8px auto 0;
+  max-width: 46ch;
+  padding: 8px 12px;
+  border-left: 2px solid var(--red);
+  background: rgba(5, 2, 2, 0.72);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.45;
+  text-align: left;
+  text-shadow: none;
+}
+.photo-count {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* O balcão. */
+.counter {
+  position: absolute;
+  inset: auto 0 max(4vh, env(safe-area-inset-bottom)) 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+.dialog {
+  width: min(640px, 100%);
+  padding: 20px 22px 18px;
+  border: 1px solid rgba(255, 59, 42, 0.35);
+  border-radius: 10px;
+  background: rgba(10, 4, 3, 0.9);
+  box-shadow: 0 10px 40px #000;
+}
+.speaker {
+  margin: 0 0 6px;
+  font: 700 20px/1.1 'Cormorant Garamond', serif;
+  letter-spacing: 0.06em;
+  color: var(--red);
+}
+.dialog .line {
+  margin: 0 0 16px;
+  font: 500 22px/1.4 'Cormorant Garamond', serif;
+}
+.dialog.narration .line { font-style: italic; color: var(--muted); }
+.dialog .enter { display: block; margin-left: auto; }
+
+/* O ampliador. */
+.panel {
+  position: absolute;
+  overflow-y: auto;
+  padding: 16px;
+  background: rgba(10, 4, 3, 0.9);
+  border: 1px solid rgba(255, 59, 42, 0.25);
+}
+.enlarger-panel {
+  top: 72px;
+  right: 16px;
+  bottom: 16px;
+  width: min(380px, calc(100% - 32px));
+  border-radius: 10px;
+}
+@media (max-width: 720px) {
+  .enlarger-panel {
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    max-height: 64vh;
+    border-radius: 14px 14px 0 0;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+.projection {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  filter: none;
+  opacity: 0.85;
+}
+.projection.lit { opacity: 1; box-shadow: 0 0 40px rgba(255, 240, 214, 0.35); }
+.control {
+  display: grid;
+  gap: 2px;
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--muted);
+}
+.control strong { color: var(--ink); }
+.control input {
+  width: 100%;
+  min-height: 44px;
+  accent-color: var(--red);
+}
+.enlarger-panel .actions { margin-top: 12px; }
+
+/* O varal. */
+.line-panel .wet-print {
+  position: absolute;
+  left: 50%;
+  bottom: calc(max(4vh, env(safe-area-inset-bottom)) + 120px);
+  width: min(70vw, 360px);
+  margin-left: calc(min(70vw, 360px) / -2);
+  touch-action: none;
+  cursor: grab;
+}
+.wet-print canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 8px 30px #000;
+}
+/* Sob a luz de segurança, a cópia molhada é vermelha. */
+.wet-print::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #ff3020;
+  mix-blend-mode: multiply;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* O mural. */
+.wall {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  padding: 72px 16px max(24px, env(safe-area-inset-bottom));
+  text-align: center;
+}
+.wall h2 {
+  margin: 0 0 8px;
+  font: 700 40px/1 'Cormorant Garamond', serif;
+}
+.wall .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px 16px;
+  max-width: 980px;
+  margin: 20px auto 24px;
+  padding: 0;
+  list-style: none;
+}
+.thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+.wall li:nth-child(odd) .thumb { transform: rotate(-1.2deg); }
+.wall li:nth-child(even) .thumb { transform: rotate(1deg); }
+.thumb canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+}
+.thumb:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+.wall.open { padding-top: 64px; }
+.sheet {
+  width: min(100%, 860px, calc(62vh * 4 / 3));
+  margin: 0 auto;
+}
+.loupe-area {
+  position: relative;
+  touch-action: none;
+  cursor: none;
+}
+.loupe-area:focus-visible { outline: 2px solid var(--muted); outline-offset: 4px; }
+.big-print {
+  display: block;
+  width: 100%;
+  height: auto;
+  box-shadow: 0 10px 40px #000;
+}
+.lens {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 3px solid #2a2420;
+  box-shadow: 0 0 0 1px #8a7a6a, 0 12px 30px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+.found {
+  min-height: 1.4em;
+  margin: 12px 0;
+  font: italic 500 19px/1.35 'Cormorant Garamond', serif;
+  color: var(--ink);
+}
+.verso {
+  aspect-ratio: 4 / 3;
+  padding: 24px;
+  background: #e8e1d2;
+  color: #2b2520;
+  text-align: left;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px #000;
+}
+.pencil {
+  margin: 0 0 12px;
+  font: italic 500 24px/1.3 'Cormorant Garamond', serif;
+  color: #4a443e;
+}
+.found-list { margin: 0 0 12px; padding-left: 20px; font-size: 14px; }
+.note { display: grid; gap: 4px; font-size: 13px; color: #5a524a; }
+.note textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #b9ae9c;
+  border-radius: 4px;
+  background: #f3eee4;
+  color: #2b2520;
+  font: 500 18px/1.35 'Cormorant Garamond', serif;
+  resize: vertical;
+}
+.wall.open .actions { margin-top: 4px; }
+.wall.open .actions .ghost[aria-label] { padding: 0 18px; font-size: 22px; }
+
+.end-card h2 {
+  margin: 8px 0 12px;
+  font: 700 clamp(40px, 8vw, 72px)/0.95 'Cormorant Garamond', serif;
+}
+.title-card .actions { margin-bottom: 4px; }
+
+/* O mural de "Ver as fotos": um botão por dia. */
+.wall .days {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 8px;
+  max-width: 720px;
+}
+.wall .days button { min-height: 44px; padding: 0 16px; font-size: 14px; }
+.gallery-day { margin: 0 0 12px; text-align: center; color: var(--muted); font-style: italic; }
+
+/* O rolo que voltou, e o fogo. O brilho respira devagar; com movimento
+   reduzido, fica parado. */
+.burn {
+  position: absolute;
+  inset: auto 0 max(4vh, env(safe-area-inset-bottom)) 0;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+.burn .glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 85%, rgba(255, 150, 60, 0.32), rgba(255, 90, 30, 0.08) 45%, transparent 70%);
+  animation: breathe 3.2s ease-in-out infinite alternate;
+}
+@keyframes breathe {
+  from { opacity: 0.75; }
+  to { opacity: 1; }
+}
+
+.choice-card h2 {
+  margin: 8px auto 20px;
+  max-width: 22ch;
+  font: 700 clamp(30px, 6vw, 52px)/1.05 'Cormorant Garamond', serif;
+}
+.actions.column { flex-direction: column; align-items: center; }
+.actions.column button { width: min(360px, 100%); }
+
+/* O tanque, no escuro total: nada vermelho, só um cinza apagado. */
+.tank {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+}
+.tank .dialog { border-color: rgba(160, 150, 140, 0.18); background: transparent; box-shadow: none; }
+.tank .dialog .line { color: #a59b94; }
+.tank .enter { border-color: rgba(165, 155, 148, 0.45); color: #c9c0b9; background: transparent; }
+.tank .enter:hover, .tank .enter:focus-visible { background: rgba(165, 155, 148, 0.12); }
+.tank .hold { touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.tank .hold.held { background: rgba(165, 155, 148, 0.18); }
+.reel { height: 2px; margin: 0 0 16px; background: rgba(165, 155, 148, 0.12); }
+.reel span { display: block; height: 100%; background: rgba(165, 155, 148, 0.5); }
+
+/* Os finais. "Revelar até o fim" escurece e depois estoura em branco,
+   devagar, sem salto. */
+.ending-look { position: fixed; inset: 0; pointer-events: none; }
+.ending-look.fire {
+  background: radial-gradient(ellipse at 50% 90%, rgba(255, 140, 50, 0.3), transparent 65%);
+  animation: breathe 3.2s ease-in-out infinite alternate;
+}
+.ending-look.white { background: #f4efe6; animation: whiteout 9s ease-in both; }
+@keyframes whiteout {
+  0% { background: rgba(0, 0, 0, 0); }
+  45% { background: rgba(0, 0, 0, 0.92); }
+  100% { background: rgba(244, 239, 230, 1); }
+}
+.end-card.white { color: #1a1210; text-shadow: none; animation: ink 9s ease-in both; }
+.end-card.white .lead, .end-card.white .kicker { color: #4a3a33; }
+.end-card.white .ghost { color: #1a1210; border-color: rgba(26, 18, 16, 0.4); }
+.end-card.white .enter { color: #1a1210; }
+@keyframes ink {
+  0%, 70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .burn .glow, .ending-look.fire { animation: none; }
+  .ending-look.white, .end-card.white { animation: none; }
+}
+
+/* No celular, os títulos descem para não ficar sob os botões do canto. */
+@media (max-width: 520px) {
+  .develop-top { top: max(64px, env(safe-area-inset-top)); }
+  .captions { top: calc(max(16px, env(safe-area-inset-top)) + 150px); }
+  .enlarger-panel { max-height: 70vh; padding-top: 12px; }
+  .projection { width: auto; max-width: 100%; max-height: 24vh; margin: 0 auto; }
+  .enlarger-panel .tutorial { font-size: 13px; }
+  .control { margin-top: 6px; }
+}
