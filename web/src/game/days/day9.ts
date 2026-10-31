@@ -2,7 +2,7 @@ import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
 // Dia 9, quarta-feira, 23 de outubro. A figura volta, perto, nas fotos de
-// todo mundo. Os clientes não veem nada. Só nas fotos da Senhorita Amanda
+// todo mundo, até nas da Lúcia. Os clientes não veem nada. Só nas fotos da Senhorita Amanda
 // ela não está.
 
 const quintal: Roll = {
@@ -12,32 +12,32 @@ const quintal: Roll = {
   title: 'O quintal',
   photos: [
     {
-      id: 'lencois',
-      verso: 'Lençol novo no varal',
+      id: 'bolhas',
+      verso: 'A Lúcia e as bolinhas de sabão',
       exposure: 7,
       focus: 0.64,
-      details: [seen('cida-quintal', 'lencois', 'Na frente do lençol, alguém alto. Não tem sombra no chão.')],
+      details: [seen('cida-quintal', 'bolhas', 'Do lado dela, alguém alto. A sombra da Lúcia está na parede. A dele, não.')],
     },
     {
-      id: 'roda',
-      verso: 'Os meninos brincando de roda',
+      id: 'gramado',
+      verso: 'As três no gramado, dividindo a bala',
       exposure: 8,
       focus: 0.64,
-      details: [seen('cida-quintal', 'roda', 'Na roda das crianças tem uma pessoa a mais.')],
+      details: [seen('cida-quintal', 'gramado', 'De pé, logo atrás das meninas. Elas não olham.')],
     },
     {
-      id: 'poltrona',
-      verso: 'O Juvenal, como sempre',
+      id: 'gato',
+      verso: 'A Lúcia e o Bichano, na poltrona do Juvenal',
       exposure: 10,
       focus: 0.64,
-      details: [seen('cida-quintal', 'poltrona', 'Atrás da poltrona do Seu Juvenal. A mão quase no ombro dele.')],
+      details: [seen('cida-quintal', 'gato', 'Atrás da poltrona. A mão quase no ombro dela.')],
     },
     {
-      id: 'portao',
-      verso: 'Os três no portão, de novo. Como cresceram',
+      id: 'escada',
+      verso: 'As três subindo para casa. Como cresceram',
       exposure: 8,
       focus: 0.64,
-      details: [seen('cida-quintal', 'portao', 'Do lado de dentro do portão, bem atrás das crianças.')],
+      details: [seen('cida-quintal', 'escada', 'Na porta de casa, lá em cima, esperando por elas.')],
     },
   ],
 }
@@ -118,7 +118,7 @@ export const DAY9: DayScript = {
       kind: 'talk',
       lines: [
         narrate('Quarta-feira, 23 de outubro. Três rolos no balcão antes das nove.'),
-        bell('cida', 'Seu Augusto, o quintal! Lençol novo, os meninos brincando. Coisa à toa, mas eu gosto.'),
+        bell('cida', 'Seu Augusto, o quintal! A Lúcia com as amigas, o gato na poltrona. Coisa à toa, mas eu gosto.'),
         bell('nakamura', 'Augusto-san. Casamento na Mooca. O último do mês.'),
         bell('amanda', 'Hoje eu sou a cliente, Seu Augusto. Fotografei a livraria para o catálogo de Natal.'),
         say('augusto', 'A senhorita fotografa?'),
@@ -135,8 +135,8 @@ export const DAY9: DayScript = {
       roll: 'cida-quintal',
       before: [bell('cida', 'Voltei, Seu Augusto! E o meu quintal?'), say('augusto', 'Aqui, Dona Cida.')],
       after: moods('cida', {
-        good: 'Que beleza! O Juvenal dormindo de novo. Esse homem dorme até em foto.',
-        pale: 'Clarinhas, mas o lençol ficou branquinho. Era o que eu queria mostrar.',
+        good: 'Que beleza! O Bichano no colo dela, nem parece bravo.',
+        pale: 'Clarinhas, mas a Lúcia ficou um anjo. Era o que eu queria mostrar.',
         dark: 'Escuras, Seu Augusto. Parece que foi de noite.',
         blurry: 'Borradas. O senhor voltou a ficar cansado?',
         mixed: 'Umas boas, outras nem tanto. Mas estão todos aí, é o que importa.',
@@ -145,7 +145,7 @@ export const DAY9: DayScript = {
     {
       kind: 'talk',
       lines: [
-        say('augusto', 'Dona Cida... a senhora não vê ninguém atrás do Seu Juvenal?'),
+        say('augusto', 'Dona Cida... a senhora não vê ninguém atrás da Lúcia, na poltrona?'),
         say('cida', 'Atrás da poltrona? Só a parede, Seu Augusto. O senhor anda vendo coisa.'),
       ],
     },

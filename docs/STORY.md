@@ -140,7 +140,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
 | 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |
 | 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |
-| 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm) | lençóis, roda de crianças, Juvenal na poltrona, o portão | Perto em todas, e ninguém vê |
+| 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm, fotos reais) | a Lúcia fazendo bolinha de sabão, as três no gramado, a Lúcia com o gato na poltrona, as três subindo a escada de casa | Perto em todas, e ninguém vê. Na das bolinhas, a Lúcia tem sombra e ele não |
 | 9 | Seu Nakamura, "Casamento na Mooca" (120, fotos reais) | a noiva entre os convidados, as duas famílias, os noivos no altar, a saída entre os fotógrafos | Perto em todas; na última, ninguém fotografa ele |
 | 9 | Senhorita Amanda, "A livraria" (35 mm) | vitrine, estante de terror, o gato Poe, ela no balcão | Nunca. "Atrás dela, só livros" |
 | 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | a bancada vista do teto, o ampliador, o varal, a pia vista do chão, o rosto, o fogo de sábado | Na sua câmara escura, mais perto a cada foto; o seu rosto borra junto |

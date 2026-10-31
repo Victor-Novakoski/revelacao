@@ -41,6 +41,10 @@ SCENES_35 = [
     ('comunhao-altar', 'nickerie-5472.jpg', (0 / 960, 120 / 937, 960 / 960, 760 / 937)),
     ('comunhao-igreja', 'nickerie-5473.jpg', (0 / 960, 150 / 946, 960 / 960, 790 / 946)),
     ('comunhao-procissao', 'nickerie-5482.jpg', (0 / 960, 200 / 931, 960 / 960, 840 / 931)),
+    ('quintal-bolhas', 'vandepoll-252-0729.jpg', (0 / 960, 300 / 1238, 960 / 960, 940 / 1238)),
+    ('quintal-gramado', 'vandepoll-189-0416.jpg', (0 / 960, 40 / 726, 960 / 960, 680 / 726)),
+    ('quintal-gato', 'vandepoll-252-1483.jpg', (0 / 960, 180 / 1256, 960 / 960, 820 / 1256)),
+    ('quintal-escada', 'vandepoll-252-0857.jpg', (0 / 960, 200 / 1241, 960 / 960, 840 / 1241)),
 ]
 
 for scenes, size in ((SCENES, (SIDE, SIDE)), (SCENES_35, FILM_35)):

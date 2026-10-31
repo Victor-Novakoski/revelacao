@@ -4,16 +4,11 @@ import { realScene } from './real'
 import {
   X,
   Y,
-  armchair,
-  boy,
   darkroom,
   enlarger,
-  girl,
   hall,
-  parlor,
   sign,
   studio,
-  yard,
 } from './places'
 import { coreto, lago, pertoVolta, pipoqueiro } from './week1'
 
@@ -76,42 +71,14 @@ const salao: Scene = (ctx, fr) => {
   falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
 }
 
-// Dia 9 · Dona Cida, "O quintal" (35 mm). A figura perto, em todas.
+// Dia 9 · Dona Cida, "O quintal" (35 mm). A figura perto, em todas. Fotos
+// de verdade, ver photos/real.ts: a Lúcia é a mesma menina que dormiu no
+// mato no piquenique.
 
-const lencois: Scene = (ctx, fr) => {
-  yard(ctx, fr)
-  person(ctx, girl(X(0.7), Y(0.92), Y(0.36)))
-  person(ctx, boy(X(0.8), Y(0.92), Y(0.3), 0.5))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const roda: Scene = (ctx, fr) => {
-  yard(ctx, fr, false)
-  // A roda de crianças, de mãos dadas, com um vão.
-  for (const [i, rx] of [0.28, 0.38, 0.62, 0.72].entries()) {
-    person(ctx, { ...(i % 2 ? girl(X(rx), Y(0.9), Y(0.36)) : boy(X(rx), Y(0.9), Y(0.36))), arms: 'side' })
-  }
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const poltronaNoite: Scene = (ctx, fr) => {
-  parlor(ctx, fr)
-  armchair(ctx, 0.42)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.45)
-}
-
-const portaoNoite: Scene = (ctx, fr) => {
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h * 0.4, 0.84, 0.76)
-  rect(ctx, fr.x, Y(0.18), fr.w, Y(0.5), 0.68)
-  rect(ctx, X(0.44), Y(0.3), X(0.12), Y(0.38), 0.3)
-  rect(ctx, fr.x, Y(0.6), fr.w, Y(0.12), 0.78)
-  gradient(ctx, fr.x, Y(0.72), fr.w, Y(0.28), 0.58, 0.44)
-  for (let i = 0; i < 18; i++) rect(ctx, X(0.3 + i * 0.022), Y(0.4), 3, Y(0.32), 0.12)
-  person(ctx, boy(X(0.38), Y(0.95), Y(0.5), 0.3))
-  person(ctx, girl(X(0.5), Y(0.96), Y(0.44)))
-  person(ctx, boy(X(0.66), Y(0.97), Y(0.34), 0.5))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
+const bolhas = realScene('quintal-bolhas')
+const gramado = realScene('quintal-gramado')
+const gatoQuintal = realScene('quintal-gato')
+const escada = realScene('quintal-escada')
 
 // Dia 9 · Seu Nakamura, "Casamento na Mooca" (120). Fotos de verdade, ver
 // photos/real.ts.
@@ -262,10 +229,10 @@ export const WEEK2_SCENES: Record<string, Scene> = {
   'nakamura-bodas/danca': danca,
   'nakamura-bodas/familia': bodasFamilia,
   'nakamura-bodas/salao': salao,
-  'cida-quintal/lencois': lencois,
-  'cida-quintal/roda': roda,
-  'cida-quintal/poltrona': poltronaNoite,
-  'cida-quintal/portao': portaoNoite,
+  'cida-quintal/bolhas': bolhas,
+  'cida-quintal/gramado': gramado,
+  'cida-quintal/gato': gatoQuintal,
+  'cida-quintal/escada': escada,
   'nakamura-mooca/convidados': moocaConvidados,
   'nakamura-mooca/familia': moocaFamilia,
   'nakamura-mooca/noivos': moocaNoivos,
