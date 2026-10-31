@@ -14,7 +14,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 | **Senhorita Amanda** | Dona da livraria ao lado, apaixonada por livros de terror e muito perspicaz. Sempre de preto. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ver "Os livros da Amanda"). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
 | **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com a porta riscada a giz (nomes de cidade de outras rotas). Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
-| **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
+| **Seu Nakamura** | Fotógrafo de casamentos da Liberdade, chamado para festas da cidade inteira |
 | **Marlene** | Normalista que fotografa as amigas. Um dia para de vir, e ninguém comenta |
 | **Inspetor Moura** | O policial que leva a câmera e depois não lembra do Elias |
 | **H. Vilela** | Iniciais gravadas na bolsa da câmera. O dono original, que nunca aparece |
@@ -103,23 +103,23 @@ Realistas, em preto e branco, renderizadas no Blender. O grão e o desfoque da r
 
 ## Os rolos
 
-O roteiro e os textos de cada dia ficam em `web/src/game/days/`. Até as fotos do Blender chegarem, cada cena é desenhada em código (`web/src/photos/`), com as mesmas posições, para os detalhes da lupa não mudarem de lugar.
+O roteiro e os textos de cada dia ficam em `web/src/game/days/`. As fotos são reais, em domínio público ou CC0 (`web/src/photos/real.ts`, origem em `art/real/README.md`); os detalhes da lupa ficam em fração da foto.
 
 ### Dia 1 · segunda-feira, 14/10/1957
 
-**Dona Cida, "Aniversário do Toninho"** (35 mm, domingo 13/10):
+**Dona Cida, "Aniversário da Lúcia"** (35 mm, domingo 13/10, fotos reais):
 
-1. O bolo: a família atrás da mesa, sete velinhas. Na lupa, o Toninho já está com o dedo na cobertura.
-2. Os netos no portão de ferro: Toninho, Lúcia e o Zezinho.
-3. Seu Juvenal dormindo na poltrona depois do almoço, jornal no colo. Na lupa, um gato dormindo embaixo da poltrona.
-4. Dona Cida e a Lúcia no quintal, varal de lençóis ao fundo. Torta, porque quem tirou foi o Toninho.
+1. O presente: a filha e o genro entregam a boneca nova, de touca e vestido de tricô. A lupa mostra o tricô.
+2. Os netos e os primos no banco alto do retratista. Na lupa, a Lúcia não larga a boneca nem para a foto.
+3. A Lúcia e a Rosinha, a boneca de boca aberta que, segundo ela, fala.
+4. Dona Cida com a irmã e as meninas no quintal. Quem tirou foi o Toninho, e um toco de cerca entrou na frente.
 
-**Seu Nakamura, "Casamento na Liberdade"** (120, 6x6, sábado 12/10):
+**Seu Nakamura, "Casamento no Bom Retiro"** (120, 6x6, sábado 12/10, fotos reais):
 
-1. Os noivos na escadaria da igreja.
-2. As duas famílias em duas fileiras. Na lupa, o padrinho piscou.
-3. O brinde no salão com lanternas de papel.
-4. A saída da igreja, arroz no ar. Na lupa, um menino catando o arroz do chão.
+1. Os noivos chegando, com uma menina de vestido branco atrás da noiva.
+2. A cerimônia debaixo do dossel, no quintal, com a vizinhança toda em volta.
+3. O brinde, com o bolo de três andares ainda inteiro.
+4. A dança, já de noite, com as moças levando arcos de flores.
 
 Nenhuma figura no dia 1. Os detalhes da lupa ensinam a vasculhar a foto com coisas inocentes; a partir do dia 3 a lupa acha outra coisa.
 
