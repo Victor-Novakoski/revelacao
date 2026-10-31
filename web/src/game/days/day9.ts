@@ -85,27 +85,41 @@ const livraria: Roll = {
   film: '35mm',
   title: 'A livraria',
   photos: [
-    { id: 'vitrine', verso: 'A vitrine de Natal (ainda sem os enfeites)', exposure: 9, focus: 0.7 },
+    {
+      id: 'vitrine',
+      verso: 'A vitrine, ainda sem os enfeites de Natal',
+      exposure: 9,
+      focus: 0.7,
+      details: [{ id: 'mocas', x: 0.5, y: 0.42, r: 0.1, text: 'Duas moças de cara no vidro. Na vitrine, só capas de livro.' }],
+    },
     {
       id: 'estantes',
-      verso: 'A estante de terror, minha favorita',
+      verso: 'O Seu Mendes e o filho, que lê de graça há um ano',
       exposure: 11,
       focus: 0.7,
-      details: [{ id: 'fora', x: 0.635, y: 0.44, r: 0.05, text: 'Um livro deitado fora do lugar: "Drácula".' }],
+      details: [{ id: 'gibi', x: 0.44, y: 0.5, r: 0.08, text: 'Um gibi estrangeiro, de capa amassada. O menino nem viu a câmera.' }],
     },
     {
       id: 'gato',
       verso: 'O verdadeiro dono da livraria',
       exposure: 9,
       focus: 0.7,
-      details: [{ id: 'poe', x: 0.75, y: 0.84, r: 0.05, text: 'O gato se chama Poe. Está escrito na tigela.' }],
+      details: [{ id: 'poe', x: 0.5, y: 0.58, r: 0.06, text: 'O Poe e a tigela de leite. Os camundongos da gaiola nem se mexem.' }],
     },
     {
       id: 'balcao',
       verso: 'Eu, com o disparador automático. Sorria!',
       exposure: 10,
       focus: 0.7,
-      details: [{ id: 'atras', x: 0.5, y: 0.5, r: 0.12, text: 'Atrás dela, só livros. Nem sombra.' }],
+      details: [
+        {
+          id: 'atras',
+          x: 0.39,
+          y: 0.56,
+          r: 0.1,
+          text: 'O disparador correu: ela não chegou a entrar. Só uma freguesa de costas, nos cartões-postais. Nem sombra de mais ninguém.',
+        },
+      ],
     },
   ],
 }
@@ -176,9 +190,9 @@ export const DAY9: DayScript = {
       after: moods('amanda', {
         good: 'Perfeitas. O Poe saiu com cara de dono da livraria. E é.',
         pale: 'Clarinhas. Os livros parecem ainda mais velhos. Gostei.',
-        dark: 'Escuras. Combina com a estante de terror, pelo menos.',
+        dark: 'Escuras. Parece livraria de romance policial. Gostei.',
         blurry: 'Borradas. Livro não pisca, mas o revelador pelo jeito sim.',
-        mixed: 'Umas boas, outras nem tanto. A do Poe ficou ótima.',
+        mixed: 'Umas boas, outras nem tanto. A do Poe ficou ótima. A minha nem fui eu.',
       }),
     },
     {

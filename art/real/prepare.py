@@ -45,6 +45,10 @@ SCENES_35 = [
     ('quintal-gramado', 'vandepoll-189-0416.jpg', (0 / 960, 40 / 726, 960 / 960, 680 / 726)),
     ('quintal-gato', 'vandepoll-252-1483.jpg', (0 / 960, 180 / 1256, 960 / 960, 820 / 1256)),
     ('quintal-escada', 'vandepoll-252-0857.jpg', (0 / 960, 200 / 1241, 960 / 960, 840 / 1241)),
+    ('livraria-vitrine', 'vandepoll-255-1853.jpg', (0 / 960, 120 / 977, 960 / 960, 760 / 977)),
+    ('livraria-estantes', 'anefo-900-8741.jpg', (0 / 960, 260 / 965, 960 / 960, 900 / 965)),
+    ('livraria-gato', 'anefo-906-9507.jpg', (110 / 960, 90 / 748, 960 / 960, 657 / 748)),
+    ('livraria-balcao', 'vandepoll-255-1852.jpg', (0 / 960, 200 / 957, 960 / 960, 840 / 957)),
 ]
 
 for scenes, size in ((SCENES, (SIDE, SIDE)), (SCENES_35, FILM_35)):

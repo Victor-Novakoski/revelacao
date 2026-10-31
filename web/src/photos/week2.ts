@@ -1,4 +1,4 @@
-import { augusto, crowd, ellipse, falloff, gradient, gray, person, poly, rect, seeded, type Ctx } from './draw'
+import { augusto, crowd, ellipse, falloff, gradient, gray, person, poly, rect } from './draw'
 import type { Scene } from './day1'
 import { realScene } from './real'
 import {
@@ -90,67 +90,10 @@ const moocaSaida = realScene('mooca-saida')
 
 // Dia 9 · a Senhorita Amanda, "A livraria" (35 mm). Sem figura nenhuma.
 
-function amanda(ctx: Ctx, x: number, foot: number, h: number) {
-  person(ctx, { x, foot, h, tone: 0.06, dress: true, hair: 0.04, face: 0.78 })
-  // O livro aberto na mão.
-  rect(ctx, x - h * 0.08, foot - h * 0.62, h * 0.16, h * 0.08, 0.92)
-}
-
-function shelves(ctx: Ctx, x: number, w: number, top: number, bottom: number, seed: number) {
-  rect(ctx, x, top, w, bottom - top, 0.18)
-  const rand = seeded(seed)
-  for (let row = 0; row < 5; row++) {
-    const y = top + ((bottom - top) / 5) * row
-    rect(ctx, x, y, w, 3, 0.4)
-    let bx = x + 3
-    while (bx < x + w - 6) {
-      const bw = 4 + rand() * 6
-      rect(ctx, bx, y + 5 + rand() * 4, bw - 1, (bottom - top) / 5 - 9, 0.3 + rand() * 0.6)
-      bx += bw
-    }
-  }
-}
-
-const vitrine: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-  rect(ctx, X(0.1), Y(0.2), X(0.8), Y(0.56), 0.82)
-  sign(ctx, 'LIVRARIA', X(0.5), Y(0.15), Y(0.05), 0.85)
-  for (let i = 0; i < 6; i++) rect(ctx, X(0.16 + i * 0.12), Y(0.5), X(0.07), Y(0.18), 0.15 + (i % 3) * 0.2)
-  rect(ctx, fr.x, Y(0.76), fr.w, Y(0.2), 0.45)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const estantes: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.5)
-  shelves(ctx, X(0.08), X(0.4), Y(0.12), Y(0.88), 7)
-  shelves(ctx, X(0.52), X(0.4), Y(0.12), Y(0.88), 9)
-  // Um livro deitado, fora do lugar.
-  rect(ctx, X(0.6), Y(0.43), X(0.07), Y(0.02), 0.95)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const gato: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.55)
-  shelves(ctx, fr.x, fr.w, Y(0.1), Y(0.56), 3)
-  rect(ctx, fr.x, Y(0.56), fr.w, Y(0.36), 0.68)
-  // O gato preto da livraria em cima da pilha de livros, e a tigela.
-  for (let i = 0; i < 4; i++) rect(ctx, X(0.38 - i * 0.005), Y(0.74 - i * 0.04), X(0.22), Y(0.04), 0.4 + (i % 2) * 0.4)
-  ellipse(ctx, X(0.49), Y(0.6), X(0.07), Y(0.05), 0.06)
-  ellipse(ctx, X(0.55), Y(0.54), X(0.03), Y(0.035), 0.06)
-  poly(ctx, [[X(0.53), Y(0.51)], [X(0.535), Y(0.48)], [X(0.545), Y(0.51)]], 0.06)
-  poly(ctx, [[X(0.555), Y(0.51)], [X(0.565), Y(0.48)], [X(0.57), Y(0.51)]], 0.06)
-  ellipse(ctx, X(0.75), Y(0.84), X(0.05), Y(0.02), 0.9)
-  sign(ctx, 'POE', X(0.75), Y(0.84), Y(0.022), 0.3)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const balcao: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.5)
-  shelves(ctx, fr.x, fr.w, Y(0.1), Y(0.7), 12)
-  amanda(ctx, X(0.5), Y(1.05), Y(0.78))
-  rect(ctx, fr.x, Y(0.72), fr.w, Y(0.2), 0.3)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
+const vitrine = realScene('livraria-vitrine')
+const estantes = realScene('livraria-estantes')
+const gato = realScene('livraria-gato')
+const balcao = realScene('livraria-balcao')
 
 // Dia 10 · "Sem nome" (35 mm). A sua câmara escura, de onde ninguém
 // poderia estar. A cada foto, o seu rosto mais borrado.
