@@ -29,6 +29,7 @@ let wantAudible = true
 let hidden = false
 let bellFree = 0
 let handsFree = 0
+let crackleFree = 0
 let waltzWrong = false
 let warp = 0
 let dread = 0
@@ -111,7 +112,12 @@ function radio(tone: Tone, out: ToneNS.InputNode) {
 
   const part = new tone.Part<Note & { time: string }>((time, n) => {
     piano.triggerAttackRelease(played(n, waltzWrong), length(n.beats), time, 0.5 + Math.random() * 0.1)
-    if (Math.random() < 0.08) crackle.triggerAttackRelease(0.01, time + Math.random() * 0.3)
+    // O estalo é monofônico: dois no mesmo tempo não podem sair fora de ordem.
+    if (Math.random() < 0.08) {
+      const at = Math.max(time + Math.random() * 0.3, crackleFree)
+      crackleFree = at + 0.02
+      crackle.triggerAttackRelease(0.01, at)
+    }
   }, WALTZ.map((n) => ({ ...n, time: at(n.bar, n.beat) })))
   part.loop = true
   part.loopEnd = at(BARS, 0)
