@@ -13,7 +13,7 @@ Dez dias na loja. Cada dia tem clientes no balcão, rolos de filme e as mesmas e
 1. **O tanque, no escuro total.** A luz apaga e a tela some. Pelo som e pelo tato, você abre o chassi e segura o botão para enrolar o filme na espiral.
 2. **O ampliador.** Acerte o foco e escolha os segundos de luz. Mais luz, cópia mais escura.
 3. **A bandeja.** Arraste (ou use as setas) para balançar o revelador. Tire na hora certa: cedo sai pálida, tarde sai escura. A figura revela por último.
-4. **O varal e o mural.** Com a lupa, procure detalhes em cada foto. A partir do terceiro dia, a lupa acha outra coisa.
+4. **O varal e o mural.** Com a lupa, procure detalhes em cada foto. A partir do segundo dia, a lupa acha outra coisa.
 
 Três finais. E sempre dá para **ver as fotos sem revelar**, direto da tela de título.
 
