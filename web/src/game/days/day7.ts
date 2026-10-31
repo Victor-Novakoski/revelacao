@@ -70,7 +70,10 @@ export const DAY7: DayScript = {
         say('augusto', 'E dá certo?'),
         say('amanda', 'Por um tempo. Depois ele começa a ouvir. Bem baixinho, debaixo das tábuas.'),
         say('augusto', 'Ouvir o quê?'),
-        say('amanda', 'O que ele achou que tinha acabado. Boa noite, Seu Augusto.'),
+        say('amanda', 'O que ele achou que tinha acabado.'),
+        say('augusto', 'Mas às vezes as coisas acabam, senhorita.'),
+        say('amanda', 'Às vezes. Boa noite, Seu Augusto. Se ouvir alguma coisa, não vá olhar sozinho.'),
+        narrate('Ela sai. Seu Augusto fica parado no meio da loja, escutando. Só o zumbido da lâmpada e a goteira da pia. Mais nada. Por enquanto.'),
       ],
     },
     {

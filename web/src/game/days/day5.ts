@@ -87,7 +87,10 @@ export const DAY5: DayScript = {
         say('augusto', 'A senhorita lembra.'),
         say('amanda', 'Por que não lembraria? No "Drácula" tem um homem que não aparece no espelho. O senhor está com a cara de quem percebeu.'),
         say('augusto', 'Percebeu o quê?'),
-        say('amanda', 'Que o problema não é o espelho. Boa noite, Seu Augusto. Durma de luz acesa.'),
+        say('amanda', 'Que o problema não é o espelho. É quem está olhando.'),
+        say('augusto', 'E o que se faz, então?'),
+        say('amanda', 'No livro? Fecham as janelas, penduram alho e rezam. Na vida, eu não sei. Boa noite, Seu Augusto. Durma de luz acesa.'),
+        narrate('Ele volta pela calçada e, pela primeira vez em anos, deixa a luz vermelha da câmara escura acesa a noite inteira.'),
       ],
     },
     {

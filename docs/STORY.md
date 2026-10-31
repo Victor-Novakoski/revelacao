@@ -60,9 +60,9 @@ Em detalhe:
 
 ## Os três finais (escolha na última foto)
 
-- **Queimar de novo:** o ciclo recomeça.
-- **Revelar até o fim:** a imagem escurece até estourar em branco.
-- **Entregar o rolo a um cliente** na manhã seguinte: você passa a maldição para frente.
+- **Queimar de novo:** o ciclo recomeça, e o preço é você. Na segunda-feira de novo, quem aparece no fundo da foto da Dona Cida é um homem de gravata: o próprio Seu Augusto.
+- **Revelar até o fim:** a imagem escurece até estourar em branco, e Seu Augusto vai junto para dentro da foto. A Senhorita Amanda acha a última cópia, com os dois lado a lado, e guarda dentro de um livro.
+- **Entregar o rolo a um cliente** na manhã seguinte: você passa a maldição para frente. Seu Augusto volta a sair inteiro nas fotos; duas semanas depois, a Amanda conta que a Dona Cida não sai mais de casa e a Lúcia não dorme de luz apagada.
 
 ## Som como narrativa
 
@@ -149,9 +149,9 @@ O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e n
 
 Os finais, depois do mural do dia 10:
 
-- **Queimar de novo:** álcool, fósforo, alívio, e a fala do dia 1 de novo: "Segunda-feira, 14 de outubro de 1957". O botão abre a loja do começo.
-- **Revelar até o fim:** a tela escurece e estoura em branco, devagar (com movimento reduzido, fica branca direto).
-- **Entregar o rolo:** na sexta de manhã, Seu Augusto dá o envelope à Dona Cida. No rádio, a valsa toca certinha.
+- **Queimar de novo:** álcool, fósforo, alívio, e a fala do dia 1 de novo: "Segunda-feira, 14 de outubro de 1957". A Dona Cida repete a mesma frase, ele repete a resposta sem querer, e à tarde quem está no fundo da foto do quintal é ele. O botão abre a loja do começo.
+- **Revelar até o fim:** a tela escurece e estoura em branco, devagar (com movimento reduzido, fica branca direto). Uma semana depois, a Amanda entra na loja fechada e acha a última cópia: a câmara escura vazia e, no fundo, a figura e Seu Augusto lado a lado. "Eu disse que olhava, Seu Augusto." Ela apaga a luz vermelha.
+- **Entregar o rolo:** na sexta de manhã, Seu Augusto dá o envelope à Dona Cida. Duas semanas depois, a Amanda conta o que aconteceu com ela e com a Lúcia, e diz que tem gente que melhora quando outro piora. No rádio, a valsa toca certinha, e ele aumenta o volume.
 
 ## Em aberto
 
