@@ -115,7 +115,9 @@ export const DAY4: DayScript = {
         ),
         say('augusto', 'E se fosse o contrário? Se a pessoa fosse sumindo do retrato?'),
         say('amanda', 'Aí ela estaria indo para outro lugar. Que pergunta, Seu Augusto.'),
-        narrate('Ela deixa o livro no balcão. O envelope do Elias fica na prateleira, ao lado do da Marlene.'),
+        say('augusto', 'Que outro lugar?'),
+        say('amanda', 'Isso o Poe nunca contou. Os bons nunca contam. Leia o resto e depois me devolve.'),
+        narrate('Ela deixa o livro no balcão e vai embora. O envelope do Elias fica na prateleira, ao lado do da Marlene. Seu Augusto não tem coragem de abrir para olhar de novo.'),
       ],
     },
     {

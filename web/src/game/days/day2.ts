@@ -123,7 +123,9 @@ export const DAY2: DayScript = {
         say('amanda', 'Que coincidência. Hoje é "O Retrato de Dorian Gray". Um moço bonito e um retrato que envelhece no lugar dele.'),
         say('augusto', 'E o retrato fica com as rugas.'),
         say('amanda', 'Fica com tudo o que ele esconde. Retrato guarda segredo, Seu Augusto. Cuidado com o que o senhor revela.'),
-        narrate('Ela abre o guarda-chuva preto e some na chuva.'),
+        say('augusto', 'A senhorita fala como se soubesse de alguma coisa.'),
+        say('amanda', 'Eu só leio, Seu Augusto. Mas os livros sempre sabem antes da gente.'),
+        narrate('Ela abre o guarda-chuva preto e some na chuva. Seu Augusto fica olhando a rua molhada até o bonde passar, como quem espera alguém atravessar.'),
       ],
     },
     {

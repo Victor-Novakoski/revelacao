@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { FADE_IN, LEVELS, MUTE, RADIO_BPM, UNMUTE, behindLeft, dripPitch, fadeTime, nextDrip, radioWarp } from './mix'
+import { FADE_IN, LEVELS, MUTE, RADIO_BPM, UNMUTE, behindLeft, dayDread, dreadMix, dripPitch, fadeTime, nextDrip, nextGlass, radioWarp } from './mix'
 
 const seq = (...values: number[]) => {
   let i = 0
@@ -52,5 +52,33 @@ describe('mix', () => {
 
   it('os sons da história ficam baixos', () => {
     for (const level of [LEVELS.phone, LEVELS.creak, LEVELS.match]) expect(level).toBeLessThanOrEqual(-24)
+  })
+})
+
+describe('o medo', () => {
+  it('cresce com os dias, sem nunca sumir de vez', () => {
+    expect(dayDread(1, 10)).toBe(0)
+    expect(dayDread(10, 10)).toBe(1)
+    expect(dayDread(5, 10)).toBeGreaterThan(dayDread(2, 10))
+    expect(dreadMix(0, 0).cellar).toBeGreaterThan(0)
+  })
+
+  it('a figura na bandeja aumenta tudo e faz o coração bater', () => {
+    const calm = dreadMix(0.3, 0)
+    const seen = dreadMix(0.3, 1)
+    expect(calm.heart).toBe(0)
+    expect(seen.heart).toBe(1)
+    expect(seen.cellar).toBeGreaterThan(calm.cellar)
+    expect(seen.glass).toBeGreaterThan(calm.glass)
+    for (const v of Object.values(dreadMix(5, 5))) expect(v).toBeLessThanOrEqual(1)
+  })
+
+  it('o apito volta mais cedo nos dias pesados, mas nunca em menos de 12 s', () => {
+    expect(nextGlass(() => 0, 1)).toBeLessThan(nextGlass(() => 0, 0))
+    expect(nextGlass(() => 0, 1)).toBeGreaterThanOrEqual(12)
+  })
+
+  it('as camadas novas também ficam baixas', () => {
+    for (const level of [LEVELS.drone, LEVELS.glass, LEVELS.heart]) expect(level).toBeLessThanOrEqual(-20)
   })
 })

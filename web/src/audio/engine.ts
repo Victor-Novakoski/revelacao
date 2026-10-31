@@ -2,7 +2,7 @@ import type * as ToneNS from 'tone'
 import { LAMP, RADIO, TAP, type Point } from '../scenes/darkroom/layout'
 import { useCaptions } from './captions'
 import { BARS, WALTZ, at, length, played, type Note } from './waltz'
-import { FADE_IN, LEVELS, RADIO_BPM, behindLeft, dripPitch, fadeTime, nextDrip, radioWarp } from './mix'
+import { FADE_IN, LEVELS, RADIO_BPM, behindLeft, dreadMix, dripPitch, fadeTime, nextDrip, nextGlass, radioWarp } from './mix'
 import type { Cue } from '../game/script'
 
 type Tone = typeof ToneNS
@@ -17,6 +17,10 @@ type Room = {
   radio: ToneNS.PolySynth
   bell: ToneNS.PolySynth
   hands: ToneNS.NoiseSynth
+  cellar: ToneNS.Gain
+  glass: ToneNS.Gain
+  heart: ToneNS.Gain
+  flutter: ToneNS.Vibrato
 }
 
 let room: Room | null = null
@@ -27,6 +31,7 @@ let bellFree = 0
 let handsFree = 0
 let waltzWrong = false
 let warp = 0
+let dread = 0
 let listener: { position: Point; forward: Point; up: Point } = { position: [0, 1.6, 2], forward: [0, 0, -1], up: [0, 1, 0] }
 
 const say = (text: string, seconds?: number) => useCaptions.getState().say(text, seconds)
@@ -81,12 +86,19 @@ function radio(tone: Tone, out: ToneNS.InputNode) {
   const band = new tone.Filter({ type: 'lowpass', frequency: 2800, rolloff: -24 }).connect(speaker)
   const tube = new tone.Distortion({ distortion: 0.12, wet: 0.5 }).connect(band)
   const cut = new tone.Filter({ type: 'highpass', frequency: 320 }).connect(tube)
+  // Um eco escuro, como se a mesma valsa tocasse num cômodo vazio ao lado.
+  const room2 = new tone.Filter({ type: 'lowpass', frequency: 900 }).connect(speaker)
+  const far = new tone.Gain(0.25).connect(room2)
+  band.connect(new tone.FeedbackDelay({ delayTime: 0.68, feedback: 0.38, wet: 1 }).connect(far))
+  // O disco balança: a afinação vai e volta devagar, como vitrola cansada.
+  const flutter = new tone.Vibrato({ frequency: 0.45, depth: 0.04, type: 'sine' }).connect(cut)
 
+  // Piano de bar, desafinado: duas cordas por nota, uma meio fora do tom.
   const piano = new tone.PolySynth(tone.Synth, {
     volume: LEVELS.radio,
-    oscillator: { type: 'triangle' },
+    oscillator: { type: 'fattriangle', count: 2, spread: 28 },
     envelope: { attack: 0.004, decay: 1.4, sustain: 0.12, release: 1.6 },
-  }).connect(cut)
+  }).connect(flutter)
 
   const reception = new tone.Gain(0.6).connect(band)
   new tone.LFO({ frequency: 0.07, min: 0.25, max: 1 }).connect(reception.gain).start()
@@ -104,7 +116,67 @@ function radio(tone: Tone, out: ToneNS.InputNode) {
   part.loop = true
   part.loopEnd = at(BARS, 0)
   part.start(0)
-  return piano
+  return { piano, flutter }
+}
+
+// O porão: um grave que ninguém sabe de onde vem. Dois tons a meio tom de
+// distância batem um no outro (uns três tremores por segundo) e um trítono
+// fica por baixo. Ele respira devagar, a cada vinte segundos.
+function cellar(tone: Tone, out: ToneNS.InputNode) {
+  const gain = new tone.Gain(0).connect(out)
+  const breath = new tone.Gain(1).connect(gain)
+  new tone.LFO({ frequency: 0.05, min: 0.4, max: 1 }).connect(breath.gain).start()
+  const low = new tone.Filter({ type: 'lowpass', frequency: 200 }).connect(breath)
+  new tone.Oscillator({ frequency: 55, type: 'sine', volume: LEVELS.drone }).connect(low).start()
+  new tone.Oscillator({ frequency: 58.27, type: 'sine', volume: LEVELS.drone - 3 }).connect(low).start()
+  new tone.Oscillator({ frequency: 77.78, type: 'triangle', volume: LEVELS.drone - 12 }).connect(low).start()
+  new tone.Noise({ type: 'brown', volume: LEVELS.rumble }).connect(low).start()
+  return gain
+}
+
+// O arrepio: dois apitos agudos colados, meio tom de distância, que andam
+// devagar de um ouvido para o outro. Sobem de tempos em tempos, nunca de
+// repente (8 segundos para subir, 12 para sumir).
+function glass(tone: Tone, out: ToneNS.InputNode) {
+  const gain = new tone.Gain(0).connect(out)
+  const swell = new tone.Gain(0).connect(gain)
+  const pan = new tone.AutoPanner({ frequency: 0.03, depth: 0.9 }).connect(swell).start()
+  const air = new tone.Filter({ type: 'lowpass', frequency: 3000 }).connect(pan)
+  new tone.Oscillator({ frequency: 1318.5, type: 'sine', volume: LEVELS.glass }).connect(air).start()
+  new tone.Oscillator({ frequency: 1396.9, type: 'sine', volume: LEVELS.glass - 2 }).connect(air).start()
+  let first = true
+  const rise = (time: number) => {
+    swell.gain.setValueAtTime(0, time)
+    swell.gain.linearRampToValueAtTime(1, time + 8)
+    swell.gain.setValueAtTime(1, time + 12)
+    swell.gain.linearRampToValueAtTime(0, time + 24)
+    if (first && dread > 0.2) {
+      first = false
+      tone.getDraw().schedule(() => say('[Um apito fino, que não vem de lugar nenhum]', 5), time + 6)
+    }
+    tone.getTransport().scheduleOnce(rise, time + 24 + nextGlass(Math.random, dread))
+  }
+  tone.getTransport().scheduleOnce(rise, `+${10 + Math.random() * 10}`)
+  return gain
+}
+
+// O coração: só bate enquanto a figura aparece na bandeja. Grave, abafado,
+// e acompanha o rádio quando ele desacelera.
+function heart(tone: Tone, out: ToneNS.InputNode) {
+  const gain = new tone.Gain(0).connect(out)
+  const chest = new tone.Filter({ type: 'lowpass', frequency: 140 }).connect(gain)
+  const beat = new tone.MembraneSynth({
+    volume: LEVELS.heart,
+    pitchDecay: 0.05,
+    octaves: 2,
+    envelope: { attack: 0.005, decay: 0.3, sustain: 0, release: 0.1 },
+  }).connect(chest)
+  new tone.Loop((time) => {
+    if (gain.gain.value < 0.01) return
+    beat.triggerAttackRelease('A1', 0.1, time, 0.9)
+    beat.triggerAttackRelease('A1', 0.1, time + 0.28, 0.6)
+  }, '4n').start(0)
+  return gain
 }
 
 // O sino da porta da loja, lá na frente: baixinho, abafado pela parede.
@@ -143,10 +215,22 @@ async function build(context: AudioContext) {
   await reverb.ready
   const hum = lamp(tone, reverb)
   drips(tone, reverb)
-  const piano = radio(tone, reverb)
+  const { piano, flutter } = radio(tone, reverb)
   const bell = doorBell(tone, reverb)
 
-  room = { tone, master, hum, radio: piano, bell, hands: hands(tone, master) }
+  room = {
+    tone,
+    master,
+    hum,
+    radio: piano,
+    bell,
+    hands: hands(tone, master),
+    cellar: cellar(tone, master),
+    glass: glass(tone, reverb),
+    heart: heart(tone, master),
+    flutter,
+  }
+  applyDread(FADE_IN)
   transport.start()
   applyGain(FADE_IN)
   say('[A lâmpada vermelha zumbe baixinho]', 5)
@@ -184,13 +268,31 @@ export function setHidden(isHidden: boolean) {
   applyGain()
 }
 
-// "O rádio desafina" quando a criatura está na foto em revelação.
+// As camadas do medo seguem o dia e a figura na bandeja. Sempre devagar.
+function applyDread(seconds: number) {
+  if (!room) return
+  const mix = dreadMix(dread, warp)
+  room.cellar.gain.rampTo(mix.cellar, seconds)
+  room.glass.gain.rampTo(mix.glass, seconds)
+  room.heart.gain.rampTo(mix.heart, seconds)
+  room.flutter.depth.rampTo(mix.flutter, seconds)
+}
+
+// O peso do dia, de 0 (dia 1) a 1 (último dia).
+export function setDread(level: number) {
+  dread = level
+  applyDread(10)
+}
+
+// "O rádio desafina" quando a criatura está na foto em revelação. O porão
+// sobe junto e o coração começa a bater.
 export function setRadioWarp(amount: number, seconds = 6) {
   if (!room || Math.abs(amount - warp) < 0.05) return
   warp = amount
   const { bpm, detune } = radioWarp(amount)
   room.tone.getTransport().bpm.rampTo(bpm, seconds)
   room.radio.set({ detune })
+  applyDread(seconds)
 }
 
 // Alguém entra na loja. A legenda aparece mesmo sem som.
