@@ -20,7 +20,7 @@ Cada arquivo de arte ou som que entrar no repo ganha uma linha aqui: caminho, or
 | Arquivo | Origem | Licença |
 | --- | --- | --- |
 | `web/src/scenes/darkroom/testPhoto.ts` (foto de teste da praça, desenhada em código) | Própria, feita para o projeto | Própria |
-| `web/src/photos/places.ts`, `week1.ts`, `week2.ts`, `figures.ts` (as placas, os fundos de apoio e a figura desenhada) | Própria, feita para o projeto | Própria |
+| `web/src/photos/places.ts`, `week1.ts`, `week2.ts`, `figures.ts` (as placas pintadas e a figura desenhada) | Própria, feita para o projeto | Própria |
 | Telefone, rangido, fósforo e silêncio (`web/src/audio/engine.ts`, gerados no Tone.js) | Próprio | Próprio |
 | Sino da porta (`web/src/audio/engine.ts`, gerado no Tone.js) | Próprio | Próprio |
 | Chassi, espiral e tampa do tanque (`web/src/audio/engine.ts`, gerados no Tone.js) | Próprio | Próprio |
