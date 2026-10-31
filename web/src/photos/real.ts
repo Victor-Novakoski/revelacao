@@ -76,6 +76,12 @@ const FILES = {
   pessoa: 'pessoa.png',
   // O que fica na frente da figura em cada cena (ver art/real/front.py).
   'estudio-rapaz-frente': 'estudio-rapaz-frente.png',
+  'anapolis-coreto-frente': 'anapolis-coreto-frente.png',
+  'campinas-jardim-frente': 'campinas-jardim-frente.png',
+  'campinas-bento-quirino-frente': 'campinas-bento-quirino-frente.png',
+  'quintal-gramado-frente': 'quintal-gramado-frente.png',
+  'mooca-familia-frente': 'mooca-familia-frente.png',
+  'mooca-saida-frente': 'mooca-saida-frente.png',
   'mooca-convidados-frente': 'mooca-convidados-frente.png',
   'mooca-noivos-frente': 'mooca-noivos-frente.png',
   'quintal-bolhas-frente': 'quintal-bolhas-frente.png',
