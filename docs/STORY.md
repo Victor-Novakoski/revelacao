@@ -12,7 +12,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 | --- | --- |
 | **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Camisa, gravata, sempre arrumado |
 | **Senhorita Amanda** | Dona da livraria ao lado, apaixonada por livros de terror e muito perspicaz. Sempre de preto. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ver "Os livros da Amanda"). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
-| **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
+| **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com a porta riscada a giz (nomes de cidade de outras rotas). Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
 | **Seu Nakamura** | Fotógrafo de casamentos da Liberdade |
 | **Marlene** | Normalista que fotografa as amigas. Um dia para de vir, e ninguém comenta |
@@ -135,7 +135,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 3 · quarta, 16/10 | Dona Cida, "Piquenique no sítio" (35 mm, fotos reais) | a turma na toalha (Juvenal de colete), a turma toda, a Lúcia dormindo no mato, na volta os patos do Jardim da Luz | Bem longe, no alto do morro, na foto da turma |
 | 3 | Marlene, "As normalistas" (35 mm) | fotos reais do passeio de sábado: a turma debaixo do pinheiro, as três no banco, o lanche na caixa de frutas, as três de novo | Nenhuma. A Marlene sai tremida na última, só ela |
 | 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120, fotos reais) | os noivos na porta com a cauda do vestido, o altar, o bolo de três andares, retrato na sala | No altar, entre as palmeiras, ao lado dos noivos |
-| 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
+| 4 | Elias, "A rota de Santos" (35 mm) | fotos reais: ele de óculos de poeira na janela do caminhão, na serra, parado no posto, e a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última a boleia vazia |
 | 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120, fotos reais) | Keiko com o laço, Dona Okada e a neta, formatura do rapaz, família Ito | No fundo pintado, atrás do rapaz |
 | 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
 | 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |

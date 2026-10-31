@@ -52,7 +52,7 @@ export const DAY5: DayScript = {
         bell('moura', 'Seu Augusto. Em que posso ajudar?'),
         say('augusto', 'É sobre o Elias. O motorista que achou a câmera do Vilela. Ele sumiu.'),
         say('moura', 'Motorista? A câmera quem me entregou foi o senhor. Estava aqui no balcão, o senhor ligou e eu vim buscar.'),
-        say('augusto', 'O Elias estava aqui do lado. Expresso Guilela, um caminhão com uma luneta pintada na porta.'),
+        say('augusto', 'O Elias estava aqui do lado. Expresso Guilela, um caminhão com a porta riscada a giz.'),
         say('moura', 'Eu anoto tudo, Seu Augusto. Olhe.'),
         narrate(
           'Ele abre o caderno. "Terça, 15/10. Câmera de fole entregue por Augusto Ferraz, Foto Íris. Rolo e cópias anexados." Nenhum outro nome.',
@@ -83,7 +83,7 @@ export const DAY5: DayScript = {
         narrate('Seis da tarde. Seu Augusto não espera a Senhorita Amanda: vai até a livraria ao lado.'),
         say('amanda', 'Seu Augusto, na minha livraria! Hoje é "Drácula". Quer emprestado?'),
         say('augusto', 'Senhorita, a senhorita lembra de um moço que esteve na loja na terça? Motorista, de boné.'),
-        say('amanda', 'Aquele moço do caminhão? Com a luneta pintada na porta? Lembro. Estacionou em cima da minha calçada.'),
+        say('amanda', 'Aquele moço do caminhão? Com a porta toda riscada a giz? Lembro. Estacionou em cima da minha calçada.'),
         say('augusto', 'A senhorita lembra.'),
         say('amanda', 'Por que não lembraria? No "Drácula" tem um homem que não aparece no espelho. O senhor está com a cara de quem percebeu.'),
         say('augusto', 'Percebeu o quê?'),

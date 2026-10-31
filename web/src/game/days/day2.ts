@@ -65,7 +65,7 @@ export const DAY2: DayScript = {
         narrate('Uma câmera de fole, amassada, com a lente rachada. Na bolsa de couro, duas iniciais gravadas: H. V.'),
         say('augusto', 'Ainda tem filme dentro. Se o senhor quiser, eu revelo. Quem sabe aparece o dono.'),
         say('elias', 'Era isso que eu queria. E já que estou aqui, revela o meu também, da rota da semana. Busco na quinta.'),
-        narrate('Elias deixa dois rolos no balcão e volta para o caminhão. Na porta da cabine, uma luneta pintada.'),
+        narrate('Elias deixa dois rolos no balcão e volta para o caminhão. Na porta da cabine, nomes de cidade riscados a giz.'),
       ],
     },
     {
