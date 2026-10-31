@@ -25,6 +25,10 @@ SCENES = [
     ('estudio-okada', 'shimizu-familia.jpg', (420 / 960, 190 / 1470, 960 / 960, 730 / 1470)),
     ('estudio-rapaz', 'shimizu-familia.jpg', (80 / 960, 150 / 1470, 660 / 960, 730 / 1470)),
     ('estudio-ito', 'familia-1920.jpg', (0 / 960, 0 / 1291, 960 / 960, 960 / 1291)),
+    ('mooca-convidados', 'bruiloft1966-0436.jpg', (50 / 960, 0 / 636, 686 / 960, 636 / 636)),
+    ('mooca-familia', 'bruiloft1966-0432.jpg', (100 / 960, 0 / 620, 720 / 960, 620 / 620)),
+    ('mooca-noivos', 'bruiloft1966-0435.jpg', (0 / 960, 100 / 1449, 960 / 960, 1060 / 1449)),
+    ('mooca-saida', 'bruiloft1966-0444.jpg', (160 / 960, 0 / 630, 790 / 960, 630 / 630)),
 ]
 
 # As de 35 mm, no mesmo formato.

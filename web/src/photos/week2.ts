@@ -6,12 +6,9 @@ import {
   Y,
   armchair,
   boy,
-  bride,
-  churchFront,
   darkroom,
   enlarger,
   girl,
-  groom,
   hall,
   parlor,
   sign,
@@ -116,53 +113,13 @@ const portaoNoite: Scene = (ctx, fr) => {
   falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
 }
 
-// Dia 9 · Seu Nakamura, "Casamento na Mooca" (120).
+// Dia 9 · Seu Nakamura, "Casamento na Mooca" (120). Fotos de verdade, ver
+// photos/real.ts.
 
-const mooca: Scene = (ctx, fr) => {
-  churchFront(ctx, fr, 0.7)
-  crowd(ctx, 23, 5, X(0.2), X(0.8), Y(0.84), Y(0.48))
-  person(ctx, groom(X(0.44), Y(0.9), Y(0.52)))
-  person(ctx, bride(X(0.54), Y(0.92), Y(0.5)))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const moocaFamilia: Scene = (ctx, fr) => {
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h * 0.7, 0.78, 0.7)
-  gradient(ctx, fr.x, Y(0.72), fr.w, Y(0.28), 0.58, 0.48)
-  for (const [i, bx] of [0.24, 0.34, 0.6, 0.7, 0.8].entries()) person(ctx, { x: X(bx), foot: Y(0.78), h: Y(0.42), tone: i % 2 ? 0.15 : 0.4, hair: 0.08 })
-  for (const [i, fx] of [0.3, 0.42, 0.5, 0.58, 0.7].entries()) {
-    person(ctx, fx === 0.5 ? bride(X(fx), Y(0.94), Y(0.44)) : { x: X(fx), foot: Y(0.94), h: Y(0.44), tone: i % 2 ? 0.2 : 0.5, hair: 0.08 })
-  }
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.35)
-}
-
-const moocaBrinde: Scene = (ctx, fr) => {
-  hall(ctx, fr)
-  person(ctx, { ...groom(X(0.42), Y(0.9), Y(0.6)), arms: 'up' })
-  person(ctx, { ...bride(X(0.54), Y(0.9), Y(0.56)), arms: 'up' })
-  rect(ctx, fr.x, Y(0.72), fr.w, Y(0.28), 0.86)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const moocaSaida: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.68)
-  rect(ctx, X(0.4), fr.y, X(0.2), Y(0.5), 0.12)
-  gradient(ctx, fr.x, Y(0.55), fr.w, Y(0.45), 0.62, 0.5)
-  person(ctx, { x: X(0.72), foot: Y(0.84), h: Y(0.5), tone: 0.3, hair: 0.1, arms: 'up' })
-  person(ctx, { x: X(0.8), foot: Y(0.84), h: Y(0.48), tone: 0.6, dress: true, hair: 0.1, arms: 'up' })
-  person(ctx, groom(X(0.48), Y(0.86), Y(0.6)))
-  person(ctx, bride(X(0.57), Y(0.86), Y(0.56)))
-  // O arroz no ar. Em volta dele, não cai nenhum.
-  const rand = seeded(2310)
-  for (let i = 0; i < 180; i++) {
-    const rx = 0.2 + rand() * 0.62
-    const ry = 0.08 + rand() * 0.5
-    if (Math.abs(rx - 0.36) < 0.06) continue
-    ctx.fillStyle = gray(0.97)
-    ctx.fillRect(X(rx), Y(ry), 1.6, 1.6)
-  }
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+const moocaConvidados = realScene('mooca-convidados')
+const moocaFamilia = realScene('mooca-familia')
+const moocaNoivos = realScene('mooca-noivos')
+const moocaSaida = realScene('mooca-saida')
 
 // Dia 9 · a Senhorita Amanda, "A livraria" (35 mm). Sem figura nenhuma.
 
@@ -309,9 +266,9 @@ export const WEEK2_SCENES: Record<string, Scene> = {
   'cida-quintal/roda': roda,
   'cida-quintal/poltrona': poltronaNoite,
   'cida-quintal/portao': portaoNoite,
-  'nakamura-mooca/escadaria': mooca,
+  'nakamura-mooca/convidados': moocaConvidados,
   'nakamura-mooca/familia': moocaFamilia,
-  'nakamura-mooca/brinde': moocaBrinde,
+  'nakamura-mooca/noivos': moocaNoivos,
   'nakamura-mooca/saida': moocaSaida,
   'amanda-livraria/vitrine': vitrine,
   'amanda-livraria/estantes': estantes,
