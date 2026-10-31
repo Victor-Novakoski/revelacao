@@ -37,13 +37,13 @@ export const PLACEMENTS: Record<string, Placement> = {
   'nakamura-mooca/familia': { x: 0.5, foot: 0.824, h: 0.495, real: true },
   'nakamura-mooca/noivos': { x: 0.54, foot: 1.085, h: 0.99, real: true, front: 'mooca-noivos' },
   'nakamura-mooca/saida': { x: 0.79, foot: 0.905, h: 0.675, real: true },
-  // Dia 10: na sua câmara escura, mais perto a cada foto.
-  'sem-nome/bancada': { x: 0.82, foot: 0.78, h: 0.42 },
-  'sem-nome/ampliador': { x: 0.7, foot: 0.86, h: 0.6 },
-  'sem-nome/varal': { x: 0.32, foot: 0.92, h: 0.76 },
-  'sem-nome/pia': { x: 0.64, foot: 1.02, h: 0.98 },
-  'sem-nome/rosto': { x: 0.72, foot: 1.3, h: 1.4 },
-  'sem-nome/fogo': { x: 0.62, foot: 1.0, h: 0.92 },
+  // Dia 10: atrás do Seu Augusto, mais perto a cada retrato.
+  'sem-nome/cadeira': { x: 0.185, foot: 0.82, h: 0.56, real: true, front: 'augusto-cadeira' },
+  'sem-nome/olhar': { x: 0.752, foot: 0.94, h: 0.72, real: true, front: 'augusto-olhar' },
+  'sem-nome/cintura': { x: 0.608, foot: 0.98, h: 0.8, real: true, front: 'augusto-cintura' },
+  'sem-nome/cigarro': { x: 0.662, foot: 1.02, h: 0.88, real: true, front: 'augusto-cigarro' },
+  'sem-nome/rosto': { x: 0.77, foot: 1.14, h: 1.08, real: true, front: 'augusto-rosto' },
+  'sem-nome/fogo': { x: 0.662, foot: 1.1, h: 1.04, real: true, front: 'augusto-fogo' },
 }
 
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))

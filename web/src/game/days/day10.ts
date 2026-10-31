@@ -1,9 +1,9 @@
 import type { DayScript, Roll } from '../script'
 import { bell, narrate, say, seen } from './lines'
 
-// Dia 10, quinta-feira, 24 de outubro. Um rolo sem nome com as suas fotos,
-// tiradas de dentro da sua câmara escura, de onde ninguém poderia estar. A
-// cada foto, o seu rosto mais borrado. A última é você queimando o rolo.
+// Dia 10, quinta-feira, 24 de outubro. Um rolo sem nome com retratos seus,
+// num estúdio em que você nunca posou. A cada foto, o seu rosto mais
+// borrado. A última é você de cigarro aceso, no sábado em que queimou o rolo.
 // Depois, a escolha, sem resposta certa.
 
 const semNome: Roll = {
@@ -13,40 +13,40 @@ const semNome: Roll = {
   title: 'Sem nome',
   photos: [
     {
-      id: 'bancada',
+      id: 'cadeira',
       verso: 'Sem anotação',
       exposure: 12,
       focus: 0.58,
       details: [
-        { id: 'costas', x: 0.48, y: 0.55, r: 0.08, text: 'É a sua câmara escura. Você, de costas, na bandeja. Tirada do canto do teto.' },
-        seen('sem-nome', 'bancada', 'No canto, perto da prateleira, ele. Esperando.'),
+        { id: 'voce', x: 0.5, y: 0.45, r: 0.08, text: 'É você, sentado num estúdio. Você nunca posou para foto nenhuma.' },
+        seen('sem-nome', 'cadeira', 'No canto claro, de pé. Esperando.'),
       ],
     },
     {
-      id: 'ampliador',
+      id: 'olhar',
       verso: 'Sem anotação',
       exposure: 12,
       focus: 0.58,
-      details: [seen('sem-nome', 'ampliador', 'Na porta, que você sempre deixa fechada.')],
+      details: [seen('sem-nome', 'olhar', 'Lá atrás, no fundo. Você olha para a câmera; ele, para você.')],
     },
     {
-      id: 'varal',
+      id: 'cintura',
       verso: 'Sem anotação',
       exposure: 11,
       focus: 0.58,
       details: [
-        { id: 'copias', x: 0.5, y: 0.3, r: 0.06, text: 'As cópias no varal são as desta semana.' },
-        seen('sem-nome', 'varal', 'Do outro lado da bancada, de frente para você.'),
+        { id: 'fumaca', x: 0.12, y: 0.2, r: 0.06, text: 'A fumaça do cigarro sobe reta. Você não fuma desde 1940.' },
+        seen('sem-nome', 'cintura', 'Atrás do seu ombro, entre a cabeça e o cotovelo.'),
       ],
     },
     {
-      id: 'pia',
+      id: 'cigarro',
       verso: 'Sem anotação',
       exposure: 11,
       focus: 0.58,
       details: [
-        { id: 'rosto-pia', x: 0.38, y: 0.22, r: 0.08, text: 'O seu rosto saiu arrastado para os lados. Só o rosto.' },
-        seen('sem-nome', 'pia', 'Ao seu lado na pia. Mais alto que a porta.'),
+        { id: 'rosto-arrastado', x: 0.4, y: 0.4, r: 0.08, text: 'O seu rosto saiu arrastado para os lados. Só o rosto.' },
+        seen('sem-nome', 'cigarro', 'Mais perto. Mais alto que você, mesmo de pé lá atrás.'),
       ],
     },
     {
@@ -55,7 +55,7 @@ const semNome: Roll = {
       exposure: 12,
       focus: 0.58,
       details: [
-        { id: 'laco', x: 0.42, y: 0.42, r: 0.07, text: 'De frente. Não sobrou rosto. Só a gravata borboleta.' },
+        { id: 'gravata', x: 0.45, y: 0.85, r: 0.05, text: 'De frente. Não sobrou rosto. Só o nó da gravata.' },
         seen('sem-nome', 'rosto', 'Logo atrás do seu ombro.'),
       ],
     },
@@ -65,7 +65,7 @@ const semNome: Roll = {
       exposure: 10,
       focus: 0.58,
       details: [
-        { id: 'fogo', x: 0.36, y: 0.56, r: 0.07, text: 'Você, queimando o rolo no sábado.' },
+        { id: 'fogo', x: 0.47, y: 0.62, r: 0.07, text: 'O cigarro aceso. O mesmo fósforo de sábado, o que queimou o rolo.' },
         seen('sem-nome', 'fogo', 'Ele estava do seu lado o tempo todo.'),
       ],
     },

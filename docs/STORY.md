@@ -10,7 +10,7 @@ Ideia original do Victor, com notas de direção que ele aprovou em 30/10/2026.
 
 | Nome | Quem é |
 | --- | --- |
-| **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Terno, gravata borboleta, sempre arrumado |
+| **Augusto Ferraz** ("Seu Augusto") | Você. Dono da Foto Íris. Camisa, gravata, sempre arrumado |
 | **Senhorita Amanda** | Dona da livraria ao lado, apaixonada por livros de terror e muito perspicaz. Sempre de preto. Sempre aparece com um livro na mão, e o livro de cada dia comenta a história sem dizer nada (ver "Os livros da Amanda"). É a única que nota que o Seu Augusto está mudando. A criatura nunca aparece nas fotos dela: ela fica protegida até o fim |
 | **Elias Prado** | Motorista de caminhão do **Expresso Guilela**, com uma luneta pintada na porta. Acha a câmera quebrada na rota |
 | **Dona Cida** | Revela fotos dos netos toda semana |
@@ -143,7 +143,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 9 · quarta, 23/10 | Dona Cida, "O quintal" (35 mm, fotos reais) | a Lúcia fazendo bolinha de sabão, as três no gramado, a Lúcia com o gato na poltrona, as três subindo a escada de casa | Perto em todas, e ninguém vê. Na das bolinhas, a Lúcia tem sombra e ele não |
 | 9 | Seu Nakamura, "Casamento na Mooca" (120, fotos reais) | a noiva entre os convidados, as duas famílias, os noivos no altar, a saída entre os fotógrafos | Perto em todas; na última, ninguém fotografa ele |
 | 9 | Senhorita Amanda, "A livraria" (35 mm) | fotos reais: a vitrine com duas moças, o Seu Mendes e o filho na estante, o gato Poe e a tigela de leite, o balcão (o disparador correu e ela não entrou) | Nunca. "Nem sombra de mais ninguém" |
-| 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | a bancada vista do teto, o ampliador, o varal, a pia vista do chão, o rosto, o fogo de sábado | Na sua câmara escura, mais perto a cada foto; o seu rosto borra junto |
+| 10 · quinta, 24/10 | "Sem nome" (deixado na porta) | fotos reais: seis retratos seus num estúdio em que você nunca posou, cada vez mais perto; o último, de cigarro aceso no sábado | Atrás de você, mais perto a cada foto; o seu rosto borra junto |
 
 O rádio: no dia 3 o locutor noticia o sumiço do Hélio Vilela, duas vezes, e não fala do Elias; no dia 10 ele diz que a Foto Íris está aberta e o revelador está sozinho nos fundos, e o som some de repente. A valsa volta com a nota errada no dia 10. O tanque no escuro aparece nos dias 1 (ensina o gesto), 2 (o filme velho da câmera, que resiste) e 6 (o rolo que voltou, que entra fácil demais); nos outros dias é narrado. O telefone com a goteira é no dia 5; o rangido, uma vez só, no fim do dia 9.
 

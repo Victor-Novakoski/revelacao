@@ -49,13 +49,46 @@ SCENES_35 = [
     ('livraria-estantes', 'anefo-900-8741.jpg', (0 / 960, 260 / 965, 960 / 960, 900 / 965)),
     ('livraria-gato', 'anefo-906-9507.jpg', (110 / 960, 90 / 748, 960 / 960, 657 / 748)),
     ('livraria-balcao', 'vandepoll-255-1852.jpg', (0 / 960, 200 / 957, 960 / 960, 840 / 957)),
+    ('augusto-cadeira', 'debruyn-252-1349.jpg', (0 / 960, 115 / 961, 960 / 960, 755 / 961)),
+    ('augusto-olhar', 'debruyn-252-1357.jpg', (0 / 960, 97 / 970, 960 / 960, 737 / 970)),
+    ('augusto-cintura', 'debruyn-252-1352.jpg', (0 / 960, 98 / 984, 960 / 960, 738 / 984)),
+    ('augusto-cigarro', 'debruyn-252-1354.jpg', (0 / 960, 96 / 961, 960 / 960, 736 / 961)),
+    ('augusto-rosto', 'debruyn-252-1359.jpg', (192 / 960, 260 / 966, 768 / 960, 644 / 966)),
+    ('augusto-fogo', 'debruyn-252-1355.jpg', (96 / 960, 96 / 964, 864 / 960, 608 / 964)),
 ]
+
+# O rolo sem nome (dia 10): o rosto do Seu Augusto arrastado para os lados,
+# cada foto mais. (meio x, meio y, raio x, raio y em fração do quadro; força)
+FACES = {
+    'augusto-cadeira': (0.51, 0.33, 0.07, 0.15, 0.3),
+    'augusto-olhar': (0.52, 0.38, 0.1, 0.2, 0.45),
+    'augusto-cintura': (0.34, 0.32, 0.1, 0.18, 0.55),
+    'augusto-cigarro': (0.42, 0.36, 0.09, 0.17, 0.65),
+    'augusto-rosto': (0.53, 0.5, 0.2, 0.38, 1.0),
+    'augusto-fogo': (0.42, 0.45, 0.12, 0.22, 0.85),
+}
+
+
+def smear_face(im, cx, cy, rx, ry, force):
+    w, h = im.size
+    reach = round(w * rx * 1.6 * force)
+    smear = im.copy()
+    for dx in range(-reach, reach + 1, max(1, reach // 8)):
+        smear = ImageChops.lighter(smear, ImageChops.offset(im, dx, 0))
+    smear = Image.blend(im.filter(ImageFilter.BoxBlur(max(1, reach // 4))), smear, 0.45)
+    mask = Image.new('L', im.size, 0)
+    ImageDraw.Draw(mask).ellipse([w * (cx - rx), h * (cy - ry), w * (cx + rx), h * (cy + ry)], fill=round(255 * min(1, 0.4 + force)))
+    return Image.composite(smear, im, mask.filter(ImageFilter.GaussianBlur(w * rx * 0.4)))
+
 
 for scenes, size in ((SCENES, (SIDE, SIDE)), (SCENES_35, FILM_35)):
     for name, f, (x0, y0, x1, y1) in scenes:
         im = Image.open(f'{src}/{f}').convert('L')
         box = (round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height))
-        im.crop(box).resize(size, Image.LANCZOS).save(f'{out}/{name}.png')
+        im = im.crop(box).resize(size, Image.LANCZOS)
+        if name in FACES:
+            im = smear_face(im, *FACES[name])
+        im.save(f'{out}/{name}.png')
 
 # A pessoa: o rosto vira um borrão claro (mexeu a cabeça na exposição), o
 # corpo fica nítido, e o tom desce para o da foto.

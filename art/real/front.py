@@ -17,6 +17,12 @@ SCENES = [
     ('mooca-noivos', None),
     ('quintal-bolhas', None),
     ('quintal-gato', None),
+    ('augusto-cadeira', None),
+    ('augusto-olhar', None),
+    ('augusto-cintura', None),
+    ('augusto-cigarro', None),
+    ('augusto-rosto', None),
+    ('augusto-fogo', None),
 ]
 
 for name, floor in SCENES:

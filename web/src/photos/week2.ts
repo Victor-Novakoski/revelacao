@@ -1,11 +1,9 @@
-import { augusto, crowd, ellipse, falloff, gradient, gray, person, poly, rect } from './draw'
+import { crowd, falloff, person, rect } from './draw'
 import type { Scene } from './day1'
 import { realScene } from './real'
 import {
   X,
   Y,
-  darkroom,
-  enlarger,
   hall,
   sign,
   studio,
@@ -95,68 +93,16 @@ const estantes = realScene('livraria-estantes')
 const gato = realScene('livraria-gato')
 const balcao = realScene('livraria-balcao')
 
-// Dia 10 · "Sem nome" (35 mm). A sua câmara escura, de onde ninguém
-// poderia estar. A cada foto, o seu rosto mais borrado.
+// Dia 10 · "Sem nome" (35 mm). Retratos do Seu Augusto que ele não lembra de
+// ter posado. A cada foto, o rosto mais borrado (já vem assim de
+// art/real/prepare.py).
 
-const bancada: Scene = (ctx, fr) => {
-  darkroom(ctx, fr, 0.66)
-  // De cima, do canto do teto: ele de costas, curvado sobre a bandeja.
-  augusto(ctx, X(0.48), Y(0.86), Y(0.5))
-  ellipse(ctx, X(0.48), Y(0.42), X(0.03), Y(0.04), 0.1)
-  // A prateleira do canto.
-  rect(ctx, X(0.78), Y(0.36), X(0.14), 3, 0.4)
-  for (let i = 0; i < 4; i++) rect(ctx, X(0.79 + i * 0.03), Y(0.3), X(0.015), Y(0.06), 0.5)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
-}
-
-const ampliador: Scene = (ctx, fr) => {
-  darkroom(ctx, fr, 0.66)
-  enlarger(ctx, X(0.3), Y(0.66), Y(0.5))
-  augusto(ctx, X(0.48), Y(0.96), Y(0.62), 0.25)
-  // A porta da câmara escura, entreaberta.
-  rect(ctx, X(0.62), Y(0.14), X(0.16), Y(0.52), 0.42)
-  rect(ctx, X(0.62), Y(0.14), X(0.02), Y(0.52), 0.3)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
-}
-
-const varal: Scene = (ctx, fr) => {
-  darkroom(ctx, fr, 0.72)
-  augusto(ctx, X(0.58), Y(1.0), Y(0.76), 0.5)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
-}
-
-const pia: Scene = (ctx, fr) => {
-  // De baixo, perto do chão: a pia, a torneira e ele lavando as cópias.
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h, 0.5, 0.3)
-  ellipse(ctx, X(0.3), Y(0.14), X(0.03), Y(0.035), 0.95)
-  rect(ctx, X(0.1), Y(0.5), X(0.4), Y(0.06), 0.45)
-  rect(ctx, X(0.24), Y(0.36), X(0.02), Y(0.14), 0.6)
-  rect(ctx, X(0.24), Y(0.36), X(0.06), Y(0.02), 0.6)
-  augusto(ctx, X(0.38), Y(1.2), Y(1.0), 0.75)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.45)
-}
-
-const rosto: Scene = (ctx, fr) => {
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h, 0.5, 0.3)
-  ellipse(ctx, X(0.5), Y(0.08), X(0.04), Y(0.05), 0.9)
-  // De frente, de perto: não sobra rosto, só o laço da gravata.
-  augusto(ctx, X(0.42), Y(1.45), Y(1.4), 1)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.45)
-}
-
-const fogo: Scene = (ctx, fr) => {
-  gradient(ctx, fr.x, fr.y, fr.w, fr.h, 0.5, 0.3)
-  // A pia e o rolo queimando, a coisa mais clara da foto.
-  rect(ctx, X(0.1), Y(0.66), X(0.5), Y(0.06), 0.4)
-  const g = ctx.createRadialGradient(X(0.36), Y(0.56), 2, X(0.36), Y(0.56), X(0.22))
-  g.addColorStop(0, gray(1))
-  g.addColorStop(1, gray(0.2, 0))
-  ctx.fillStyle = g
-  ctx.fillRect(fr.x, fr.y, fr.w, fr.h)
-  poly(ctx, [[X(0.31), Y(0.66)], [X(0.36), Y(0.42)], [X(0.41), Y(0.66)]], 1)
-  augusto(ctx, X(0.22), Y(1.0), Y(0.7), 0.9)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.45)
-}
+const cadeira = realScene('augusto-cadeira')
+const olhar = realScene('augusto-olhar')
+const cintura = realScene('augusto-cintura')
+const cigarro = realScene('augusto-cigarro')
+const rosto = realScene('augusto-rosto')
+const fogo = realScene('augusto-fogo')
 
 export const WEEK2_SCENES: Record<string, Scene> = {
   'vilela-volta/coreto': coreto,
@@ -184,10 +130,10 @@ export const WEEK2_SCENES: Record<string, Scene> = {
   'amanda-livraria/estantes': estantes,
   'amanda-livraria/gato': gato,
   'amanda-livraria/balcao': balcao,
-  'sem-nome/bancada': bancada,
-  'sem-nome/ampliador': ampliador,
-  'sem-nome/varal': varal,
-  'sem-nome/pia': pia,
+  'sem-nome/cadeira': cadeira,
+  'sem-nome/olhar': olhar,
+  'sem-nome/cintura': cintura,
+  'sem-nome/cigarro': cigarro,
   'sem-nome/rosto': rosto,
   'sem-nome/fogo': fogo,
 }

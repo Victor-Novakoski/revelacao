@@ -43,6 +43,12 @@ const FILES = {
   'livraria-estantes': 'livraria-estantes.jpg',
   'livraria-gato': 'livraria-gato.jpg',
   'livraria-balcao': 'livraria-balcao.jpg',
+  'augusto-cadeira': 'augusto-cadeira.jpg',
+  'augusto-olhar': 'augusto-olhar.jpg',
+  'augusto-cintura': 'augusto-cintura.jpg',
+  'augusto-cigarro': 'augusto-cigarro.jpg',
+  'augusto-rosto': 'augusto-rosto.jpg',
+  'augusto-fogo': 'augusto-fogo.jpg',
   'comunhao-altar': 'comunhao-altar.jpg',
   'comunhao-igreja': 'comunhao-igreja.jpg',
   'comunhao-procissao': 'comunhao-procissao.jpg',
@@ -53,6 +59,12 @@ const FILES = {
   'mooca-noivos-frente': 'mooca-noivos-frente.png',
   'quintal-bolhas-frente': 'quintal-bolhas-frente.png',
   'quintal-gato-frente': 'quintal-gato-frente.png',
+  'augusto-cadeira-frente': 'augusto-cadeira-frente.png',
+  'augusto-olhar-frente': 'augusto-olhar-frente.png',
+  'augusto-cintura-frente': 'augusto-cintura-frente.png',
+  'augusto-cigarro-frente': 'augusto-cigarro-frente.png',
+  'augusto-rosto-frente': 'augusto-rosto-frente.png',
+  'augusto-fogo-frente': 'augusto-fogo-frente.png',
 } as const
 
 type Name = keyof typeof FILES
