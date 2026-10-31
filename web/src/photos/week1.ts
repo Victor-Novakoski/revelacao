@@ -1,20 +1,7 @@
-import { ellipse, falloff, gradient, gray, person, poly, rect, seeded, type Ctx } from './draw'
+import { ellipse, falloff, gradient, gray, poly, rect, seeded, type Ctx } from './draw'
 import type { Scene } from './day1'
 import { blurredSign, realScene } from './real'
-import {
-  X,
-  Y,
-  boy,
-  cap,
-  elias,
-  girl,
-  groom,
-  lady,
-  praca,
-  sign,
-  student,
-  studio,
-} from './places'
+import { X, Y, cap, elias, praca, sign, student } from './places'
 
 // As fotos dos dias 2 a 5. A figura não está aqui: ela fica na camada
 // própria (photos/figures.ts). Aqui só ficam os vãos onde ela cabe.
@@ -179,42 +166,14 @@ export const cabine: Scene = (ctx, fr) => {
 
 // Dia 5 · Seu Nakamura, "Retratos do estúdio" (120).
 
-export const keiko: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  person(ctx, girl(X(0.5), Y(0.92), Y(0.56), 0.9))
-  // O laço enorme no cabelo.
-  poly(ctx, [[X(0.46), Y(0.36)], [X(0.5), Y(0.39)], [X(0.46), Y(0.42)]], 0.96)
-  poly(ctx, [[X(0.54), Y(0.36)], [X(0.5), Y(0.39)], [X(0.54), Y(0.42)]], 0.96)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+// Dia 5 · Seu Nakamura, "Retratos do estúdio" (120). Retratos de estúdio
+// de verdade, ver photos/real.ts. O Okada e o Tanaka saem do mesmo fundo
+// pintado: é o mesmo estúdio.
 
-export const okada: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  // A cadeira, ela sentada e ele de pé ao lado, com a mão no ombro dela.
-  rect(ctx, X(0.36), Y(0.62), X(0.18), Y(0.3), 0.2)
-  person(ctx, { x: X(0.45), foot: Y(0.86), h: Y(0.5), tone: 0.3, dress: true, hair: 0.85 })
-  person(ctx, { x: X(0.62), foot: Y(0.94), h: Y(0.76), tone: 0.15, hair: 0.85 })
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const rapaz: Scene = (ctx, fr) => {
-  studio(ctx, fr, true)
-  person(ctx, groom(X(0.44), Y(0.96), Y(0.78)))
-  // O diploma enrolado, com fita.
-  rect(ctx, X(0.48), Y(0.5), X(0.08), Y(0.03), 0.96)
-  rect(ctx, X(0.515), Y(0.49), 3, Y(0.05), 0.3)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const ito: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  person(ctx, { x: X(0.36), foot: Y(0.92), h: Y(0.7), tone: 0.15, hair: 0.08 })
-  person(ctx, lady(X(0.64), Y(0.92), Y(0.64)))
-  person(ctx, boy(X(0.44), Y(0.94), Y(0.36), 0.3))
-  person(ctx, girl(X(0.54), Y(0.94), Y(0.32)))
-  person(ctx, girl(X(0.5), Y(0.95), Y(0.22), 0.7))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+export const keiko = realScene('estudio-keiko')
+export const okada = realScene('estudio-okada')
+export const rapaz = realScene('estudio-rapaz')
+export const ito = realScene('estudio-ito')
 
 export const WEEK1_SCENES: Record<string, Scene> = {
   'vilela-praca/coreto': coreto,

@@ -136,7 +136,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | 3 | Marlene, "As normalistas" (35 mm) | escadaria da Escola Normal, as três no banco, sorveteria, Marlene sozinha | Nenhuma. A Marlene sai tremida na dela, só ela |
 | 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120, fotos reais) | os noivos na porta com a cauda do vestido, o altar, o bolo de três andares, retrato na sala | No altar, entre as palmeiras, ao lado dos noivos |
 | 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
-| 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120) | Keiko com o laço, os Okada, formatura do rapaz, família Ito | Na fresta da cortina, atrás do rapaz |
+| 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120, fotos reais) | Keiko com o laço, Dona Okada e a neta, formatura do rapaz, família Ito | No fundo pintado, atrás do rapaz |
 | 6 · sábado, 19/10 | O rolo da viagem, de novo (sem remetente) | coreto, jardim, rua, a última (agora com a vitrine da Foto Íris ao fundo) | No meio de cada foto, de frente. Depois Seu Augusto vela, molha de álcool e queima |
 | 7 · segunda, 21/10 | Dona Cida, "Primeira comunhão da Lúcia" (35 mm, fotos reais) | a saída da igreja, o altar enfeitado, a igreja cheia de crianças de véu, a procissão | Nenhuma. A Marlene não vem buscar |
 | 8 · terça, 22/10 | Seu Nakamura, "Bodas de prata" (120, cinco chapas) | o casal, o bolo dos 25 anos, a valsa, a família, os dois sozinhos no salão | Nenhuma |

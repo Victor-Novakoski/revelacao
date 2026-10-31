@@ -21,6 +21,10 @@ SCENES = [
     ('cambuci-altar', 'smulders-3794.jpg', (100 / 960, 0 / 751, 851 / 960, 751 / 751)),
     ('cambuci-bolo', 'smulders-3820.jpg', (100 / 960, 0 / 748, 848 / 960, 748 / 748)),
     ('cambuci-retrato', 'smulders-3805.jpg', (0 / 960, 0 / 728, 728 / 960, 728 / 728)),
+    ('estudio-keiko', 'kitashirakawa-familia.jpg', (222 / 960, 520 / 1437, 782 / 960, 1080 / 1437)),
+    ('estudio-okada', 'shimizu-familia.jpg', (420 / 960, 190 / 1470, 960 / 960, 730 / 1470)),
+    ('estudio-rapaz', 'shimizu-familia.jpg', (80 / 960, 150 / 1470, 660 / 960, 730 / 1470)),
+    ('estudio-ito', 'familia-1920.jpg', (0 / 960, 0 / 1291, 960 / 960, 960 / 1291)),
 ]
 
 # As de 35 mm, no mesmo formato.
