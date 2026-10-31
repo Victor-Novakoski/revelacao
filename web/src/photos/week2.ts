@@ -1,13 +1,5 @@
-import { crowd, falloff, person, rect } from './draw'
 import type { Scene } from './day1'
 import { realScene } from './real'
-import {
-  X,
-  Y,
-  hall,
-  sign,
-  studio,
-} from './places'
 import { coreto, lago, pertoVolta, pipoqueiro } from './week1'
 
 // As fotos dos dias 6 a 10. Como em week1.ts, a figura fica na camada
@@ -21,53 +13,14 @@ const comunhaoAltar = realScene('comunhao-altar')
 const comunhaoIgreja = realScene('comunhao-igreja')
 const procissao = realScene('comunhao-procissao')
 
-// Dia 8 · Seu Nakamura, "Bodas de prata" (120).
+// Dia 8 · Seu Nakamura, "Bodas de prata" (120). Fotos de verdade, de uma
+// festa de 25 anos de casados em casa.
 
-const elderly = (x: number, foot: number, h: number, wife: boolean) =>
-  wife ? { x, foot, h, tone: 0.55, dress: true, hair: 0.8 } : { x, foot, h, tone: 0.12, hair: 0.8 }
-
-const bodasCasal: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  person(ctx, elderly(X(0.42), Y(0.96), Y(0.74), false))
-  person(ctx, elderly(X(0.58), Y(0.96), Y(0.68), true))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const bodasBolo: Scene = (ctx, fr) => {
-  hall(ctx, fr)
-  rect(ctx, X(0.42), Y(0.54), X(0.16), Y(0.16), 0.95)
-  sign(ctx, '25', X(0.5), Y(0.62), Y(0.07), 0.6)
-  person(ctx, elderly(X(0.3), Y(0.92), Y(0.6), false))
-  person(ctx, elderly(X(0.7), Y(0.92), Y(0.56), true))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const danca: Scene = (ctx, fr) => {
-  hall(ctx, fr)
-  rect(ctx, fr.x, Y(0.7), fr.w, Y(0.3), 0.5)
-  crowd(ctx, 81, 6, X(0.2), X(0.8), Y(0.72), Y(0.34))
-  person(ctx, { ...elderly(X(0.46), Y(0.94), Y(0.62), false), arms: 'side' })
-  person(ctx, { ...elderly(X(0.54), Y(0.94), Y(0.58), true), arms: 'side' })
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const bodasFamilia: Scene = (ctx, fr) => {
-  studio(ctx, fr)
-  for (const [i, bx] of [0.26, 0.36, 0.64, 0.74].entries()) person(ctx, { x: X(bx), foot: Y(0.8), h: Y(0.46), tone: i % 2 ? 0.2 : 0.6, dress: i % 2 === 0, hair: 0.1 })
-  person(ctx, elderly(X(0.45), Y(0.92), Y(0.56), false))
-  person(ctx, elderly(X(0.55), Y(0.92), Y(0.52), true))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-const salao: Scene = (ctx, fr) => {
-  hall(ctx, fr)
-  rect(ctx, fr.x, Y(0.7), fr.w, Y(0.3), 0.5)
-  // Cadeiras vazias encostadas na parede e os dois sozinhos no meio.
-  for (let i = 0; i < 8; i++) rect(ctx, X(0.18 + i * 0.09), Y(0.58), X(0.03), Y(0.12), 0.2)
-  person(ctx, elderly(X(0.48), Y(0.86), Y(0.4), false))
-  person(ctx, elderly(X(0.53), Y(0.86), Y(0.37), true))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.4)
-}
+const presente = realScene('bodas-presente')
+const album = realScene('bodas-album')
+const valsa = realScene('bodas-valsa')
+const familiaBodas = realScene('bodas-familia')
+const casal = realScene('bodas-casal')
 
 // Dia 9 · Dona Cida, "O quintal" (35 mm). A figura perto, em todas. Fotos
 // de verdade, ver photos/real.ts: a Lúcia é a mesma menina que dormiu no
@@ -113,11 +66,11 @@ export const WEEK2_SCENES: Record<string, Scene> = {
   'cida-comunhao/altar': comunhaoAltar,
   'cida-comunhao/igreja': comunhaoIgreja,
   'cida-comunhao/procissao': procissao,
-  'nakamura-bodas/casal': bodasCasal,
-  'nakamura-bodas/bolo': bodasBolo,
-  'nakamura-bodas/danca': danca,
-  'nakamura-bodas/familia': bodasFamilia,
-  'nakamura-bodas/salao': salao,
+  'nakamura-bodas/presente': presente,
+  'nakamura-bodas/album': album,
+  'nakamura-bodas/valsa': valsa,
+  'nakamura-bodas/familia': familiaBodas,
+  'nakamura-bodas/casal': casal,
   'cida-quintal/bolhas': bolhas,
   'cida-quintal/gramado': gramado,
   'cida-quintal/gato': gatoQuintal,
