@@ -1,5 +1,6 @@
 # Prepara as fotos reais do jogo a partir dos originais baixados (ver
-# README.md): recorta cada foto no quadrado do filme 120 e trata a pessoa
+# README.md): recorta cada foto no quadro do filme (quadrado no 120, 3:2 no
+# 35 mm) e trata a pessoa
 # recortada (rosto borrado, tom da foto). Depois, `revela age` envelhece
 # cada cena. Uso: python3 prepare.py <originais> <saída>
 import sys
@@ -7,6 +8,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 
 src, out = sys.argv[1], sys.argv[2]
 SIDE = 648
+FILM_35 = (648, 432)
 
 # (saída, original, recorte em fração da largura e da altura: x0, y0, x1, y1)
 SCENES = [
@@ -17,10 +19,19 @@ SCENES = [
     ('campinas-pompeo', 'praca-antonio-pompeo-3.jpg', (300 / 800, 60 / 615, 770 / 800, 530 / 615)),
 ]
 
-for name, f, (x0, y0, x1, y1) in SCENES:
-    im = Image.open(f'{src}/{f}').convert('L')
-    box = (round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height))
-    im.crop(box).resize((SIDE, SIDE), Image.LANCZOS).save(f'{out}/{name}.png')
+# As de 35 mm, no mesmo formato.
+SCENES_35 = [
+    ('amersfoort-toalha', 'amersfoort-schaftuur.jpg', (215 / 960, 90 / 864, 731 / 960, 434 / 864)),
+    ('amersfoort-turma', 'amersfoort-genietend.jpg', (204 / 960, 72 / 932, 724 / 960, 419 / 932)),
+    ('renee-soneca', 'renee-gras.jpg', (0 / 960, 40 / 735, 960 / 960, 680 / 735)),
+    ('sarphatipark-patos', 'sarphatipark-eenden.jpg', (110 / 960, 40 / 803, 960 / 960, 607 / 803)),
+]
+
+for scenes, size in ((SCENES, (SIDE, SIDE)), (SCENES_35, FILM_35)):
+    for name, f, (x0, y0, x1, y1) in scenes:
+        im = Image.open(f'{src}/{f}').convert('L')
+        box = (round(x0 * im.width), round(y0 * im.height), round(x1 * im.width), round(y1 * im.height))
+        im.crop(box).resize(size, Image.LANCZOS).save(f'{out}/{name}.png')
 
 # A pessoa: o rosto vira um borrão claro (mexeu a cabeça na exposição), o
 # corpo fica nítido, e o tom desce para o da foto.

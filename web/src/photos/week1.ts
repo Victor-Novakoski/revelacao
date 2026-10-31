@@ -1,4 +1,4 @@
-import { ellipse, falloff, gradient, gray, person, poly, rect, seeded, tree, type Ctx } from './draw'
+import { ellipse, falloff, gradient, gray, person, poly, rect, seeded, type Ctx } from './draw'
 import type { Scene } from './day1'
 import { blurredSign, realScene } from './real'
 import {
@@ -41,69 +41,13 @@ export const pertoVolta: Scene = (ctx, fr) => {
 
 // Dia 3 · Dona Cida, "Piquenique no parque" (35 mm).
 
-const grass = (ctx: Ctx, fr: { x: number; y: number; w: number; h: number }, horizon: number, gaps: number[] = []) => {
-  gradient(ctx, fr.x, fr.y, fr.w, Y(horizon) - fr.y, 0.9, 0.84)
-  for (let i = 0; i < 14; i++) {
-    const tx = 0.08 + i * 0.065
-    if (gaps.some((g) => Math.abs(g - tx) < 0.04)) continue
-    tree(ctx, X(tx), Y(horizon), Y(0.16 + (i % 3) * 0.03), 0.3)
-  }
-  gradient(ctx, fr.x, Y(horizon), fr.w, fr.y + fr.h - Y(horizon), 0.6, 0.48)
-}
+// Dia 3 · o piquenique da Dona Cida no sítio do compadre, e os patos do
+// Jardim da Luz na volta. Fotos de verdade, ver photos/real.ts.
 
-export const toalha: Scene = (ctx, fr) => {
-  grass(ctx, fr, 0.4)
-  // A toalha xadrez e a cesta.
-  poly(ctx, [[X(0.2), Y(0.62)], [X(0.8), Y(0.62)], [X(0.9), Y(0.86)], [X(0.1), Y(0.86)]], 0.92)
-  for (let i = 0; i < 8; i++) rect(ctx, X(0.14 + i * 0.1), Y(0.62), X(0.04), Y(0.24), 0.7)
-  rect(ctx, X(0.62), Y(0.6), X(0.1), Y(0.08), 0.4)
-  // A família sentada em volta.
-  person(ctx, lady(X(0.3), Y(0.7), Y(0.36)))
-  person(ctx, { x: X(0.78), foot: Y(0.72), h: Y(0.4), tone: 0.2, hair: 0.15 })
-  person(ctx, girl(X(0.46), Y(0.74), Y(0.26)))
-  person(ctx, boy(X(0.56), Y(0.74), Y(0.26), 0.3))
-  // O guardanapo da Lúcia, com o bolo escondido.
-  ellipse(ctx, X(0.44), Y(0.8), X(0.022), Y(0.016), 0.98)
-  ellipse(ctx, X(0.44), Y(0.795), X(0.01), Y(0.008), 0.5)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const correndo: Scene = (ctx, fr) => {
-  grass(ctx, fr, 0.47, [0.86])
-  // Os três correndo atrás da bola, longe da câmera.
-  person(ctx, { ...boy(X(0.34), Y(0.74), Y(0.3), 0.3), arms: 'side' })
-  person(ctx, { ...girl(X(0.46), Y(0.76), Y(0.28)), arms: 'side' })
-  person(ctx, { ...boy(X(0.55), Y(0.75), Y(0.22), 0.5), arms: 'up' })
-  ellipse(ctx, X(0.63), Y(0.72), X(0.02), Y(0.025), 0.95)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const chapeu: Scene = (ctx, fr) => {
-  grass(ctx, fr, 0.36)
-  // Seu Juvenal deitado na grama, de chapéu na cara.
-  rect(ctx, X(0.28), Y(0.66), X(0.42), Y(0.08), 0.85)
-  rect(ctx, X(0.66), Y(0.67), X(0.16), Y(0.06), 0.25)
-  ellipse(ctx, X(0.24), Y(0.68), X(0.04), Y(0.05), 0.7)
-  ellipse(ctx, X(0.24), Y(0.66), X(0.07), Y(0.035), 0.2)
-  rect(ctx, X(0.19), Y(0.655), X(0.1), Y(0.02), 0.15)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const patos: Scene = (ctx, fr) => {
-  grass(ctx, fr, 0.42)
-  gradient(ctx, fr.x, Y(0.5), fr.w, Y(0.18), 0.82, 0.72)
-  for (const [px, py] of [
-    [0.3, 0.58],
-    [0.38, 0.62],
-    [0.6, 0.56],
-  ] as const) {
-    ellipse(ctx, X(px), Y(py), X(0.025), Y(0.015), 0.95)
-    ellipse(ctx, X(px + 0.02), Y(py - 0.02), X(0.008), Y(0.012), 0.95)
-  }
-  person(ctx, lady(X(0.7), Y(0.96), Y(0.6)))
-  person(ctx, boy(X(0.8), Y(0.97), Y(0.3), 0.55))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+export const toalha = realScene('amersfoort-toalha')
+export const turma = realScene('amersfoort-turma')
+export const soneca = realScene('renee-soneca')
+export const patos = realScene('sarphatipark-patos')
 
 // Dia 3 · Marlene, "As normalistas" (35 mm).
 
@@ -313,8 +257,8 @@ export const WEEK1_SCENES: Record<string, Scene> = {
   'vilela-praca/familia': familia,
   'vilela-praca/perto': perto,
   'cida-piquenique/toalha': toalha,
-  'cida-piquenique/correndo': correndo,
-  'cida-piquenique/chapeu': chapeu,
+  'cida-piquenique/turma': turma,
+  'cida-piquenique/soneca': soneca,
   'cida-piquenique/patos': patos,
   'marlene-normal/escada': escadaNormal,
   'marlene-normal/banco': banco,

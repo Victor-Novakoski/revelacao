@@ -1,6 +1,6 @@
 # Fotos reais
 
-As fotos do jogo que não são desenhadas em código: fotos de arquivo e cartões-postais em domínio público, recortados no quadrado do filme 120 e envelhecidos pelo `revela age`. A figura delas é um homem recortado de um retrato de 1870, com o rosto borrado.
+As fotos do jogo que não são desenhadas em código: fotos de arquivo e cartões-postais em domínio público, recortados no quadro do filme (quadrado no 120, 3:2 no 35 mm) e envelhecidos pelo `revela age`. A figura delas é um homem recortado de um retrato de 1870, com o rosto borrado.
 
 Saída em `web/public/photos/`, usada por `web/src/photos/real.ts`.
 
@@ -8,7 +8,7 @@ Saída em `web/public/photos/`, usada por `web/src/photos/real.ts`.
 
 1. Baixe os originais (tabela abaixo) para uma pasta, com os nomes da coluna "Arquivo". `pessoa-recorte.png` é o retrato recortado com `rembg` (modelo `u2net_human_seg`).
 2. `python3 prepare.py <originais> <tmp>` recorta as cenas e trata a pessoa.
-3. Para cada cena: `go run ./cmd/revela age -seed N <tmp>/<cena>.png <tmp>/<cena>-aged.png` (sementes 2 a 6, na ordem da tabela), e salve em JPEG qualidade 84 em `web/public/photos/<cena>.jpg`. `pessoa.png` vai como está.
+3. Para cada cena: `go run ./cmd/revela age -seed N <tmp>/<cena>.png <tmp>/<cena>-aged.png` (sementes 2 a 6 para as do Vilela e 7 a 10 para as do piquenique, na ordem da tabela), e salve em JPEG qualidade 84 em `web/public/photos/<cena>.jpg`. `pessoa.png` vai como está.
 
 ## Origem
 
@@ -19,6 +19,10 @@ Saída em `web/public/photos/`, usada por `web/src/photos/real.ts`.
 | `praca-bento-quirino-2.jpg` | `campinas-bento-quirino.jpg` | Werner Haberkorn, *Praça Bento Quirino, Campinas*, Fotolabor 716, [Commons](https://commons.wikimedia.org/wiki/File:Werner_Haberkorn_-_Pra%C3%A7a_Bento_Quirino_-_Campinas_2.jpg) | Idem |
 | `largo-do-rosario-2.jpg` | `campinas-rosario.jpg` | Werner Haberkorn, *Largo do Rosário, Campinas*, Fotolabor 720, [Commons](https://commons.wikimedia.org/wiki/File:Werner_Haberkorn_-_Largo_do_Ros%C3%A1rio_-_Campinas_2.jpg) | Idem |
 | `praca-antonio-pompeo-3.jpg` | `campinas-pompeo.jpg` | Werner Haberkorn, *Vista parcial da Praça Antônio Pompeo, Campinas*, [Commons](https://commons.wikimedia.org/wiki/File:Werner_Haberkorn_-_Vista_parcial_da_Pra%C3%A7a_Ant%C3%B4nio_Pompeo._Campinas-SP_3.jpg) | Idem |
+| `amersfoort-schaftuur.jpg` | `amersfoort-toalha.jpg` | *Gezelschap picknickend op de hei bij Amersfoort ('t schaftuur)*, maio de 1924, Rijksmuseum (RP-F-F01203-BI), [Commons](https://commons.wikimedia.org/wiki/File:Gezelschap_picknickend_op_de_hei_bij_Amersfoort_%27t_schaftuur_(titel_op_object)_Pic-nic_op_de_hei_bij_Amersfoort,_mei_%2724_(titel_op_object),_RP-F-F01203-BI.jpg), miniatura de 960 px | CC0 (Rijksmuseum) |
+| `amersfoort-genietend.jpg` | `amersfoort-turma.jpg` | *Gezelschap picknickend op de hei bij Amersfoort (Genietend van het prachtige weer)*, maio de 1924, Rijksmuseum (RP-F-F01203-BH), [Commons](https://commons.wikimedia.org/wiki/File:Gezelschap_picknickend_op_de_hei_bij_Amersfoort_Genietend_van_het_prachtige_weer_(titel_op_object)_Pic-nic_op_de_hei_bij_Amersfoort,_mei_%2724_(titel_op_object),_RP-F-F01203-BH.jpg), miniatura de 960 px | CC0 (Rijksmuseum) |
+| `renee-gras.jpg` | `renee-soneca.jpg` | Willem van de Poll, *Stiefdochter Renée ligt in het gras*, 1932, Nationaal Archief (252-0512), [Commons](https://commons.wikimedia.org/wiki/File:Stiefdochter_Ren%C3%A9e_ligt_in_het_gras_met_een_krans_van_paardenbloemen_om_haar_nek,_Bestanddeelnr_252-0512.jpg), miniatura de 960 px | CC0 (Nationaal Archief) |
+| `sarphatipark-eenden.jpg` | `sarphatipark-patos.jpg` | Wim van Rossem, *Eenden voeren in Sarphatiepark*, 1954, Anefo, Nationaal Archief (906-2796), [Commons](https://commons.wikimedia.org/wiki/File:Lucas_Bols_eenden_voerderen_in_Sarphatiepark,_Bestanddeelnr_906-2796.jpg), miniatura de 960 px | CC0 (Nationaal Archief) |
 | `pessoa-recorte.png` | `pessoa.png` | *Full-length portrait of a man, standing, facing front*, 1870, Biblioteca do Congresso (LCCN 2005692477), [Commons](https://commons.wikimedia.org/wiki/File:Full-length_portrait_of_a_man,_standing,_facing_front_LCCN2005692477.jpg) | Domínio público no mundo todo (PD-old-100) |
 
-**Pendência antes de lançar:** as fotos brasileiras estão em domínio público no Brasil segundo o Commons, mas a data de cada uma não está confirmada (a lei pede divulgação até 1955) e a marca URAA indica que nos EUA, onde a Vercel serve o site, elas podem ainda ter direitos. Confirmar com o Arquivo Nacional e o Museu Paulista, ou trocar por fotos sem essa dúvida.
+**Pendência antes de lançar:** as fotos brasileiras (as do Vilela) estão em domínio público no Brasil segundo o Commons, mas a data de cada uma não está confirmada (a lei pede divulgação até 1955) e a marca URAA indica que nos EUA, onde a Vercel serve o site, elas podem ainda ter direitos. Confirmar com o Arquivo Nacional e o Museu Paulista, ou trocar por fotos sem essa dúvida.

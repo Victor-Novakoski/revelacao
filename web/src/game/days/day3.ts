@@ -2,39 +2,42 @@ import type { DayScript, Roll } from '../script'
 import { bell, moods, narrate, say, seen } from './lines'
 
 // Dia 3, quarta-feira, 16 de outubro. O rádio noticia o sumiço de um tal
-// Vilela. De volta à rotina, a figura aparece ao longe numa foto da Dona
-// Cida. A Marlene deixa as normalistas para buscar na segunda.
+// Vilela. De volta à rotina, a figura aparece ao longe no piquenique da
+// Dona Cida, no alto do morro do sítio. A Marlene deixa as normalistas para buscar na segunda.
 
 const piquenique: Roll = {
   id: 'cida-piquenique',
   customer: 'cida',
   film: '35mm',
-  title: 'Piquenique no parque',
+  title: 'Piquenique no sítio',
   photos: [
     {
       id: 'toalha',
-      verso: 'O piquenique. Sábado, 12/10/57',
+      verso: 'O piquenique no sítio do compadre. Sábado, 12/10/57',
       exposure: 8,
       focus: 0.64,
-      details: [{ id: 'guardanapo', x: 0.44, y: 0.8, r: 0.05, text: 'A Lúcia escondeu um pedaço de bolo no guardanapo.' }],
+      details: [
+        { id: 'colete', x: 0.34, y: 0.62, r: 0.06, text: 'O Juvenal de colete, sem o paletó. A Dona Cida tinha razão.' },
+        { id: 'gravata', x: 0.73, y: 0.49, r: 0.05, text: 'O compadre de gravata-borboleta, mesmo no mato.' },
+      ],
     },
     {
-      id: 'correndo',
-      verso: 'Os meninos atrás da bola',
+      id: 'turma',
+      verso: 'A turma toda (menos eu, que tirei)',
       exposure: 8,
       focus: 0.64,
-      details: [seen('cida-piquenique', 'correndo', 'Lá longe, na fileira de árvores, alguém parado. De frente para a câmera.')],
+      details: [seen('cida-piquenique', 'turma', 'Lá longe, no alto do morro, alguém parado. De frente para a câmera.')],
     },
     {
-      id: 'chapeu',
-      verso: 'O Juvenal sem paletó!',
+      id: 'soneca',
+      verso: 'A Lúcia dormiu no mato, com colar de flor',
       exposure: 9,
       focus: 0.64,
-      details: [{ id: 'chapeu', x: 0.24, y: 0.66, r: 0.06, text: 'Seu Juvenal dormiu de novo, de chapéu na cara.' }],
+      details: [{ id: 'colar', x: 0.3, y: 0.63, r: 0.06, text: 'O colar é de carrapicho. Coisa do Toninho, aposto.' }],
     },
     {
       id: 'patos',
-      verso: 'Eu e o Zezinho dando pão aos patos',
+      verso: 'Na volta, os patos do Jardim da Luz',
       exposure: 8,
       focus: 0.64,
     },
@@ -79,7 +82,7 @@ export const DAY3: DayScript = {
           'Rádio Garoa, sete e meia. A polícia procura o senhor Hélio Vilela, fotógrafo amador, que não volta para casa desde domingo.',
         ),
         say('augusto', 'Vilela. H. V.'),
-        bell('cida', 'Bom dia, Seu Augusto! Fizemos piquenique no parque no sábado. O Juvenal até tirou o paletó.'),
+        bell('cida', 'Bom dia, Seu Augusto! Fizemos piquenique no sítio do meu compadre, no sábado. O Juvenal até tirou o paletó.'),
         say('augusto', 'Milagre, Dona Cida.'),
         say('cida', 'Só as boas, viu? Volto à tarde.'),
         bell('marlene', 'Bom dia, Seu Augusto! As meninas da Normal, do passeio de sábado.'),
@@ -96,7 +99,7 @@ export const DAY3: DayScript = {
       roll: 'cida-piquenique',
       before: [bell('cida', 'Voltei! E o piquenique?'), say('augusto', 'Aqui está, Dona Cida.')],
       after: moods('cida', {
-        good: 'Que lindo! Olha o Juvenal de chapéu na cara. E os meninos correndo, que alegria.',
+        good: 'Que lindo! Olha o Juvenal de colete, parece outro homem. E a Lúcia dormindo, um anjo.',
         pale: 'Clarinhas como dia de sol. Combina com piquenique, não é?',
         dark: 'Escureceu tudo, parece que choveu no piquenique.',
         blurry: 'Borradinhas... o senhor anda cansado, Seu Augusto?',
@@ -106,8 +109,8 @@ export const DAY3: DayScript = {
     {
       kind: 'talk',
       lines: [
-        say('augusto', 'Dona Cida... na foto dos meninos correndo. A senhora viu alguém lá perto das árvores?'),
-        say('cida', 'No parque? Tinha gente para todo lado, Seu Augusto. Por quê?'),
+        say('augusto', 'Dona Cida... na foto da turma. A senhora viu alguém lá no alto do morro?'),
+        say('cida', 'No morro? Só se for o caseiro, Seu Augusto. Por quê?'),
         say('augusto', 'Por nada. Coisa de revelador.'),
         narrate('Ela guarda o envelope na bolsa e vai embora. Leva a foto com ela.'),
         narrate('No fim da tarde, o rádio dá a notícia de novo.'),
@@ -119,7 +122,7 @@ export const DAY3: DayScript = {
     {
       kind: 'end',
       title: 'Fim do terceiro dia',
-      text: 'Lá longe, entre as árvores. Talvez fosse só alguém no parque.',
+      text: 'Lá longe, no alto do morro. Talvez fosse só o caseiro.',
     },
   ],
 }

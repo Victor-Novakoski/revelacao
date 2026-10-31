@@ -18,6 +18,10 @@ const FILES = {
   'campinas-bento-quirino': 'campinas-bento-quirino.jpg',
   'campinas-rosario': 'campinas-rosario.jpg',
   'campinas-pompeo': 'campinas-pompeo.jpg',
+  'amersfoort-toalha': 'amersfoort-toalha.jpg',
+  'amersfoort-turma': 'amersfoort-turma.jpg',
+  'renee-soneca': 'renee-soneca.jpg',
+  'sarphatipark-patos': 'sarphatipark-patos.jpg',
   pessoa: 'pessoa.png',
 } as const
 
