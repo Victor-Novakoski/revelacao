@@ -133,7 +133,7 @@ Os textos de cada dia estão em `web/src/game/days/dayN.ts`; os desenhos, em `we
 | --- | --- | --- | --- |
 | 2 · terça, 15/10 | H. Vilela (câmera do Elias), "De Anápolis a Campinas" (120, fotos reais) | o coreto de Anápolis; em Campinas, o Jardim Carlos Gomes, a Praça Bento Quirino, o Largo do Rosário e a Praça Antônio Pompeo | O mesmo homem em todas, cada vez mais perto; na rua de sol, sem sombra; na última, colado na lente |
 | 3 · quarta, 16/10 | Dona Cida, "Piquenique no sítio" (35 mm, fotos reais) | a turma na toalha (Juvenal de colete), a turma toda, a Lúcia dormindo no mato, na volta os patos do Jardim da Luz | Bem longe, no alto do morro, na foto da turma |
-| 3 | Marlene, "As normalistas" (35 mm) | escadaria da Escola Normal, as três no banco, sorveteria, Marlene sozinha | Nenhuma. A Marlene sai tremida na dela, só ela |
+| 3 | Marlene, "As normalistas" (35 mm) | fotos reais do passeio de sábado: a turma debaixo do pinheiro, as três no banco, o lanche na caixa de frutas, as três de novo | Nenhuma. A Marlene sai tremida na última, só ela |
 | 4 · quinta, 17/10 | Seu Nakamura, "Casamento no Cambuci" (120, fotos reais) | os noivos na porta com a cauda do vestido, o altar, o bolo de três andares, retrato na sala | No altar, entre as palmeiras, ao lado dos noivos |
 | 4 | Elias, "A rota de Santos" (35 mm) | ele e o caminhão, a serra, o café no posto, a boleia | Nenhuma. O Elias some: 80%, 50%, 20%, e na última só o boné no banco |
 | 5 · sexta, 18/10 | Seu Nakamura, "Retratos do estúdio" (120, fotos reais) | Keiko com o laço, Dona Okada e a neta, formatura do rapaz, família Ito | No fundo pintado, atrás do rapaz |

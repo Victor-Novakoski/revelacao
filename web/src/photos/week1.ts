@@ -1,7 +1,7 @@
 import { ellipse, falloff, gradient, gray, poly, rect, seeded, type Ctx } from './draw'
 import type { Scene } from './day1'
 import { blurredSign, realScene } from './real'
-import { X, Y, cap, elias, praca, sign, student } from './places'
+import { X, Y, cap, elias, sign } from './places'
 
 // As fotos dos dias 2 a 5. A figura não está aqui: ela fica na camada
 // própria (photos/figures.ts). Aqui só ficam os vãos onde ela cabe.
@@ -32,58 +32,13 @@ export const turma = realScene('amersfoort-turma')
 export const soneca = realScene('renee-soneca')
 export const patos = realScene('sarphatipark-patos')
 
-// Dia 3 · Marlene, "As normalistas" (35 mm).
+// Dia 3 · Marlene, "As normalistas" (35 mm). O passeio de sábado, fotos de
+// verdade. Na última, a Marlene sai tremida, só ela (art/real/prepare.py).
 
-export const escadaNormal: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.78)
-  for (let i = 0; i < 6; i++) rect(ctx, X(0.12 + i * 0.15), fr.y, X(0.05), Y(0.5), 0.9)
-  rect(ctx, fr.x, Y(0.12), fr.w, Y(0.04), 0.6)
-  sign(ctx, 'ESCOLA NORMAL', X(0.5), Y(0.14), Y(0.035), 0.25)
-  for (let i = 0; i < 6; i++) rect(ctx, fr.x, Y(0.5 + i * 0.07), fr.w, Y(0.07), i % 2 ? 0.66 : 0.76)
-  for (const [i, sx] of [0.3, 0.4, 0.5, 0.6, 0.7].entries()) student(ctx, X(sx), Y(0.64 + (i % 2) * 0.07), Y(0.4))
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const banco: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.44)
-  // As três no banco: Célia, Marlene e a Dirce fazendo chifrinho.
-  student(ctx, X(0.38), Y(0.78), Y(0.42))
-  student(ctx, X(0.5), Y(0.78), Y(0.42))
-  student(ctx, X(0.62), Y(0.78), Y(0.42), 'side')
-  rect(ctx, X(0.36), Y(0.36), 2, Y(0.03), 0.2)
-  rect(ctx, X(0.395), Y(0.36), 2, Y(0.03), 0.2)
-  rect(ctx, X(0.26), Y(0.7), X(0.48), Y(0.04), 0.3)
-  rect(ctx, X(0.28), Y(0.74), 4, Y(0.1), 0.2)
-  rect(ctx, X(0.71), Y(0.74), 4, Y(0.1), 0.2)
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-export const sorvete: Scene = (ctx, fr) => {
-  rect(ctx, fr.x, fr.y, fr.w, fr.h, 0.7)
-  // A sorveteria: toldo listrado e vitrine.
-  for (let i = 0; i < 12; i++) poly(ctx, [[X(0.1 + i * 0.07), Y(0.2)], [X(0.17 + i * 0.07), Y(0.2)], [X(0.17 + i * 0.07), Y(0.3)], [X(0.1 + i * 0.07), Y(0.3)]], i % 2 ? 0.95 : 0.3)
-  rect(ctx, X(0.14), Y(0.32), X(0.72), Y(0.3), 0.4)
-  sign(ctx, 'SORVETES', X(0.5), Y(0.15), Y(0.05), 0.2)
-  gradient(ctx, fr.x, Y(0.62), fr.w, Y(0.38), 0.6, 0.5)
-  for (const sx of [0.36, 0.5, 0.64]) {
-    student(ctx, X(sx), Y(0.94), Y(0.5), 'side')
-    poly(ctx, [[X(sx + 0.04), Y(0.62)], [X(sx + 0.06), Y(0.62)], [X(sx + 0.05), Y(0.66)]], 0.85)
-    ellipse(ctx, X(sx + 0.05), Y(0.615), X(0.012), Y(0.012), 0.97)
-  }
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
-
-// A Marlene sozinha no poste. Saiu tremida: só ela.
-export const marleneSo: Scene = (ctx, fr) => {
-  praca(ctx, fr, 0.5)
-  rect(ctx, X(0.62), Y(0.12), 4, Y(0.72), 0.15)
-  ellipse(ctx, X(0.625), Y(0.12), X(0.02), Y(0.03), 0.9)
-  ctx.save()
-  ctx.globalAlpha = 0.45
-  for (const dx of [-0.012, 0, 0.012]) student(ctx, X(0.5 + dx), Y(0.9), Y(0.56))
-  ctx.restore()
-  falloff(ctx, fr.x, fr.y, fr.w, fr.h, 0.3)
-}
+export const passeio = realScene('normal-passeio')
+export const banco = realScene('normal-banco')
+export const lanche = realScene('normal-lanche')
+export const marleneSo = realScene('normal-marlene')
 
 // Dia 4 · Seu Nakamura, "Casamento no Cambuci" (120). Fotos de verdade,
 // ver photos/real.ts.
@@ -185,9 +140,9 @@ export const WEEK1_SCENES: Record<string, Scene> = {
   'cida-piquenique/turma': turma,
   'cida-piquenique/soneca': soneca,
   'cida-piquenique/patos': patos,
-  'marlene-normal/escada': escadaNormal,
+  'marlene-normal/passeio': passeio,
   'marlene-normal/banco': banco,
-  'marlene-normal/sorvete': sorvete,
+  'marlene-normal/lanche': lanche,
   'marlene-normal/marlene': marleneSo,
   'nakamura-cambuci/porta': portaCambuci,
   'nakamura-cambuci/altar': altar,

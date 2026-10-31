@@ -49,6 +49,10 @@ SCENES_35 = [
     ('livraria-estantes', 'anefo-900-8741.jpg', (0 / 960, 260 / 965, 960 / 960, 900 / 965)),
     ('livraria-gato', 'anefo-906-9507.jpg', (110 / 960, 90 / 748, 960 / 960, 657 / 748)),
     ('livraria-balcao', 'vandepoll-255-1852.jpg', (0 / 960, 200 / 957, 960 / 960, 840 / 957)),
+    ('normal-passeio', 'kibboets-255-4488.jpg', (0 / 960, 150 / 983, 960 / 960, 790 / 983)),
+    ('normal-banco', 'kibboets-255-4487.jpg', (0 / 960, 160 / 971, 960 / 960, 800 / 971)),
+    ('normal-lanche', 'kibboets-255-4492.jpg', (0 / 960, 150 / 972, 960 / 960, 790 / 972)),
+    ('normal-marlene', 'kibboets-255-4486.jpg', (0 / 960, 200 / 979, 960 / 960, 840 / 979)),
     ('augusto-cadeira', 'debruyn-252-1349.jpg', (0 / 960, 115 / 961, 960 / 960, 755 / 961)),
     ('augusto-olhar', 'debruyn-252-1357.jpg', (0 / 960, 97 / 970, 960 / 960, 737 / 970)),
     ('augusto-cintura', 'debruyn-252-1352.jpg', (0 / 960, 98 / 984, 960 / 960, 738 / 984)),
@@ -58,8 +62,10 @@ SCENES_35 = [
 ]
 
 # O rolo sem nome (dia 10): o rosto do Seu Augusto arrastado para os lados,
-# cada foto mais. (meio x, meio y, raio x, raio y em fração do quadro; força)
+# cada foto mais. E a Marlene (dia 3), que sai tremida inteira, só ela.
+# (meio x, meio y, raio x, raio y em fração do quadro; força)
 FACES = {
+    'normal-marlene': (0.17, 0.55, 0.15, 0.45, 0.5),
     'augusto-cadeira': (0.51, 0.33, 0.07, 0.15, 0.3),
     'augusto-olhar': (0.52, 0.38, 0.1, 0.2, 0.45),
     'augusto-cintura': (0.34, 0.32, 0.1, 0.18, 0.55),

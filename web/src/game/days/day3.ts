@@ -50,21 +50,27 @@ const normalistas: Roll = {
   film: '35mm',
   title: 'As normalistas',
   photos: [
-    { id: 'escada', verso: 'Nós na escadaria da Escola. Sáb 12/10', exposure: 9, focus: 0.44 },
+    {
+      id: 'passeio',
+      verso: 'A turma da Normal no passeio. Sáb 12/10',
+      exposure: 9,
+      focus: 0.44,
+      details: [{ id: 'arvore', x: 0.66, y: 0.55, r: 0.06, text: 'Debaixo do pinheiro, o único pedaço de sombra do morro.' }],
+    },
     {
       id: 'banco',
       verso: 'Eu, a Célia e a Dirce. Ampliar esta!',
       exposure: 8,
       focus: 0.44,
-      details: [{ id: 'chifrinho', x: 0.38, y: 0.4, r: 0.05, text: 'A Dirce está fazendo chifrinho na Célia.' }],
+      details: [{ id: 'trancas', x: 0.28, y: 0.38, r: 0.05, text: 'A Marlene de tranças, como no primeiro dia de aula.' }],
     },
-    { id: 'sorvete', verso: 'Sorvete depois da aula', exposure: 7, focus: 0.44 },
+    { id: 'lanche', verso: 'O lanche, na caixa de frutas', exposure: 7, focus: 0.44 },
     {
       id: 'marlene',
-      verso: 'Eu (a Célia que tirou)',
+      verso: 'De novo, as três (a Ivone que tirou)',
       exposure: 8,
       focus: 0.44,
-      details: [{ id: 'tremida', x: 0.5, y: 0.6, r: 0.08, text: 'A Marlene saiu tremida. Só ela. O poste ao lado está nítido.' }],
+      details: [{ id: 'tremida', x: 0.21, y: 0.5, r: 0.1, text: 'A Marlene saiu tremida. Só ela. As outras duas e o banco estão nítidos.' }],
     },
   ],
 }
